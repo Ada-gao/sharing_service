@@ -3,11 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
 import Mint from 'mint-ui'
 Vue.use(Mint);
 import 'mint-ui/lib/style.css'
 
 import './assets/iconfont/iconfont.css'
+
+import axios from 'axios'
+Vue.prototype.$ajax= axios
+
+import './assets/css/common.css'
 
 Vue.config.productionTip = false
 
