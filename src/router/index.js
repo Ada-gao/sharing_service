@@ -9,11 +9,17 @@ export default new Router({
     {
       path: '/',
       redirect:'/register',
+      meta: {
+       title: '注册'
+     }
     },
     {
       path: '/register',
       name: 'register',
-      component: register
+      component: register,
+      meta: {
+       title: '注册'
+     }
     },
   ]
 })

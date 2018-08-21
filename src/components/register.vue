@@ -48,7 +48,7 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      shellid:this.$route.query.shellid,
+      share_id:this.$route.query.share_id,
     }
   },
   methods: {
@@ -128,7 +128,7 @@ export default {
         "passwd": this.password,
         "verify_passwd": this.surePassword,
         "code": this.verifyCode,
-        "shellid":this.shellid
+        "share_id":this.share_id
       }
       user.register(obj)
         .then((res) => {
@@ -144,7 +144,7 @@ export default {
         })
     },
     checkRegister() {
-      console.log(this.shellid)
+      console.log(this.share_id)
       var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
       if (!this.password) {
         this.codeMsg = '请您输入密码'
