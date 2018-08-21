@@ -48,6 +48,7 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
+      shellid:this.$route.query.shellid,
     }
   },
   methods: {
@@ -126,7 +127,8 @@ export default {
         "name": this.userName,
         "passwd": this.password,
         "verify_passwd": this.surePassword,
-        "code": this.verifyCode
+        "code": this.verifyCode,
+        "shellid":this.shellid
       }
       user.register(obj)
         .then((res) => {
@@ -142,6 +144,7 @@ export default {
         })
     },
     checkRegister() {
+      console.log(this.shellid)
       var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
       if (!this.password) {
         this.codeMsg = '请您输入密码'
