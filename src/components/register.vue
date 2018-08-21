@@ -32,14 +32,8 @@
 </template>
 
 <script>
-import {
-  MessageBox
-} from 'mint-ui';
-
-import {
-  sendMsg,
-  register
-} from '@/http/api';
+import {MessageBox} from 'mint-ui';
+import user from '@/http/api'
 
 export default {
   name: 'register',
@@ -57,27 +51,31 @@ export default {
     }
   },
   methods: {
-    show(code) {
-      if (code == 1) {
+    show(code){
+      switch(code){
+        case 1:
         var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
         if (!phone_reg.test(this.phone)) {
           this.codeMsg = '您输入的手机号码不正确'
         } else {
           this.codeMsg = '';
         }
-      } else if (code == 2) {
+        break
+        case 2:
         var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
         if (!pwd_reg.test(this.password)) {
           this.codeMsg = '密码必须由 6-16位字母、数字组成'
         } else {
           this.codeMsg = '';
         }
-      } else if (code == 3) {
+        break
+        case 3:
         if (this.password != this.surePassword) {
           this.codeMsg = '两次输入的密码不一致'
         } else {
           this.codeMsg = '';
         }
+        break
       }
     },
     checkMsgCode() {
@@ -108,7 +106,7 @@ export default {
         "app_version": "v1.0",
         "registration_id": "0891683108200105F"
       }
-      sendMsg(obj)
+      user.sendMsg(obj)
         .then((res) => {
           console.log(res)
           if (res.data.code == 200) {
@@ -130,13 +128,13 @@ export default {
         "verify_passwd": this.surePassword,
         "code": this.verifyCode
       }
-      register(obj)
+      user.register(obj)
         .then((res) => {
           console.log(res)
           if (res.data.code == 200) {
             MessageBox('提示', '注册成功');
           } else if (res.data.code == 103) {
-            this.codeMsg = '验证码错误'
+            this.codeMsg = res.data.message
           }
         })
         .catch((err) => {
@@ -147,8 +145,6 @@ export default {
       var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
       if (!this.password) {
         this.codeMsg = '请您输入密码'
-      } else if (this.password != this.surePassword) {
-        this.codeMsg = '两次输入的密码不一致'
       } else {
         this.userRegister();
       }
@@ -160,7 +156,7 @@ export default {
 <style lang='less' scoped>
 @bgColor: #B68458;
 .register {
-    background: url("../assets/images/bg.png") no-repeat center;
+    background: url("../assets/images/bg.png") bottom center no-repeat;
     height: 100%;
     background-size: cover;
     .box {
