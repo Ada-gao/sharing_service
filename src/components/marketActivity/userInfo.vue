@@ -10,10 +10,7 @@
         <span>
           <my-select :options='option' @chooseOne='select' :place='place'></my-select>
         </span>
-        <!-- <select class="" name="">
-          <option value="">男</option>
-          <option value="">女</option>
-        </select> -->
+
       </li>
     </ul>
   </div>
