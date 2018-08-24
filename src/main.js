@@ -17,6 +17,9 @@ import './assets/css/common.css'
 
 Vue.config.productionTip = false
 
+import vSelect from 'vue-select'
+Vue.component('vSelect',vSelect)
+
 //rem动态计算公式
 function add(){var html=document.documentElement;var hei=html.clientWidth;var fz=hei/375*100+"px";html.style.fontSize=fz};
 add();

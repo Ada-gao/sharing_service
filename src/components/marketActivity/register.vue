@@ -2,10 +2,6 @@
 <div class="register">
   <div class="box">
     <div class="two">
-      <i class='iconfont icon-gerenxinxi'></i>
-      <input type="text" name="" value="" placeholder="请输入用户姓名" v-model='userName'>
-    </div>
-    <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
       <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone' @keyup='show(1)'>
     </div>
@@ -15,19 +11,12 @@
       <span v-show='!msgShow' @click='checkMsgCode()'>发送验证码</span>
       <span v-show='msgShow'>{{this.msg}}</span>
     </div>
-    <div class="two">
-      <i class='iconfont icon-mima'></i>
-      <input type="password" name="" value="" placeholder="请您输入密码" v-model='password' @keyup='show(2)'>
-    </div>
-    <div class="two">
-      <i class='iconfont icon-mima'></i>
-      <input type="password" name="" value="" placeholder="请您再一次输入密码" v-model='surePassword' @keyup='show(3)'>
-    </div>
     <div class="text">
       <p>{{this.codeMsg}}</p>
     </div>
   </div>
-  <button type="button" name="button" @click='checkRegister()'>注册</button>
+  <button class='btn' type="button" name="button" @click='checkRegister()'>确定</button>
+  <button type="button" name="button">取消</button>
 </div>
 </template>
 
@@ -48,7 +37,7 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      share_id:this.$route.query.shareId,
+      share_id:this.$route.query.share_id,
     }
   },
   methods: {
@@ -159,14 +148,14 @@ export default {
 <style lang='less' scoped>
 @bgColor: #B68458;
 .register {
-    background: url("../assets/images/bg.png") bottom center no-repeat;
+    background: url("../../assets/images/bg.png") bottom center no-repeat;
     height: 100%;
     background-size: cover;
     .box {
-        padding-top: 2.52rem;
+        padding-top: 3.66rem;
         input {
             width: 6.36rem;
-            height: 1.17rem;
+            height: 1.8rem;
             border: 1px solid #979797;
             padding-left: 0.6rem;
             font-size: 0.28rem;
@@ -184,7 +173,7 @@ export default {
             width: 0.3rem;
             height: 0.3rem;
             position: absolute;
-            top: 0.59rem;
+            top: 0.9rem;
             left: 0.2rem;
             vertical-align: middle;
         }
@@ -193,7 +182,7 @@ export default {
         }
         .two {
             position: relative;
-            height: 1.17rem;
+            height: 1.5rem;
             width: 6.36rem;
             margin: auto;
             border-bottom: 1px solid #979797;
@@ -207,7 +196,7 @@ export default {
                 font-size: 0.2rem;
                 color: #F0F0F0;
                 line-height: 0.5rem;
-                top: 0.52rem;
+                top: 0.8rem;
                 right: 0.1rem;
             }
         }
@@ -223,12 +212,15 @@ export default {
     button {
         background: @bgColor;
         border-radius: 10px;
-        width: 6.5rem;
+        width: 2.6rem;
         height: 0.8rem;
-        margin-top: 1rem;
-        margin-bottom: 2.3rem;
+        margin-top: 1.7rem;
+        margin-bottom: 3.27rem;
         font-size: 0.28rem;
         color: #F0F0F0;
+    }
+    .btn{
+      margin-right: 0.96rem;
     }
 }
 </style>
