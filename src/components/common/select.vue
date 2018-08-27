@@ -27,6 +27,8 @@ export default {
       this.selected = item.text
       this.ulShow = !this.ulShow
       this.$emit('chooseOne', item)
+      this.$emit('chooseTwo', item)
+      this.$emit('deleteSrc')
     }
   },
 }

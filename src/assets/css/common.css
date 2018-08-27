@@ -60,13 +60,21 @@ option::-ms-expand {
 }
 
 .sureButton {
-  margin-top: 2.18rem;
-  /* margin-bottom: 1.8rem; */
   width: 6.5rem;
   height: 0.8rem;
   background: #B68458;
   border-radius: 10px;
   color: #fff;
+}
+
+.title {
+  font-size: 0.36rem;
+  color: #333333;
+  letter-spacing: 0;
+  background-color: #fff;
+  border-bottom: 1px solid #D2D2D2;
+  padding-top: 0.6rem;
+  padding-bottom: 0.4rem;
 }
 
 .add_bg {

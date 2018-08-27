@@ -1,5 +1,11 @@
 <template>
 <div class="register">
+  <mt-header class='title' title="注册">
+    <!-- <router-link to="/" slot="left">
+      <mt-button icon="back"></mt-button>
+    </router-link> -->
+    <mt-button icon="more" slot="right"></mt-button>
+  </mt-header>
   <div class="box">
     <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
@@ -22,19 +28,20 @@
 
 <script>
 import {
-  MessageBox
+  MessageBox,
+  Header
 } from 'mint-ui';
+import Vue from 'vue'
+Vue.component(Header.name, Header);
+
 import user from '@/http/api'
 
 export default {
   name: 'register',
   data() {
     return {
-      userName: this.userName,
       phone: this.phone,
       verifyCode: this.verifyCode,
-      password: this.password,
-      surePassword: this.surePassword,
       codeMsg: '',
       count: 60,
       msgShow: false,
@@ -71,9 +78,7 @@ export default {
       }
     },
     checkMsgCode() {
-      if (!this.userName) {
-        this.codeMsg = '请输入您的用户名'
-      } else if (!this.phone) {
+      if (!this.phone) {
         this.codeMsg = '请输入您的手机号码'
       } else {
         this.sendCode();
@@ -134,15 +139,6 @@ export default {
           console.log(err)
         })
     },
-    checkRegister() {
-      console.log(this.share_id)
-      var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-      if (!this.password) {
-        this.codeMsg = '请您输入密码'
-      } else {
-        this.userRegister();
-      }
-    }
   },
 }
 </script>
@@ -154,9 +150,9 @@ export default {
     height: 100%;
     background-size: cover;
     .box {
-        padding-top: 3.66rem;
+        padding-top: 3rem;
         input {
-            width: 6.36rem;
+            width: 6.66rem;
             height: 1.8rem;
             border: 1px solid #979797;
             padding-left: 0.6rem;
@@ -211,7 +207,7 @@ export default {
         }
 
     }
-    button {
+    > button {
         background: @bgColor;
         border-radius: 10px;
         width: 2.6rem;

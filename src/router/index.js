@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import register from '@/components/register'
-import activeRegister from '@/components/marketActivity/register'
+import activeRegister from '@/components/marketActivity/activeRegister'
 import uploadImg from '@/components/marketActivity/uploadImg'
 import userInfo from '@/components/marketActivity/userInfo'
 import pass from '@/components/marketActivity/pass'
 
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
@@ -26,7 +25,7 @@ export default new Router({
      }
     },
     {
-      path: '/marketActivity/register',
+      path: '/marketActivity/activeRegister',
       name: 'activeRegister',
       component: activeRegister,
       meta: {

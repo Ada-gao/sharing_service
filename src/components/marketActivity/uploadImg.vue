@@ -1,8 +1,13 @@
 <template>
 <div class="uploadImg">
+  <mt-header class='title' title="实名认证">
+    <router-link :to="{path:'activeRegister'}" slot="left">
+      <mt-button icon="back"></mt-button>
+    </router-link>
+  </mt-header>
   <p>证件信息 (请上传清晰的证件图片)</p>
   <div class="select">
-    <my-select :options='options' @chooseOne='select' :place='place'></my-select>
+    <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg' :place='place' v-model='type'></my-select>
   </div>
   <div class="img">
     <div class="box1">
@@ -18,14 +23,18 @@
       </div>
     </div>
   </div>
-  <button class='sureButton ' type="button " name="button">提交</button>
+  <button class='sureButton ' type="button " name="button" @click='submit()'>提交</button>
 </div>
 </template>
 <script type="text/javascript">
 import mySelect from '@/components/common/select'
 import {
-  MessageBox
+  MessageBox,
+  Header
 } from 'mint-ui';
+import Vue from 'vue'
+Vue.component(Header.name, Header);
+
 export default {
   name: 'uploadImg',
   components: {
@@ -46,22 +55,26 @@ export default {
         text: '其他',
         value: 3
       }],
-      text: '',
       place: '身份证',
       imgShow: true,
       imgsrc: '',
       imgsrcs: '',
+      type: this.type
     }
   },
   methods: {
     select(item) {
-      this.text = item.text
-      console.log(item.value)
+      this.type = item.text
       if (item.value != 0) {
         this.imgShow = false
       } else {
         this.imgShow = true
       }
+    },
+    // 切换select时清除图片路径
+    deleteImg() {
+      this.imgsrc = ''
+      this.imgsrcs = ''
     },
     getImg() {
       var _this = this;
@@ -97,6 +110,12 @@ export default {
       }
       reader.readAsDataURL(file);
     },
+    submit() {
+      if (!this.type) {
+        this.type = this.place
+      }
+      console.log(this.type)
+    }
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
@@ -153,8 +172,10 @@ export default {
                 display: none;
             }
             img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                height: auto;
+                max-width: 100%;
+                max-height: 100%;
             }
         }
         .box1 {
@@ -168,6 +189,9 @@ export default {
                 border: 1px solid #ccc;
             }
         }
+    }
+    .sureButton {
+        margin-top: 1.4rem;
     }
 }
 </style>
