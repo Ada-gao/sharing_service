@@ -21,7 +21,9 @@
 </template>
 
 <script>
-import {MessageBox} from 'mint-ui';
+import {
+  MessageBox
+} from 'mint-ui';
 import user from '@/http/api'
 
 export default {
@@ -37,35 +39,35 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      share_id:this.$route.query.share_id,
+      share_id: this.$route.query.share_id,
     }
   },
   methods: {
-    show(code){
-      switch(code){
+    show(code) {
+      switch (code) {
         case 1:
-        var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
-        if (!phone_reg.test(this.phone)) {
-          this.codeMsg = '您输入的手机号码不正确'
-        } else {
-          this.codeMsg = '';
-        }
-        break
+          var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+          if (!phone_reg.test(this.phone)) {
+            this.codeMsg = '您输入的手机号码不正确'
+          } else {
+            this.codeMsg = '';
+          }
+          break
         case 2:
-        var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-        if (!pwd_reg.test(this.password)) {
-          this.codeMsg = '密码必须由 6-16位字母、数字组成'
-        } else {
-          this.codeMsg = '';
-        }
-        break
+          var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+          if (!pwd_reg.test(this.password)) {
+            this.codeMsg = '密码必须由 6-16位字母、数字组成'
+          } else {
+            this.codeMsg = '';
+          }
+          break
         case 3:
-        if (this.password != this.surePassword) {
-          this.codeMsg = '两次输入的密码不一致'
-        } else {
-          this.codeMsg = '';
-        }
-        break
+          if (this.password != this.surePassword) {
+            this.codeMsg = '两次输入的密码不一致'
+          } else {
+            this.codeMsg = '';
+          }
+          break
       }
     },
     checkMsgCode() {
@@ -117,7 +119,7 @@ export default {
         "passwd": this.password,
         "verify_passwd": this.surePassword,
         "code": this.verifyCode,
-        "share_id":this.share_id
+        "share_id": this.share_id
       }
       user.register(obj)
         .then((res) => {
@@ -141,7 +143,7 @@ export default {
         this.userRegister();
       }
     }
-  }
+  },
 }
 </script>
 
@@ -219,8 +221,8 @@ export default {
         font-size: 0.28rem;
         color: #F0F0F0;
     }
-    .btn{
-      margin-right: 0.96rem;
+    .btn {
+        margin-right: 0.96rem;
     }
 }
 </style>

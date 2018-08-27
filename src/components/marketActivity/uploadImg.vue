@@ -6,15 +6,26 @@
   </div>
   <div class="img">
     <div class="box1">
+      <label for="input"></label>
+      <input id='input' type='file' accept="image/*" @change="getImg()" multiple />
+      <img :src="imgsrc" alt=" ">
     </div>
-    <div class="box2" v-show='imgShow'>
+    <div class="box2 ">
+      <div class="pic " v-show='imgShow '>
+        <label for="inputer"></label>
+        <input id='inputer' type="file" accept="image/*" @change="getImgs()" multiple/>
+        <img :src="imgsrcs" alt=" ">
+      </div>
     </div>
   </div>
-  <button type="button" name="button">提交</button>
+  <button class='sureButton ' type="button " name="button">提交</button>
 </div>
 </template>
 <script type="text/javascript">
 import mySelect from '@/components/common/select'
+import {
+  MessageBox
+} from 'mint-ui';
 export default {
   name: 'uploadImg',
   components: {
@@ -38,6 +49,8 @@ export default {
       text: '',
       place: '身份证',
       imgShow: true,
+      imgsrc: '',
+      imgsrcs: '',
     }
   },
   methods: {
@@ -46,8 +59,47 @@ export default {
       console.log(item.value)
       if (item.value != 0) {
         this.imgShow = false
+      } else {
+        this.imgShow = true
       }
     },
+    getImg() {
+      var _this = this;
+      var event = event || window.event;
+      var file = event.target.files[0];
+      var reader = new FileReader()
+      if (typeof FileReader === 'undefined') {
+        MessageBox('您的浏览器不支持图片上传，请升级您的浏览器');
+        return false;
+      }
+      reader.onload = function(e) {
+        _this.imgsrc = e.target.result;
+      }
+      reader.onerror = function() {
+        MessageBox('上传失败，请稍后再试');
+      }
+      reader.readAsDataURL(file);
+    },
+    getImgs() {
+      var _this = this;
+      var event = event || window.event;
+      var file = event.target.files[0];
+      var reader = new FileReader()
+      if (typeof FileReader === 'undefined') {
+        MessageBox('您的浏览器不支持图片上传，请升级您的浏览器');
+        return false;
+      }
+      reader.onload = function(e) {
+        _this.imgsrcs = e.target.result;
+      }
+      reader.onerror = function() {
+        MessageBox('上传失败，请稍后再试');
+      }
+      reader.readAsDataURL(file);
+    },
+  },
+  mounted() {
+    document.body.removeAttribute('class', 'add_bg')
   },
 }
 </script>
@@ -55,7 +107,6 @@ export default {
 .uploadImg {
     height: 100%;
     background-color: #fff;
-
     > p {
         padding-top: 0.35rem;
         text-align: center;
@@ -81,19 +132,42 @@ export default {
         > div {
             width: 100%;
             height: 3.22rem;
-            background-color: #ccc;
+            position: relative;
+            input {
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                display: none;
+            }
+            label {
+                width: 100%;
+                height: 3.22rem;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 10;
+            }
+            .remove {
+                display: none;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+            }
         }
         .box1 {
             margin-bottom: 0.88rem;
+            border: 1px solid #ccc;
         }
-    }
-    button {
-        margin-top: 1.4rem;
-        width: 6.5rem;
-        height: 0.8rem;
-        background-color: #B68458;
-        color: #fff;
-        border-radius: 10px;
+        .box2 {
+            .pic {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #ccc;
+            }
+        }
     }
 }
 </style>

@@ -10,17 +10,12 @@
         <span>
           <my-select :options='option' @chooseOne='select' :place='place'></my-select>
         </span>
-
       </li>
     </ul>
   </div>
   <div class="list list2">
     <ul class='listUl'>
       <li class='special clearfix'>证件类型：
-        <!-- <select class="" name="">
-          <option value="">身份证</option>
-          <option value="">护照</option>
-        </select> -->
         <span class='most'>
           <my-select :options='options' @chooseOne='select' :place='places'></my-select>
         </span>
@@ -31,9 +26,8 @@
       <li>地址：</i><input type="text" name="" value=""></li>
       <li>出生日期：</i><input type="text" name="" value=""></li>
     </ul>
-
   </div>
-  <button type="button" name="button">提交</button>
+  <button class='sureButton' type="button" name="button">提交</button>
 </div>
 </template>
 <script type="text/javascript">
@@ -51,16 +45,21 @@ export default {
         text: '女'
       }],
       options: [{
-        text: '护照'
+        text: '身份证',
+        value: 0
       }, {
-        text: '军官证'
+        text: '护照',
+        value: 1
       }, {
-        text: '其他'
+        text: '军官证',
+        value: 2
+      }, {
+        text: '其他',
+        value: 3
       }],
       text: '',
       place: '男',
       places: '身份证'
-
     }
   },
   methods: {
@@ -69,12 +68,17 @@ export default {
       console.log(this.text)
     },
   },
+  mounted() {
+    document.getElementsByTagName("body")[0].className = 'add_bg'
+  },
+  beforedestroy() {
+    document.body.removeAttribute('class', 'add_bg')
+  }
 }
 </script>
 <style lang='less' scoped>
 .info {
     font-size: 0.28rem;
-    background: #F5F5F5;
     color: #333;
     .list {
         background: #fff;
@@ -125,7 +129,7 @@ export default {
             }
         }
     }
-    button {
+    /* button {
         margin-top: 2.18rem;
         margin-bottom: 1.8rem;
         width: 6.5rem;
@@ -133,6 +137,6 @@ export default {
         background: #B68458;
         border-radius: 10px;
 
-    }
+    } */
 }
 </style>
