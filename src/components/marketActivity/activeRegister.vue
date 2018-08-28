@@ -1,9 +1,6 @@
 <template>
 <div class="register">
   <mt-header class='title' title="注册">
-    <!-- <router-link to="/" slot="left">
-      <mt-button icon="back"></mt-button>
-    </router-link> -->
     <mt-button icon="more" slot="right"></mt-button>
   </mt-header>
   <div class="box">
@@ -21,11 +18,10 @@
       <p>{{this.codeMsg}}</p>
     </div>
   </div>
-  <button class='btn' type="button" name="button" @click='checkRegister()'>确定</button>
+  <button class='btn' type="button" name="button" @click='userRegister()'>确定</button>
   <button type="button" name="button">取消</button>
 </div>
 </template>
-
 <script>
 import {
   MessageBox,
@@ -35,6 +31,9 @@ import Vue from 'vue'
 Vue.component(Header.name, Header);
 
 import user from '@/http/api'
+import {
+  set
+} from '../../help'
 
 export default {
   name: 'register',
@@ -53,7 +52,7 @@ export default {
     show(code) {
       switch (code) {
         case 1:
-          var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+          var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[0-9])[0-9]{8}$/;
           if (!phone_reg.test(this.phone)) {
             this.codeMsg = '您输入的手机号码不正确'
           } else {
@@ -64,13 +63,6 @@ export default {
           var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
           if (!pwd_reg.test(this.password)) {
             this.codeMsg = '密码必须由 6-16位字母、数字组成'
-          } else {
-            this.codeMsg = '';
-          }
-          break
-        case 3:
-          if (this.password != this.surePassword) {
-            this.codeMsg = '两次输入的密码不一致'
           } else {
             this.codeMsg = '';
           }
@@ -105,7 +97,6 @@ export default {
       }
       user.sendMsg(obj)
         .then((res) => {
-          console.log(res)
           if (res.data.code == 200) {
             this.countDown();
             MessageBox('提示', '验证码发送成功，请查收');
@@ -120,17 +111,24 @@ export default {
     userRegister() {
       let obj = {
         "mobile": this.phone,
-        "name": this.userName,
-        "passwd": this.password,
-        "verify_passwd": this.surePassword,
         "code": this.verifyCode,
-        "share_id": this.share_id
+        "share_type": 'activity',
+        "share_id": '111',
       }
       user.register(obj)
         .then((res) => {
-          console.log(res)
           if (res.data.code == 200) {
-            MessageBox('提示', '注册成功');
+            let token = res.data.token
+            set('token', token)
+            if (res.data.status == 0) {
+              this.$router.push({
+                name: 'uploadImg'
+              });
+            } else if (res.data.status == 1) {
+              this.$router.push({
+                name: 'pass'
+              });
+            }
           } else if (res.data.code == 103) {
             this.codeMsg = res.data.message
           }

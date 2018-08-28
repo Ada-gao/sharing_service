@@ -12,13 +12,13 @@
   <div class="img">
     <div class="box1">
       <label for="input"></label>
-      <input id='input' type='file' accept="image/*" @change="getImg()" multiple />
+      <input id='input' type='file' accept="image/*" @change="getImg(0)" multiple />
       <img :src="imgsrc" alt=" ">
     </div>
     <div class="box2 ">
-      <div class="pic " v-show='imgShow '>
+      <div class="pic " v-show='imgShow'>
         <label for="inputer"></label>
-        <input id='inputer' type="file" accept="image/*" @change="getImgs()" multiple/>
+        <input id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple/>
         <img :src="imgsrcs" alt=" ">
       </div>
     </div>
@@ -34,6 +34,10 @@ import {
 } from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
+import user from '@/http/api'
+import {
+  get
+} from '../../help'
 
 export default {
   name: 'uploadImg',
@@ -59,7 +63,8 @@ export default {
       imgShow: true,
       imgsrc: '',
       imgsrcs: '',
-      type: this.type
+      type: this.type,
+      imgFiles: [],
     }
   },
   methods: {
@@ -76,7 +81,7 @@ export default {
       this.imgsrc = ''
       this.imgsrcs = ''
     },
-    getImg() {
+    getImg(index) {
       var _this = this;
       var event = event || window.event;
       var file = event.target.files[0];
@@ -86,36 +91,60 @@ export default {
         return false;
       }
       reader.onload = function(e) {
-        _this.imgsrc = e.target.result;
+        let formData = new FormData()
+        formData.append('file', file)
+        let token = get('token');
+        let header = {
+          'Content-Type': 'multipart/form-data',
+          'X-Token': JSON.parse(token)
+        }
+        _this.uploadImg(header, formData, index)
       }
       reader.onerror = function() {
         MessageBox('上传失败，请稍后再试');
       }
       reader.readAsDataURL(file);
     },
-    getImgs() {
-      var _this = this;
-      var event = event || window.event;
-      var file = event.target.files[0];
-      var reader = new FileReader()
-      if (typeof FileReader === 'undefined') {
-        MessageBox('您的浏览器不支持图片上传，请升级您的浏览器');
-        return false;
-      }
-      reader.onload = function(e) {
-        _this.imgsrcs = e.target.result;
-      }
-      reader.onerror = function() {
-        MessageBox('上传失败，请稍后再试');
-      }
-      reader.readAsDataURL(file);
+    uploadImg(header, data, index) {
+      user.uploadImg(header, data)
+        .then((res) => {
+          if (res.status == 200) {
+            // this.imgFiles.push(res.data.file_url)
+            this.imgFiles[index] = res.data.file_url
+            this.imgsrc = this.imgFiles[0]
+            this.imgsrcs = this.imgFiles[1]
+            console.log(this.imgsrc)
+          } else {
+            MessageBox('上传失败，请稍后再试');
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
+    // 开始认证
     submit() {
-      if (!this.type) {
-        this.type = this.place
+      let token = get('token');
+      let header = {
+        'X-Token': JSON.parse(token)
       }
-      console.log(this.type)
-    }
+      user.certification(header)
+        .then((res) => {
+          console.log(res)
+          if (res.status == 200) {
+            this.$router.push({
+              name: 'userInfo',
+              query: {
+                client_certification_id: res.data.client_certification_id,
+                list: this.imgFiles
+              }
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
