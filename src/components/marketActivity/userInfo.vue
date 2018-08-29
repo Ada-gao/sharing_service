@@ -10,10 +10,11 @@
       <li class='one'>
         <p>客户信息</p>
       </li>
-      <li>客户名称：</i><input type="text" name="" value="" v-model='name'></li>
+      <li>客户名称：</i><input type="text" name="" value="" v-model='name' @keyup='show(1)'></li>
       <li class='special clearfix'>客户性别：
         <span>
           <my-select :options='option' @chooseOne='select' :place='place' v-model='sexVal'></my-select>
+          <i class="iconfont icon-xialajiantou"></i>
         </span>
       </li>
     </ul>
@@ -23,19 +24,21 @@
       <li class='special clearfix'>证件类型：
         <span class='most'>
           <my-select :options='options' @chooseTwo='selects' :place='places' v-model='typeVal'></my-select>
+          <i class="iconfont icon-xialajiantou"></i>
         </span>
       </li>
-      <li>证件号码：</i><input type="text" name="" value="" v-model='number' @keyup='test()'></li>
-      <li>证件有效期起始时间：</i><input type="date" name="" value="" v-model='start_time'></li>
-      <li>证件有效期结束时间：</i><input type="date" name="" value="" v-model='end_time' '></li>
-      <li>地址：</i><input type="text" name="" value="" v-model='adress ''></li>
-      <li>出生日期：</i><input type="date" name="" value="" v-model='birth'></li>
+      <li>证件号码：</i><input type="text" name="" value="" v-model='number' @keyup='show(2)'></li>
+      <li>证件有效期起始时间：</i><input type="date" name="" value="" v-model='start_time' @keyup='show(3)'></li>
+      <li>证件有效期结束时间：</i><input type="date" name="" value="" v-model='end_time' @keyup='show(3)'></li>
+      <li>地址：</i>
+        <input type="text" name="" value="" v-model='adress ' @keyup='show(4)'></li>
+      <li>出生日期：</i><input type="date" name="" value="" v-model='birth ' @keyup='show(3)'></li>
     </ul>
   </div>
   <div class="text">
     <p>{{this.codeMsg}}</p>
   </div>
-  <button class='sureButton' type="button" name="button" @click='submit()'>提交</button>
+  <button class='sureButton ' type="button" name="button" @click='submit() '>提交</button>
 </div>
 </template>
 <script type="text/javascript">
@@ -46,12 +49,14 @@ import {
 } from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
+
 import user from '@/http/api'
 
 import {
   fmtDate,
   get
 } from '../../help'
+
 export default {
   name: 'uploadImg',
   components: {
@@ -91,8 +96,8 @@ export default {
       end_time: this.end_time,
       adress: this.adress,
       birth: this.birth,
-      id_front_url: this.$route.query.list[0],
-      id_back_url: this.$route.query.list[1],
+      // id_front_url: this.$route.query.list[0],
+      // id_back_url: this.$route.query.list[1],
       id: this.$route.query.client_certification_id,
       codeMsg: '',
     }
@@ -104,12 +109,37 @@ export default {
     selects(options) {
       this.typeVal = options.value
     },
-    test() {
-      let rule = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|[xX])$/
-      if (!this.number || rule.test(this.numbe)) {
-        this.codeMsg = '请输入正确的证件号码'
-      } else {
-        this.codeMsg = ''
+    show(code) {
+      switch (code) {
+        case 1:
+          if (!this.name) {
+            this.codeMsg = '请输入您的名称'
+          } else {
+            this.codeMsg = ''
+          }
+          break
+        case 2:
+          const number_reg = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+          if (!number_reg.test(this.number)) {
+            this.codeMsg = '请输入正确的证件号码'
+          } else {
+            this.codeMsg = ''
+          }
+          break
+        case 3:
+          if (!this.start_time || !this.end_time || !birth) {
+            this.codeMsg = '请选择日期'
+          } else {
+            this.codeMsg = ''
+          }
+          break
+        case 4:
+          if (!this.adress) {
+            this.codeMsg = '请输入地址'
+          } else {
+            this.codeMsg = ''
+          }
+          break
       }
     },
     submit() {
@@ -124,12 +154,13 @@ export default {
         this.sexVal = this.placeVal
         this.typeVal = this.placesVal
       }
+      this.realName()
 
       if (!this.name) {
         this.codeMsg = '请输入您的名称'
       } else if (!this.number) {
-        this.codeMsg = '请输入正确的证件号码'
-      } else if (!this.start_time || !this.end_time || !birth) {
+        this.codeMsg = '请输入证件号码'
+      } else if (!this.start_time || !this.end_time || !this.birth) {
         this.codeMsg = '请选择日期'
       } else if (!adress) {
         this.codeMsg = '请输入地址'
@@ -143,22 +174,29 @@ export default {
         'X-Token': JSON.parse(token)
       }
       let data = {
+        "name": this.name,
+        "gender": this.sexVal,
         "id_type": this.typeVal,
         "id_no": this.number,
         "id_start_date": fmtDate(this.start_time),
         "id_expiration": fmtDate(this.end_time),
         "address": this.address,
         "birthday": fmtDate(this.birth),
-        "id_front_url": this.id_front_url,
-        "id_back_url": this.id_back_url
+        "id_front_url": get('id_front_url'),
+        "id_back_url": get('id_back_url')
       }
       user.realName(this.id, header, data)
         .then((res) => {
-          comsole.log(res)
+          console.log(res)
           if (res.data.code == 200) {
-            MessageBox(res.data.message)
+            this.$router.push({
+              name: 'pass'
+            })
           } else {
-            MessageBox(res.data.message)
+            this.$router.push({
+              name: 'pass'
+            })
+            // MessageBox(res.data.message)
           }
         })
         .catch((err) => {
@@ -168,7 +206,6 @@ export default {
   },
   mounted() {
     document.getElementsByTagName("body")[0].className = 'add_bg'
-
   },
   beforedestroy() {
     document.body.removeAttribute('class', 'add_bg')
@@ -220,6 +257,14 @@ export default {
                     float: right;
                     margin-right: 0.4rem;
                     position: relative;
+                    .iconfont {
+                        width: 0.25rem;
+                        height: 0.16rem;
+                        font-size: 0.25rem;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                    }
                 }
                 span.most {
                     position: relative;

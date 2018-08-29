@@ -14,11 +14,16 @@
       <span v-show='!msgShow' @click='checkMsgCode()'>发送验证码</span>
       <span v-show='msgShow'>{{this.msg}}</span>
     </div>
+    <div class="agrenment">
+      <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
+      <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
+      <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
+    </div>
     <div class="text">
       <p>{{this.codeMsg}}</p>
     </div>
   </div>
-  <button class='btn' type="button" name="button" @click='userRegister()'>确定</button>
+  <button class='btn' type="button" name="button" @click='submit()'>确定</button>
   <button type="button" name="button">取消</button>
 </div>
 </template>
@@ -46,6 +51,7 @@ export default {
       msgShow: false,
       msg: '',
       share_id: this.$route.query.share_id,
+      isIconShow: true,
     }
   },
   methods: {
@@ -69,6 +75,9 @@ export default {
           break
       }
     },
+    choose() {
+      this.isIconShow = !this.isIconShow
+    },
     checkMsgCode() {
       if (!this.phone) {
         this.codeMsg = '请输入您的手机号码'
@@ -90,13 +99,14 @@ export default {
     sendCode() {
       let obj = {
         "mobile": this.phone,
-        "code_flag": 1,
+        // "code_flag": 0,
         "platform": "iOS",
         "app_version": "v1.0",
         "registration_id": "0891683108200105F"
       }
       user.sendMsg(obj)
         .then((res) => {
+          console.log(res)
           if (res.data.code == 200) {
             this.countDown();
             MessageBox('提示', '验证码发送成功，请查收');
@@ -107,6 +117,13 @@ export default {
         .catch((err) => {
           console.log(err)
         })
+    },
+    submit() {
+      if (this.isIconShow == false) {
+        this.userRegister()
+      } else {
+        this.codeMsg = '请认真阅读并勾选协议'
+      }
     },
     userRegister() {
       let obj = {
@@ -126,7 +143,7 @@ export default {
               });
             } else if (res.data.status == 1) {
               this.$router.push({
-                name: 'pass'
+                name: 'success'
               });
             }
           } else if (res.data.code == 103) {
@@ -194,6 +211,27 @@ export default {
                 line-height: 0.5rem;
                 top: 0.8rem;
                 right: 0.1rem;
+            }
+        }
+        .agrenment {
+            color: #fff;
+            text-align: left;
+            width: 6.36rem;
+            margin: auto;
+            position: relative;
+            padding-top: 0.4rem;
+            padding-right: 0.4rem;
+            i {
+                width: 0.3rem;
+                height: 0.3rem;
+                font-size: 0.34rem;
+                position: absolute;
+                top: 0.38rem;
+                left: 0.4rem;
+            }
+            span {
+                margin-left: 0.9rem;
+                font-size: 0.24rem;
             }
         }
         .text {

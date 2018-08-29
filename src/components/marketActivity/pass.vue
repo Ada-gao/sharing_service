@@ -7,9 +7,10 @@
   </mt-header>
   <div class="main">
     <div class="pic">
+      <i class='iconfont icon-tongguo'></i>
     </div>
     <p>实名认证审核通过</p>
-    <button class='sureButton' type="button" name="button">提交报名</button>
+    <button class='sureButton' type="button" name="button" @click='go()'>提交报名</button>
   </div>
 </div>
 </template>
@@ -23,6 +24,14 @@ Vue.component(Header.name, Header);
 export default {
   data() {
     return {
+
+    }
+  },
+  methods: {
+    go() {
+      this.$router.push({
+        name: 'success'
+      })
 
     }
   },
@@ -40,8 +49,18 @@ export default {
         .pic {
             width: 1.05rem;
             height: 1.05rem;
-            background-color: #ccc;
             margin: auto auto 0.99rem;
+            border-radius: 50%;
+            line-height: 1.05rem;
+            i {
+                display: block;
+                border-radius: 50%;
+                width: 100%;
+                height: 100%;
+                color: #74BA3B;
+                margin: auto;
+                font-size: 1.05rem;
+            }
         }
         > p {
             font-size: 0.48rem;

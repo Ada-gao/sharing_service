@@ -2,7 +2,7 @@
 <div class="selectWrap">
   <div class="choose" :class="this.ulShow ?'remove':'add'">
     <input :class="this.ulShow ?'remove':'add'" type="text" name="" value="" readonly @click='select()' :placeholder='place' v-model='selected'>
-    <i class="iconfont icon-xialajiantou"></i>
+    <!-- <i class="iconfont icon-xialajiantou"></i> -->
     <ul v-show='ulShow'>
       <li v-for='(item,index) in options' @click='choose(item, index)'>{{item.text}}</li>
     </ul>
@@ -37,6 +37,7 @@ export default {
 .selectWrap {
     width: 100%;
     height: 0.6rem;
+
     .add {
         border-radius: 8px;
     }
@@ -47,6 +48,11 @@ export default {
     .choose {
         width: 100%;
         height: 100%;
+        > .iconfont {
+            width: 0.25rem;
+            height: 0.16rem;
+            font-size: 0.25rem;
+        }
         input {
             width: 100%;
             height: 100%;

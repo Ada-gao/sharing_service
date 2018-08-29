@@ -5,6 +5,8 @@ import activeRegister from '@/components/marketActivity/activeRegister'
 import uploadImg from '@/components/marketActivity/uploadImg'
 import userInfo from '@/components/marketActivity/userInfo'
 import pass from '@/components/marketActivity/pass'
+import success from '@/components/marketActivity/success'
+import agrement from '@/components/agrement/agrement'
 
 Vue.use(Router)
 export default new Router({
@@ -55,6 +57,22 @@ export default new Router({
    meta: {
     title: '实名认证'
   }
+},
+{
+  path: '/marketActivity/success',
+  name: 'success',
+  component: success,
+  meta: {
+   title: '报名成功'
+ }
+},
+{
+  path: '/agrement/agrement',
+  name: 'agrement',
+  component: agrement,
+  meta: {
+   title: '报名成功'
+ }
 },
   ]
 })

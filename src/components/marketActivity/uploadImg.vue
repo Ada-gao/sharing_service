@@ -8,6 +8,7 @@
   <p>证件信息 (请上传清晰的证件图片)</p>
   <div class="select">
     <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg' :place='place' v-model='type'></my-select>
+    <i class="iconfont icon-xialajiantou"></i>
   </div>
   <div class="img">
     <div class="box1">
@@ -36,7 +37,8 @@ import Vue from 'vue'
 Vue.component(Header.name, Header);
 import user from '@/http/api'
 import {
-  get
+  get,
+  set
 } from '../../help'
 
 export default {
@@ -109,11 +111,12 @@ export default {
       user.uploadImg(header, data)
         .then((res) => {
           if (res.status == 200) {
-            // this.imgFiles.push(res.data.file_url)
             this.imgFiles[index] = res.data.file_url
             this.imgsrc = this.imgFiles[0]
             this.imgsrcs = this.imgFiles[1]
-            console.log(this.imgsrc)
+            set('id_front_url', this.imgsrc)
+            set('id_back_url', this.imgsrcs)
+            console.log(this.imgFiles)
           } else {
             MessageBox('上传失败，请稍后再试');
           }
@@ -136,7 +139,6 @@ export default {
               name: 'userInfo',
               query: {
                 client_certification_id: res.data.client_certification_id,
-                list: this.imgFiles
               }
             })
           }
@@ -173,6 +175,14 @@ export default {
         height: 0.6rem;
         margin: 0.35rem auto;
         position: relative;
+        > .iconfont {
+            width: 0.25rem;
+            height: 0.16rem;
+            font-size: 0.25rem;
+            position: absolute;
+            top: 0.2rem;
+            right: 0;
+        }
     }
     .img {
         width: 5.09rem;
