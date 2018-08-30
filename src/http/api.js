@@ -42,7 +42,45 @@ const user = {
      method:'post',
      data:data
    })
- }
+ },
+ // 是否绑定理财师
+ isBind:function(header){
+   return fetch({
+     url:'/mine/planner/is_bind/',
+     headers:header,
+     method:'get'
+   })
+ },
+
+ // 查询理财师
+ search:function(header,data){
+   return fetch({
+     url:'/mine/planner/search/',
+     headers:header,
+     method:'post',
+     data:data
+   })
+ },
+
+ // 查询绑定理财师信息
+ detail:function(header){
+   return fetch({
+     url:'/mine/planner/detail/',
+     method:'get',
+     headers:header
+   })
+ },
+
+ // 绑定理财师
+ bind:function(header,data){
+   return fetch({
+     url:'/mine/planner/bind/',
+     method:'post',
+     headers:header,
+     data:data
+   })
+ },
+
 
 }
 

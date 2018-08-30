@@ -37,8 +37,8 @@ import Vue from 'vue'
 Vue.component(Header.name, Header);
 import user from '@/http/api'
 import {
-  get,
-  set
+  gett,
+  sett,
 } from '../../help'
 
 export default {
@@ -95,10 +95,9 @@ export default {
       reader.onload = function(e) {
         let formData = new FormData()
         formData.append('file', file)
-        let token = get('token');
+        let token = gett('token');
         let header = {
-          'Content-Type': 'multipart/form-data',
-          'X-Token': JSON.parse(token)
+          'X-Token': token
         }
         _this.uploadImg(header, formData, index)
       }
@@ -114,8 +113,8 @@ export default {
             this.imgFiles[index] = res.data.file_url
             this.imgsrc = this.imgFiles[0]
             this.imgsrcs = this.imgFiles[1]
-            set('id_front_url', this.imgsrc)
-            set('id_back_url', this.imgsrcs)
+            sett('id_front_url', this.imgsrc)
+            sett('id_back_url', this.imgsrcs)
             console.log(this.imgFiles)
           } else {
             MessageBox('上传失败，请稍后再试');
@@ -127,20 +126,22 @@ export default {
     },
     // 开始认证
     submit() {
-      let token = get('token');
+      let token = gett('token');
       let header = {
-        'X-Token': JSON.parse(token)
+        'X-Token': token
       }
       user.certification(header)
         .then((res) => {
           console.log(res)
-          if (res.status == 200) {
+          if (gett('id_front_url', 1000 * 60 * 60 * 24) && gett('id_back_url', 1000 * 60 * 60 * 24)) {
             this.$router.push({
               name: 'userInfo',
               query: {
                 client_certification_id: res.data.client_certification_id,
               }
             })
+          } else {
+            MessageBox('请先上传图片');
           }
         })
         .catch((err) => {

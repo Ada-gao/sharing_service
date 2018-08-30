@@ -54,7 +54,8 @@ import user from '@/http/api'
 
 import {
   fmtDate,
-  get
+  gett,
+  timetap
 } from '../../help'
 
 export default {
@@ -96,8 +97,6 @@ export default {
       end_time: this.end_time,
       adress: this.adress,
       birth: this.birth,
-      // id_front_url: this.$route.query.list[0],
-      // id_back_url: this.$route.query.list[1],
       id: this.$route.query.client_certification_id,
       codeMsg: '',
     }
@@ -154,7 +153,8 @@ export default {
         this.sexVal = this.placeVal
         this.typeVal = this.placesVal
       }
-      this.realName()
+      var start_time = timetap(this.start_time)
+      var end_time = timetap(this.end_time)
 
       if (!this.name) {
         this.codeMsg = '请输入您的名称'
@@ -162,16 +162,18 @@ export default {
         this.codeMsg = '请输入证件号码'
       } else if (!this.start_time || !this.end_time || !this.birth) {
         this.codeMsg = '请选择日期'
-      } else if (!adress) {
+      } else if (start_time > end_time) {
+        this.codeMsg = '请选择正确的证件有效期'
+      } else if (!this.adress) {
         this.codeMsg = '请输入地址'
       } else {
         this.realName()
       }
     },
     realName() {
-      let token = get('token');
+      let token = gett('token');
       let header = {
-        'X-Token': JSON.parse(token)
+        'X-Token': token
       }
       let data = {
         "name": this.name,
@@ -182,8 +184,8 @@ export default {
         "id_expiration": fmtDate(this.end_time),
         "address": this.address,
         "birthday": fmtDate(this.birth),
-        "id_front_url": get('id_front_url'),
-        "id_back_url": get('id_back_url')
+        "id_front_url": gett('id_front_url'),
+        "id_back_url": gett('id_back_url')
       }
       user.realName(this.id, header, data)
         .then((res) => {

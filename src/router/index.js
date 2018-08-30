@@ -71,7 +71,7 @@ export default new Router({
   name: 'agrement',
   component: agrement,
   meta: {
-   title: '报名成功'
+   title: '用户协议'
  }
 },
   ]

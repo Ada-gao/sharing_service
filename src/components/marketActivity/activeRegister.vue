@@ -37,7 +37,7 @@ Vue.component(Header.name, Header);
 
 import user from '@/http/api'
 import {
-  set
+  sett,
 } from '../../help'
 
 export default {
@@ -130,13 +130,16 @@ export default {
         "mobile": this.phone,
         "code": this.verifyCode,
         "share_type": 'activity',
-        "share_id": '111',
+        "share_id": '3',
       }
       user.register(obj)
         .then((res) => {
+          console.log(res)
           if (res.data.code == 200) {
             let token = res.data.token
-            set('token', token)
+            let user_id = res.data.user_id
+            sett('token', token)
+            sett('user_id', user_id)
             if (res.data.status == 0) {
               this.$router.push({
                 name: 'uploadImg'

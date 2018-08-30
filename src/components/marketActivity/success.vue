@@ -9,30 +9,35 @@
     <h2>恭喜你，报名成功</h2>
     <p>最近主办“新时代新趋势新机遇”,中国发展与投资论坛</p>
     <p class='time'><i class='iconfont icon-shijian'></i>参会时间:<span> 2018年4月24日 17:00</span></p>
-    <p><i class='iconfont icon-dizhi'></i>参会地址: 北京市朝阳区东直门国际酒店9F</p>
+    <p><i class='iconfont icon-dizhi'></i>参会地址: <span>北京市朝阳区东直门国际酒店9F</span></p>
   </div>
   <button class='sureButton' type="button" name="button">立即下载望财app</button>
-  <p class='bind' @click='bind()'>绑定理财师</p>
+  <p class='bind' @click='modalShow()' v-show='isbindShow'>绑定理财师</p>
   <div class="modal" v-show='isModalShow'>
     <div class="box clearfix">
       <i class='iconfont icon-chahao' @click='close()'></i>
       <div class="one">
         <input type="radio" id="first" name="radio" @change='change()' />
-        <label for="first">绑定推荐理财师</label>
+        <label for="first">绑定推荐理财师:<span>{{name}}</span></label>
       </div>
       <div class="two">
         <input ref='check' type="radio" id="second" name="radio" @change='change()' />
         <label for="second">输入理财师手机号绑定</label>
       </div>
       <div class="inputer">
-        <input type="text" name="" value="" placeholder='请输入理财师手机号' v-show='isInputShow'>
+        <input type="text" name="" value="" placeholder='请输入理财师手机号' v-model='phone' v-show='isInputShow'>
       </div>
-      <button type="button" name="button">绑定</button>
+      <button type="button" name="button" @click='submit()'>绑定</button>
     </div>
   </div>
 </div>
 </template>
 <script type="text/javascript">
+import user from '@/http/api'
+import {
+  gett,
+  sett,
+} from '../../help'
 import {
   MessageBox,
   Header,
@@ -45,13 +50,19 @@ export default {
     return {
       isModalShow: true,
       isInputShow: false,
+      isbindShow: true,
+      phone: this.phone,
+      name: '',
     }
+  },
+  created() {
+    this.isBind()
   },
   methods: {
     close() {
       this.isModalShow = false
     },
-    bind() {
+    modalShow() {
       this.isModalShow = true
     },
     change() {
@@ -60,6 +71,94 @@ export default {
       } else {
         this.isInputShow = false
       }
+    },
+    // 查询用户是否绑定理财师
+    isBind() {
+      let token = gett('token');
+      let header = {
+        'X-Token': token
+      }
+      user.isBind(header)
+        .then((res) => {
+          console.log(res)
+          if (res.data.code == 209) {
+            this.isbindShow = false
+            this.isModalShow = false
+          } else {
+            this.isbindShow = true
+            this.isModalShow = true
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            // console.log(err.response.data);
+            if (err.response.data.code == 222) {
+              this.isbindShow = true
+              this.isModalShow = true
+            } else {
+              this.isbindShow = false
+              this.isModalShow = false
+            }
+          } else {
+            console.log('Error', err.message);
+          }
+        })
+    },
+    // 查询理财师
+    // search() {
+    //   let token = gett('token');
+    //   let header = {
+    //     'X-Token': token
+    //   }
+    //   let data = {
+    //     'mobile': this.phone
+    //   }
+    //   user.search(header, data)
+    //     .then((res) => {
+    //       console.log(res)
+    //       MessageBox(res.data.message)
+    //     })
+    //     .catch((err) => {
+    //       if (err.response) {
+    //         MessageBox(err.response.data.message)
+    //       }
+    //     })
+    // },
+    submit() {
+      if (this.$refs.check.checked) {
+        // this.search()
+        let data = {
+          "mobile": this.phone
+        }
+        this.bind(data)
+      } else {
+        let data = {
+          "user_id": gett('user_id')
+        }
+        this.bind(data)
+      }
+    },
+
+    // 绑定理财师
+    bind(data) {
+      let token = gett('token');
+      let header = {
+        'X-Token': token
+      }
+      user.bind(header, data)
+        .then((res) => {
+          console.log(res)
+          if (res.data.code == 209) {
+            MessageBox(res.data.message)
+            this.isbindShow = false
+            this.isModalShow = false
+          } else {
+            MessageBox(res.data.message)
+          }
+        })
+        .catch((err) => {
+          MessageBox(err.response.data.message)
+        })
     },
   },
   mounted() {

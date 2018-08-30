@@ -32,6 +32,13 @@ module.exports = {
         '^/cert' : '/cert'
         }
       },
+      '/mine':{
+      target: baseUrl,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/mine' : '/mine'
+        }
+      },
     },
     // Various Dev Server settings
     host: '10.9.70.96', // can be overwritten by process.env.HOST
