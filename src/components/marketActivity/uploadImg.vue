@@ -148,7 +148,7 @@ export default {
             this.$router.push({
               name: 'userInfo',
               query: {
-                client_certification_id: res.data.client_certification_id,
+                id: res.data.client_certification_id,
               }
             })
           }

@@ -55,7 +55,7 @@ import user from '@/http/api'
 import {
   fmtDate,
   gett,
-  timetap
+  timetap,
 } from '../../help'
 
 export default {
@@ -97,7 +97,7 @@ export default {
       end_time: this.end_time,
       adress: this.adress,
       birth: this.birth,
-      id: this.$route.query.client_certification_id,
+      id: this.$route.query.id,
       codeMsg: '',
     }
   },

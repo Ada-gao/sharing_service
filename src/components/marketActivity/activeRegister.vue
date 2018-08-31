@@ -58,7 +58,7 @@ export default {
     show(code) {
       switch (code) {
         case 1:
-          var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[0-9])[0-9]{8}$/;
+          var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
           if (!phone_reg.test(this.phone)) {
             this.codeMsg = '您输入的手机号码不正确'
           } else {

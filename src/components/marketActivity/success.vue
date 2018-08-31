@@ -105,33 +105,18 @@ export default {
           }
         })
     },
-    // 查询理财师
-    // search() {
-    //   let token = gett('token');
-    //   let header = {
-    //     'X-Token': token
-    //   }
-    //   let data = {
-    //     'mobile': this.phone
-    //   }
-    //   user.search(header, data)
-    //     .then((res) => {
-    //       console.log(res)
-    //       MessageBox(res.data.message)
-    //     })
-    //     .catch((err) => {
-    //       if (err.response) {
-    //         MessageBox(err.response.data.message)
-    //       }
-    //     })
-    // },
     submit() {
       if (this.$refs.check.checked) {
-        // this.search()
-        let data = {
-          "mobile": this.phone
+        var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
+        if (!phone_reg.test(this.phone)) {
+          MessageBox('手机号码输入不正确')
+        } else {
+          let data = {
+            "mobile": this.phone
+          }
+          this.bind(data)
         }
-        this.bind(data)
+
       } else {
         let data = {
           "user_id": gett('user_id')
