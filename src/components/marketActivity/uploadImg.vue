@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     select(item) {
-      this.type = item.text
+      this.type = item.value
       if (item.value != 0) {
         this.imgShow = false
       } else {
@@ -126,28 +126,37 @@ export default {
     },
     // 开始认证
     submit() {
+      if (this.imgFiles.length == 0) {
+        MessageBox('请先上传图片');
+      } else {
+        this.upload()
+      }
+    },
+    upload() {
       let token = gett('token');
       let header = {
         'X-Token': token
       }
       user.certification(header)
         .then((res) => {
-          console.log(res)
-          if (gett('id_front_url', 1000 * 60 * 60 * 24) && gett('id_back_url', 1000 * 60 * 60 * 24)) {
+          if (!this.type) {
+            this.type = 0;
+          }
+          if (this.imgFiles.length != 2 && this.type == 0) {
+            MessageBox('请先上传完整的照片');
+          } else {
             this.$router.push({
               name: 'userInfo',
               query: {
                 client_certification_id: res.data.client_certification_id,
               }
             })
-          } else {
-            MessageBox('请先上传图片');
           }
         })
         .catch((err) => {
           console.log(err)
         })
-    },
+    }
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')

@@ -34,6 +34,7 @@
 </template>
 <script type="text/javascript">
 import user from '@/http/api'
+import _runApp from '@/http/platform'
 import {
   gett,
   sett,
@@ -160,6 +161,13 @@ export default {
           MessageBox(err.response.data.message)
         })
     },
+    // 下载app
+    download() {
+      _runApp({
+        ios: '',
+        android: ''
+      })
+    }
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')

@@ -1,7 +1,7 @@
 <template>
 <div class="register">
   <mt-header class='title' title="注册">
-    <mt-button icon="more" slot="right"></mt-button>
+    <!-- <mt-button icon="more" slot="right"></mt-button> -->
   </mt-header>
   <div class="box">
     <div class="two">

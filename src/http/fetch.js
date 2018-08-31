@@ -14,6 +14,7 @@ export function fetch(options){
       });
       instance(options)
         .then(response => { //then 请求成功之后进行什么操作
+          console.log(response)
           resolve(response);//把请求到的数据发到引用请求的地方
         })
         .catch(error => {
