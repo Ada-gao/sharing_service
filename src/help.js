@@ -17,7 +17,7 @@ export function gett(key,exp){
         var data = window.localStorage.getItem(key);
         var dataObj = JSON.parse(data);
         // exp默认一周
-        var exp = exp || 1000 * 60 * 60 * 24 * 7;
+        var exp = exp || 1000 * 60 * 60 * 24;
         if(!dataObj){
             console.log('错误')
         }else if(key == 'token'){
@@ -57,7 +57,7 @@ export function fmtDate(obj){
 }
 // xxxx年xx月xx日 xx:xx
 export function timestampToTime(timestamp) {
-        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
         var Y = date.getFullYear() + '年';
         var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
         var D = date.getDate() + '日' + ' ';

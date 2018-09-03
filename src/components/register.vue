@@ -7,7 +7,7 @@
     </div>
     <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
-      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone' @keyup='show(1)'>
+      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
     </div>
     <div class="two">
       <i class='iconfont icon-duanxinyanzhengma'></i>
@@ -17,11 +17,11 @@
     </div>
     <div class="two">
       <i class='iconfont icon-mima'></i>
-      <input type="password" name="" value="" placeholder="请您输入密码" v-model='password' @keyup='show(2)'>
+      <input type="password" name="" value="" placeholder="请您输入密码" v-model='password'>
     </div>
     <div class="two">
       <i class='iconfont icon-mima'></i>
-      <input type="password" name="" value="" placeholder="请您再一次输入密码" v-model='surePassword' @keyup='show(3)'>
+      <input type="password" name="" value="" placeholder="请您再一次输入密码" v-model='surePassword'>
     </div>
     <div class="text">
       <p>{{this.codeMsg}}</p>
@@ -82,10 +82,11 @@ export default {
       }
     },
     checkMsgCode() {
+      var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
       if (!this.userName) {
-        this.codeMsg = '请输入您的用户名'
-      } else if (!this.phone) {
-        this.codeMsg = '请输入您的手机号码'
+        this.codeMsg = '请输入用户名'
+      } else if (!phone_reg.test(this.phone)) {
+        this.codeMsg = '您输入的手机号码不正确'
       } else {
         this.sendCode();
       }
@@ -137,7 +138,7 @@ export default {
           console.log(res)
           if (res.data.code == 200) {
             MessageBox('提示', '注册成功');
-          } else if (res.data.code == 103) {
+          } else {
             this.codeMsg = res.data.message
           }
         })
@@ -147,9 +148,19 @@ export default {
     },
     checkRegister() {
       console.log(this.share_id)
-      var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-      if (!this.password) {
-        this.codeMsg = '请您输入密码'
+      // var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+      var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
+      var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+      if (!this.userName) {
+        this.codeMsg = '请输入用户名'
+      } else if (!phone_reg.test(this.phone)) {
+        this.codeMsg = '您输入的手机号码不正确'
+      } else if (!this.verifyCode) {
+        this.codeMsg = '请输入验证码'
+      } else if (!pwd_reg.test(this.password)) {
+        this.codeMsg = '密码必须由 6-16位字母、数字组成'
+      } else if (this.surePassword != this.password) {
+        this.codeMsg = '两次输入的密码不一致'
       } else {
         this.userRegister();
       }

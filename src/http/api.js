@@ -81,7 +81,27 @@ const user = {
    })
  },
 
+ // 活动报名
+ activityClient:function(id,token){
+   return fetch({
+     url:'/activity/m/activityClient/'+ id,
+     method:'post',
+     headers:{
+       'X-token':token
+     },
+   })
+ },
 
+ // 活动详情
+ activityDetail:function(id,token){
+   return fetch ({
+     url:'/activity/m/activity/'+ id,
+     method:'get',
+     headers:{
+       'X-token':token
+     },
+   })
+ },
 }
 
 export default user

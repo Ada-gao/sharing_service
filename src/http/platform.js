@@ -2,8 +2,7 @@ import {
   MessageBox,
 } from 'mint-ui';
 // 启用app
-
-  export function _runApp (schemaUrl) {
+export default function runApp(schemaUrl) {
     let t0 = (new Date()).getTime(),
         href = ''
     // 判断是微信
@@ -17,13 +16,13 @@ import {
       href = schemaUrl.android;
     }
     window.location.href = href
-    var delay = setInterval(function () {
-      var t1 = (new Date()).getTime();
-      if (t1 - t0 < 4000 && t1 - t0 > 3000) {
-        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.tanbei.biqiu";
-      }
-      if (t1 - t0 >= 4000) {
-        clearInterval(delay);
-      }
-    }, 1000);
-  }
+    // var delay = setInterval(function () {
+    //   var t1 = (new Date()).getTime();
+    //   if (t1 - t0 < 4000 && t1 - t0 > 3000) {
+    //     window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.tanbei.biqiu";
+    //   }
+    //   if (t1 - t0 >= 4000) {
+    //     clearInterval(delay);
+    //   }
+    // }, 1000);
+}

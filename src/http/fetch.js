@@ -1,4 +1,6 @@
 import axios from 'axios';//引入axios
+import {gett} from '../help'
+import {MessageBox} from 'mint-ui';
 
 export function fetch(options){
     return new Promise((resolve, reject) => {
@@ -10,15 +12,14 @@ export function fetch(options){
           'AppID':'9d2c1e18b0bc408da8624cce97bb74a2',
           'AppSecret':'14dbefefb0004eb890fc7d1b1a467290'
         },
-        // timeout:5000,// 30秒超时
+        // timeout:5000,// 超时
       });
       instance(options)
         .then(response => { //then 请求成功之后进行什么操作
-          console.log(response)
           resolve(response);//把请求到的数据发到引用请求的地方
         })
         .catch(error => {
-          // console.log(error);
+          console.log(error)
           reject(error);
         });
     });

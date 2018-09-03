@@ -10,11 +10,15 @@
       <i class='iconfont icon-tongguo'></i>
     </div>
     <p>实名认证审核通过</p>
-    <button class='sureButton' type="button" name="button" @click='go()'>提交报名</button>
+    <button class='sureButton' type="button" name="button" @click='submit()'>提交报名</button>
   </div>
 </div>
 </template>
 <script type="text/javascript">
+import user from '@/http/api'
+import {
+  gett,
+} from '../../help'
 import {
   MessageBox,
   Header
@@ -24,15 +28,29 @@ Vue.component(Header.name, Header);
 export default {
   data() {
     return {
-
+      activityId: '3'
     }
   },
   methods: {
-    go() {
-      this.$router.push({
-        name: 'success'
-      })
-
+    submit() {
+      let id = this.activityId
+      let token = gett('token')
+      user.activityClient(id, token)
+        .then((res) => {
+          console.log(res)
+          if (res.data.code == 0) {
+            this.$router.push({
+              name: 'success'
+            })
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            MessageBox(err.response.data.msg)
+          } else {
+            console.log(err)
+          }
+        })
     }
   },
   mounted() {

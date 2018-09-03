@@ -93,13 +93,21 @@ export default {
         return false;
       }
       reader.onload = function(e) {
-        let formData = new FormData()
-        formData.append('file', file)
-        let token = gett('token');
-        let header = {
-          'X-Token': token
-        }
-        _this.uploadImg(header, formData, index)
+        // 压缩
+        lrz(file, {
+            quality: 0.5
+          })
+          .then(function(rst) {
+            let formData = new FormData()
+            formData.append('file', rst.file)
+            let token = gett('token');
+            let header = {
+              'X-Token': token
+            }
+            _this.uploadImg(header, formData, index)
+          }).catch(function(error) {
+            console.log(error)
+          })
       }
       reader.onerror = function() {
         MessageBox('上传失败，请稍后再试');

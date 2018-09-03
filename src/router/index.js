@@ -6,18 +6,18 @@ import uploadImg from '@/components/marketActivity/uploadImg'
 import userInfo from '@/components/marketActivity/userInfo'
 import pass from '@/components/marketActivity/pass'
 import success from '@/components/marketActivity/success'
-import agrement from '@/components/agrement/agrement'
+import agrement from '@/components/marketActivity/agrement'
 
 Vue.use(Router)
 export default new Router({
   routes: [
-    {
-      path: '/',
-      redirect:'/register',
-      meta: {
-       title: '注册'
-     }
-    },
+    // {
+    //   path: '/',
+    //   redirect:'/register',
+    //   meta: {
+    //    title: '注册'
+    //  }
+    // },
     {
       path: '/register',
       name: 'register',
@@ -67,7 +67,7 @@ export default new Router({
  }
 },
 {
-  path: '/agrement/agrement',
+  path: '/marketActivity/agrement',
   name: 'agrement',
   component: agrement,
   meta: {

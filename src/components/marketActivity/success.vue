@@ -1,23 +1,23 @@
 <template >
 <div class="success">
   <mt-header class='title' title="报名成功">
-    <router-link :to="{path:'userInfo'}" slot="left">
+    <!-- <router-link :to="{path:'userInfo'}" slot="left">
       <mt-button icon="back"></mt-button>
-    </router-link>
+    </router-link> -->
   </mt-header>
   <div class="main">
     <h2>恭喜你，报名成功</h2>
-    <p>最近主办“新时代新趋势新机遇”,中国发展与投资论坛</p>
-    <p class='time'><i class='iconfont icon-shijian'></i>参会时间:<span> 2018年4月24日 17:00</span></p>
-    <p><i class='iconfont icon-dizhi'></i>参会地址: <span>北京市朝阳区东直门国际酒店9F</span></p>
+    <p>最近主办<span>{{activitySite}}</span></p>
+    <p class='time'><i class='iconfont icon-shijian'></i>参会时间:<span>{{activityStart}}</span></p>
+    <p class='site'><i class='iconfont icon-dizhi'></i>参会地址: <span>{{activitySite}}</span></p>
   </div>
-  <button class='sureButton' type="button" name="button">立即下载望财app</button>
+  <button class='sureButton' type="button" name="button" @click='download()'>立即下载望财app</button>
   <p class='bind' @click='modalShow()' v-show='isbindShow'>绑定理财师</p>
   <div class="modal" v-show='isModalShow'>
     <div class="box clearfix">
       <i class='iconfont icon-chahao' @click='close()'></i>
       <div class="one">
-        <input type="radio" id="first" name="radio" @change='change()' />
+        <input ref='default' type="radio" id="first" name="radio" @change='change()' />
         <label for="first">绑定推荐理财师:<span>{{name}}</span></label>
       </div>
       <div class="two">
@@ -34,10 +34,11 @@
 </template>
 <script type="text/javascript">
 import user from '@/http/api'
-import _runApp from '@/http/platform'
+import runApp from '@/http/platform'
 import {
   gett,
   sett,
+  timestampToTime
 } from '../../help'
 import {
   MessageBox,
@@ -54,10 +55,15 @@ export default {
       isbindShow: true,
       phone: this.phone,
       name: '',
+      activity_id: '3',
+      activityStart: '',
+      activityName: '',
+      activitySite: '',
     }
   },
   created() {
     this.isBind()
+    this.activityDetail()
   },
   methods: {
     close() {
@@ -81,7 +87,6 @@ export default {
       }
       user.isBind(header)
         .then((res) => {
-          console.log(res)
           if (res.data.code == 209) {
             this.isbindShow = false
             this.isModalShow = false
@@ -92,7 +97,6 @@ export default {
         })
         .catch((err) => {
           if (err.response) {
-            // console.log(err.response.data);
             if (err.response.data.code == 222) {
               this.isbindShow = true
               this.isModalShow = true
@@ -116,15 +120,15 @@ export default {
           }
           this.bind(data)
         }
-
-      } else {
+      } else if (this.$refs.default.checked) {
         let data = {
           "user_id": gett('user_id')
         }
         this.bind(data)
+      } else {
+        MessageBox('请选择绑定理财师')
       }
     },
-
     // 绑定理财师
     bind(data) {
       let token = gett('token');
@@ -148,11 +152,26 @@ export default {
     },
     // 下载app
     download() {
-      _runApp({
-        ios: '',
-        android: ''
+      runApp({
+        ios: 'https://itunes.apple.com/cn/app/wang-cai/id1105720274?mt=8',
+        android: 'http://sj.qq.com/myapp/detail.htm?apkName=com.wangcai.android'
       })
-    }
+    },
+    // 活动详情
+    activityDetail() {
+      let id = this.activity_id
+      let token = gett('token')
+      user.activityDetail(id, token)
+        .then((res) => {
+          this.activityStart = timestampToTime(res.data.activityStart)
+          this.activityName = res.data.activityName
+          this.activitySite = res.data.activitySite
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+    },
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
@@ -183,12 +202,17 @@ export default {
                 left: 1.28rem;
             }
             .icon-dizhi {
-                left: 0.66rem;
+                left: -0.5rem;
             }
         }
         > p.time {
             margin-top: 1.68rem;
             margin-bottom: 0.88rem;
+        }
+        > .site {
+            text-align: left;
+            /* margin-left: 1.8rem; */
+            margin-left: 1.5rem;
         }
     }
     .sureButton {

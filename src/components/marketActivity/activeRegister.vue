@@ -1,12 +1,12 @@
 <template>
 <div class="register">
-  <mt-header class='title' title="注册">
+  <mt-header class='title' title="注册   登录">
     <!-- <mt-button icon="more" slot="right"></mt-button> -->
   </mt-header>
   <div class="box">
     <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
-      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone' @keyup='show(1)'>
+      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
     </div>
     <div class="two">
       <i class='iconfont icon-duanxinyanzhengma'></i>
@@ -14,11 +14,11 @@
       <span v-show='!msgShow' @click='checkMsgCode()'>发送验证码</span>
       <span v-show='msgShow'>{{this.msg}}</span>
     </div>
-    <div class="agrenment">
+    <!-- <div class="agrenment">
       <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
       <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
       <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
-    </div>
+    </div> -->
     <div class="text">
       <p>{{this.codeMsg}}</p>
     </div>
@@ -51,6 +51,7 @@ export default {
       msgShow: false,
       msg: '',
       share_id: this.$route.query.share_id,
+      dept_id: 11,
       isIconShow: true,
     }
   },
@@ -79,9 +80,11 @@ export default {
       this.isIconShow = !this.isIconShow
     },
     checkMsgCode() {
-      if (!this.phone) {
-        this.codeMsg = '请输入您的手机号码'
+      var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
+      if (!phone_reg.test(this.phone)) {
+        this.codeMsg = '您输入的手机号码不正确'
       } else {
+        this.codeMsg = ''
         this.sendCode();
       }
     },
@@ -119,17 +122,26 @@ export default {
         })
     },
     submit() {
-      if (this.isIconShow == false) {
-        this.userRegister()
+      var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
+      if (!phone_reg.test(this.phone)) {
+        this.codeMsg = '您输入的手机号码不正确'
+      } else if (!this.verifyCode) {
+        this.codeMsg = '请输入验证码'
       } else {
-        this.codeMsg = '请认真阅读并勾选协议'
+        this.userRegister()
       }
+
+      // if (this.isIconShow == false) {
+      //   this.userRegister()
+      // } else {
+      //   this.codeMsg = '请认真阅读并勾选协议'
+      // }
     },
     userRegister() {
       let obj = {
         "mobile": this.phone,
         "code": this.verifyCode,
-        "share_type": 'activity',
+        "dept_id": this.dept_id,
         "share_id": '3',
       }
       user.register(obj)
@@ -149,7 +161,7 @@ export default {
                 name: 'success'
               });
             }
-          } else if (res.data.code == 103) {
+          } else if (res.data.code == 103 || res.data.code == 104) {
             this.codeMsg = res.data.message
           }
         })

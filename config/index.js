@@ -39,6 +39,13 @@ module.exports = {
         '^/mine' : '/mine'
         }
       },
+      '/activity':{
+      target: 'http://10.9.70.232:9999',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/activity' : '/activity'
+        }
+      },
     },
     // Various Dev Server settings
     host: '10.9.70.96', // can be overwritten by process.env.HOST
