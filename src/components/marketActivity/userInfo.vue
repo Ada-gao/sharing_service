@@ -202,7 +202,9 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err)
+          if (err.response.status == 401) {
+            MessageBox('请先登录');
+          }
         })
     },
   },

@@ -197,22 +197,23 @@ export default {
                 font-size: 0.4rem;
                 color: #333;
                 position: absolute;
+                left: -0.5rem;
             }
-            .icon-shijian {
-                left: 1.28rem;
+            /* .icon-shijian {
+                left: -1.28rem;
             }
             .icon-dizhi {
                 left: -0.5rem;
-            }
+            } */
         }
-        > p.time {
+        .site,
+        .time {
+            text-align: left;
+            margin-left: 1.5rem;
+        }
+        > .time {
             margin-top: 1.68rem;
             margin-bottom: 0.88rem;
-        }
-        > .site {
-            text-align: left;
-            /* margin-left: 1.8rem; */
-            margin-left: 1.5rem;
         }
     }
     .sureButton {

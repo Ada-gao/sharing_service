@@ -12,7 +12,7 @@ export function fetch(options){
           'AppID':'9d2c1e18b0bc408da8624cce97bb74a2',
           'AppSecret':'14dbefefb0004eb890fc7d1b1a467290'
         },
-        // timeout:5000,// 超时
+        timeout:5000,// 超时
       });
       instance(options)
         .then(response => { //then 请求成功之后进行什么操作

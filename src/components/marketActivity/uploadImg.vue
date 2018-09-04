@@ -104,6 +104,9 @@ export default {
             let header = {
               'X-Token': token
             }
+            // if (!token) {
+            //   MessageBox('请先登录');
+            // }
             _this.uploadImg(header, formData, index)
           }).catch(function(error) {
             console.log(error)
@@ -129,7 +132,9 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err)
+          if (err.response.status == 504) {
+            MessageBox('请先登录');
+          }
         })
     },
     // 开始认证
