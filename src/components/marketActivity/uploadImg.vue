@@ -1,45 +1,63 @@
 <template>
 <div class="uploadImg">
-  <mt-header class='title' title="实名认证">
+  <!-- <mt-header class='title' title="实名认证">
     <router-link :to="{path:'activeRegister'}" slot="left">
       <mt-button icon="back"></mt-button>
     </router-link>
-  </mt-header>
-  <p>证件信息 (请上传清晰的证件图片)</p>
-  <div class="select">
+  </mt-header> -->
+  <p class='txt'>证件信息</p>
+  <div class="card">
+    <span>证件类型：</span>
+    <span class='select'>
+      <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg()' :place='place' v-model='type'></my-select>
+    </span>
+    
+    <!-- <mt-popup v-model="popupVisible" position="bottom" v-modal='false'>
+      <div class='list' v-for="it in options">
+            <span v-text="it.text"></span>
+        </div>
+    </mt-popup> -->
+  </div>
+  <div class="card photo">
+    <span>上传照片：</span>
+    <span class='select'>（请上传清晰的原件或复印件）</span>
+  </div>
+  
+  <!-- <div class="select">
     <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg' :place='place' v-model='type'></my-select>
     <i class="iconfont icon-xialajiantou"></i>
-  </div>
+  </div> -->
   <div class="img">
     <div class="box1">
       <label for="input"></label>
       <input id='input' type='file' accept="image/*" @change="getImg(0)" multiple />
       <img :src="imgsrc" alt=" ">
     </div>
+    <p class='front'>正面</p>
     <div class="box2 ">
       <div class="pic " v-show='imgShow'>
         <label for="inputer"></label>
         <input id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple/>
         <img :src="imgsrcs" alt=" ">
+        <p class='back'>背面</p>
       </div>
     </div>
+    
   </div>
   <button class='sureButton ' type="button " name="button" @click='submit()'>提交</button>
 </div>
 </template>
 <script type="text/javascript">
 import mySelect from '@/components/common/select'
-import {
-  MessageBox,
-  Header
-} from 'mint-ui';
+import {MessageBox,Header,Popup } from 'mint-ui';
+Vue.component(Popup.name, Popup);
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 import user from '@/http/api'
-import {
-  gett,
-  sett,
-} from '../../help'
+import {gett,sett,} from '../../help'
+
+import front from '../../assets/images/front.png'
+import back from '../../assets/images/back.png'
 
 export default {
   name: 'uploadImg',
@@ -61,12 +79,14 @@ export default {
         text: '其他',
         value: 3
       }],
-      place: '身份证',
+      place: '请选择证件类型',
       imgShow: true,
-      imgsrc: '',
-      imgsrcs: '',
+      imgsrc: front,
+      imgsrcs: back,
       type: this.type,
       imgFiles: [],
+      defaultImg:'this.src="' + front + '"',
+      defaultImgs:'this.src="' + back + '"',
     }
   },
   methods: {
@@ -78,10 +98,13 @@ export default {
         this.imgShow = true
       }
     },
+    choose(){
+      this.popupVisible = true
+    },
     // 切换select时清除图片路径
     deleteImg() {
-      this.imgsrc = ''
-      this.imgsrcs = ''
+      this.imgsrc = front
+      this.imgsrcs = back
     },
     getImg(index) {
       var _this = this;
@@ -104,9 +127,6 @@ export default {
             let header = {
               'X-Token': token
             }
-            // if (!token) {
-            //   MessageBox('请先登录');
-            // }
             _this.uploadImg(header, formData, index)
           }).catch(function(error) {
             console.log(error)
@@ -122,18 +142,28 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             this.imgFiles[index] = res.data.file_url
-            this.imgsrc = this.imgFiles[0]
-            this.imgsrcs = this.imgFiles[1]
+            console.log(this.imgFiles.length)
+            if(this.imgFiles.length == 1){
+              this.imgsrc = this.imgFiles[0]
+              this.imgsrcs = back
+            }else{
+              this.imgsrc = this.imgFiles[0]
+              this.imgsrcs = this.imgFiles[1]
+            }
+            // this.imgsrcs = this.imgFiles[1]
             sett('id_front_url', this.imgsrc)
             sett('id_back_url', this.imgsrcs)
-            console.log(this.imgFiles)
           } else {
             MessageBox('上传失败，请稍后再试');
           }
         })
         .catch((err) => {
           if (err.response.status == 504) {
-            MessageBox('请先登录');
+            MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+               this.$router.push({
+                 name:'activeRegister'
+               })
+             });
           }
         })
     },
@@ -173,6 +203,13 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
+    if(!gett('token')){
+      MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+        this.$router.push({
+          name: 'activeRegister'
+        })
+      });
+    }
   },
 }
 </script>
@@ -180,11 +217,21 @@ export default {
 .uploadImg {
     height: 100%;
     background-color: #fff;
-    > p {
-        padding-top: 0.35rem;
-        text-align: center;
-        font-size: 0.3rem;
-        color: #666;
+    .txt {
+        padding-top: 0.48rem;
+        padding-left:0.2rem;
+        text-align: left;
+        font-size: 0.32rem;
+        color: #4A4A4A;
+    }
+    .txt::before{
+      content:'';
+      display: inline-block;
+      width: 0.06rem;
+      height:0.3rem;
+      background: #C4902D;
+      margin-right: 0.1rem;
+      vertical-align: middle;
     }
     .add {
         border-radius: 8px;
@@ -193,8 +240,44 @@ export default {
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
     }
-    .select {
-        width: 6.25rem;
+    .card{
+      text-align: left;
+      width: 100%;
+      box-sizing: border-box;
+      padding-left:0.2rem;
+      margin-top: 0.5rem;
+      font-size: 0.3rem;
+      color: #4A4A4A;
+      border-bottom: 1px solid #E9E9E9;
+      padding-bottom:0.2rem;
+      .select{
+        color: #DCDCDC;
+        text-align: right;
+        float:right;
+        margin-right: 0.4rem;
+        margin-top: -0.3rem;
+      }
+      .list{
+        width: 100%;
+      }
+    }
+    .photo{
+      border:none;
+      .select{
+        float: none;
+      }
+    }
+    .card::before{
+      content:'*';
+      display: inline-block;
+      width: 0;
+      height:0;
+      color: #E73838;
+      margin-right: 0.2rem;
+      vertical-align: top;
+    }
+    /* .select {
+        width: 2.1rem;
         height: 0.6rem;
         margin: 0.35rem auto;
         position: relative;
@@ -206,13 +289,13 @@ export default {
             top: 0.2rem;
             right: 0;
         }
-    }
+    } */
     .img {
-        width: 5.09rem;
+        width:4.2rem;
         margin: 0.45rem auto auto;
         > div {
-            width: 100%;
-            height: 3.22rem;
+          width: 100%;
+          height:2.7rem;
             position: relative;
             input {
                 width: 100%;
@@ -241,10 +324,23 @@ export default {
             }
         }
         .box1 {
-            margin-bottom: 0.88rem;
             border: 1px solid #ccc;
+            /* background: url('../../assets/images/front.png') no-repeat center;
+            background-size: 100%; */
+        }
+        .front{
+          margin-bottom: 0.88rem;
+          font-size: 0.24rem;
+          color: #B0B0B0;
+        }
+        .back{
+          margin-bottom: 1rem;
+          font-size: 0.24rem;
+          color: #B0B0B0;
         }
         .box2 {
+          /* background: url('../../assets/images/back.png') no-repeat center;
+          background-size: 100%; */
             .pic {
                 width: 100%;
                 height: 100%;
@@ -252,8 +348,8 @@ export default {
             }
         }
     }
-    .sureButton {
-        margin-top: 1.4rem;
+    .sureButton{
+      margin-top: 1rem;
     }
 }
 </style>

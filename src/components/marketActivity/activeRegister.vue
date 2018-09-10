@@ -1,8 +1,8 @@
 <template>
 <div class="register">
-  <mt-header class='title' title="注册   登录">
-    <!-- <mt-button icon="more" slot="right"></mt-button> -->
-  </mt-header>
+  <!-- <mt-header class='title' title="注册   登录">
+    <mt-button icon="more" slot="right"></mt-button>
+  </mt-header> -->
   <div class="box">
     <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
@@ -14,17 +14,17 @@
       <span v-show='!msgShow' @click='checkMsgCode()'>发送验证码</span>
       <span v-show='msgShow'>{{this.msg}}</span>
     </div>
-    <!-- <div class="agrenment">
+    <div class="agrenment">
       <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
       <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
       <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
-    </div> -->
+    </div>
     <div class="text">
       <p>{{this.codeMsg}}</p>
     </div>
   </div>
-  <button class='btn' type="button" name="button" @click='submit()'>确定</button>
-  <button type="button" name="button">取消</button>
+  <button class='sureButton' type="button" name="button" @click='submit()'>确定</button>
+  <!-- <button type="button" name="button">取消</button> -->
 </div>
 </template>
 <script>
@@ -176,17 +176,18 @@ export default {
 <style lang='less' scoped>
 @bgColor: #B68458;
 .register {
-    background: url("../../assets/images/bg.png") bottom center no-repeat;
+    background: url("../../assets/images/background.png") bottom center no-repeat;
     height: 100%;
     background-size: cover;
+    font-size: 0.26rem;
     .box {
-        padding-top: 3rem;
+        padding-top: 3.9rem;
         input {
             width: 6.66rem;
             height: 1.8rem;
             border: 1px solid #979797;
-            padding-left: 0.6rem;
-            font-size: 0.28rem;
+            padding-left: 0.8rem;
+            font-size: 0.26rem;
             color: #B4B4B4;
             border: 0 none;
             background-color: rgba(255,255,255,0);
@@ -194,19 +195,19 @@ export default {
             box-sizing: border-box;
         }
         input::-webkit-input-placeholder {
-            color: #B4B4B4;
+            color: #7B7976;
         }
         i {
             display: inline-block;
-            width: 0.3rem;
-            height: 0.3rem;
+            width: 0.32rem;
+            height: 0.32rem;
             position: absolute;
             top: 0.9rem;
             left: 0.2rem;
             vertical-align: middle;
         }
         .iconfont {
-            color: #B1B1B1;
+            color: #8F7859;
         }
         .two {
             position: relative;
@@ -217,19 +218,20 @@ export default {
             span {
                 position: absolute;
                 display: inline-block;
-                background-color: @bgColor;
-                border-radius: 10px;
+                /* background-color: @bgColor; */
+                border: 1px solid #BD9D62;
+                border-radius: 4px;
+                /* border-radius: 10px; */
                 width: 1.56rem;
                 height: 0.5rem;
-                font-size: 0.2rem;
-                color: #F0F0F0;
+                font-size: 0.22rem;
+                color: #BD9D62;
                 line-height: 0.5rem;
                 top: 0.8rem;
                 right: 0.1rem;
             }
         }
         .agrenment {
-            color: #fff;
             text-align: left;
             width: 6.36rem;
             margin: auto;
@@ -245,8 +247,9 @@ export default {
                 left: 0.4rem;
             }
             span {
-                margin-left: 0.9rem;
-                font-size: 0.24rem;
+                margin-left: 0.99rem;
+                font-size: 0.26rem;
+                color: #B9B9B9;
             }
         }
         .text {
@@ -259,17 +262,8 @@ export default {
 
     }
     > button {
-        background: @bgColor;
-        border-radius: 10px;
-        width: 2.6rem;
-        height: 0.8rem;
         margin-top: 1.7rem;
-        margin-bottom: 3.27rem;
-        font-size: 0.28rem;
-        color: #F0F0F0;
-    }
-    .btn {
-        margin-right: 0.96rem;
+        margin-bottom: 2.09rem;
     }
 }
 </style>

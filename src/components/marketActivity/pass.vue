@@ -1,13 +1,13 @@
 <template >
 <div class="pass">
-  <mt-header class='title' title="实名认证">
+  <!-- <mt-header class='title' title="实名认证">
     <router-link :to="{path:'userInfo'}" slot="left">
       <mt-button icon="back"></mt-button>
     </router-link>
-  </mt-header>
+  </mt-header> -->
   <div class="main">
     <div class="pic">
-      <i class='iconfont icon-tongguo'></i>
+      <!-- <i class='iconfont icon-tongguo'></i> -->
     </div>
     <p>实名认证审核通过</p>
     <button class='sureButton' type="button" name="button" @click='submit()'>提交报名</button>
@@ -55,6 +55,13 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
+    if(!gett('token')){
+      MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+        this.$router.push({
+          name: 'activeRegister'
+        })
+      });
+    }
   },
 }
 </script>
@@ -65,11 +72,11 @@ export default {
         height: 1.2rem;
         margin: 2.67rem auto auto;
         .pic {
-            width: 1.05rem;
-            height: 1.05rem;
-            margin: auto auto 0.99rem;
-            border-radius: 50%;
-            line-height: 1.05rem;
+            width: 2.84rem;
+            height: 2.96rem;
+            margin: auto auto 0.5rem;
+            background: url('../../assets/images/pass.png') no-repeat center;
+            background-size: cover;
             i {
                 display: block;
                 border-radius: 50%;
@@ -81,11 +88,11 @@ export default {
             }
         }
         > p {
-            font-size: 0.48rem;
-            color: #333333;
+          font-size: 0.32rem;
+          color: #4A4A4A;
         }
         button {
-            margin-top: 4rem;
+            margin-top: 3rem;
         }
 
     }
