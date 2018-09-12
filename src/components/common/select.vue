@@ -2,7 +2,8 @@
 <div class="selectWrap">
   <div class="choose" :class="this.ulShow ?'remove':'add'">
     <input type="text" name="" value="" readonly @click='select()' :placeholder='place' v-model='selected'>
-    <!-- <i class="iconfont icon-xialajiantou"></i> -->
+    <!-- <i class='iconfont icon-gengduo'></i> -->
+    <!-- <i class="iconfont icon-gengduo"></i> -->
     <ul v-show='ulShow'>
       <li v-for='(item,index) in options' @click='choose(item, index)'>{{item.text}}</li>
     </ul>
@@ -49,10 +50,12 @@ export default {
         width: 100%;
         height: 100%;
         font-size:0.3rem;
+        position:relative;
         > .iconfont {
-            width: 0.25rem;
-            height: 0.16rem;
-            font-size: 0.25rem;
+            display:inline-block;
+            position:absolute;
+            top:0.15rem;
+            right:-0.3rem;
         }
         input {
             width: 100%;

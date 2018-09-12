@@ -1,32 +1,34 @@
 <template >
 <div class="success">
-  <mt-header class='title' title="报名成功">
-    <!-- <router-link :to="{path:'userInfo'}" slot="left">
+  <!-- <mt-header class='title' title="报名成功">
+    <router-link :to="{path:'userInfo'}" slot="left">
       <mt-button icon="back"></mt-button>
-    </router-link> -->
-  </mt-header>
+    </router-link>
+  </mt-header> -->
   <div class="main">
-    <h2>恭喜你，报名成功</h2>
-    <p>最近主办<span>{{activitySite}}</span></p>
-    <p class='time'><i class='iconfont icon-shijian'></i>参会时间:<span>{{activityStart}}</span></p>
-    <p class='site'><i class='iconfont icon-dizhi'></i>参会地址: <span>{{activitySite}}</span></p>
+    <i class='ok iconfont icon-iconfont-success'></i>
+    <h2>报名成功!</h2>
+    <p>你已成功报名<span>{{activitySite}}</span></p>
+    <p class='time'>活动时间:<span>{{activityStart}}</span></p>
+    <p class='site'>活动地址: <span>{{activitySite}}</span></p>
+    <button class='sureButton' type="button" name="button" @click='download()'>立即下载望财app</button>
+    <p class='bind' @click='modalShow()' v-show='isbindShow'>立即绑定理财师<i class='iconfont icon-gengduo'></i></p>
   </div>
-  <button class='sureButton' type="button" name="button" @click='download()'>立即下载望财app</button>
-  <p class='bind' @click='modalShow()' v-show='isbindShow'>绑定理财师</p>
   <div class="modal" v-show='isModalShow'>
     <div class="box clearfix">
       <i class='iconfont icon-chahao' @click='close()'></i>
       <div class="one">
-        <input ref='default' type="radio" id="first" name="radio" @change='change()' />
-        <label for="first">绑定推荐理财师:<span>{{name}}</span></label>
+        <input ref='default' type="radio" id="first" name="radio" @change='change()' checked />
+        <label :class='{"color":isInputShow === false}' for="first">绑定推荐理财师<span>({{name}})</span></label>
       </div>
       <div class="two">
         <input ref='check' type="radio" id="second" name="radio" @change='change()' />
-        <label for="second">输入理财师手机号绑定</label>
+        <label :class='{ "color":isInputShow === true}' for="second">输入理财师手机号绑定</label>
       </div>
       <div class="inputer">
         <input type="text" name="" value="" placeholder='请输入理财师手机号' v-model='phone' v-show='isInputShow'>
       </div>
+      <button type="button" name="button" @click='close()'>取消</button>
       <button type="button" name="button" @click='submit()'>绑定</button>
     </div>
   </div>
@@ -35,16 +37,8 @@
 <script type="text/javascript">
 import user from '@/http/api'
 import runApp from '@/http/platform'
-import {
-  gett,
-  sett,
-  timestampToTime
-} from '../../help'
-import {
-  MessageBox,
-  Header,
-  Toast
-} from 'mint-ui';
+import {gett,sett,timestampToTime} from '../../help'
+import {MessageBox,Header} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 export default {
@@ -55,7 +49,7 @@ export default {
       isbindShow: true,
       phone: this.phone,
       name: '',
-      activity_id: '3',
+      activity_id: '4',
       activityStart: '',
       activityName: '',
       activitySite: '',
@@ -75,6 +69,7 @@ export default {
     change() {
       if (this.$refs.check.checked) {
         this.isInputShow = true
+        document.getElementByClassName('introduce')[0].color='#BD9D62'
       } else {
         this.isInputShow = false
       }
@@ -186,52 +181,73 @@ export default {
 </script>
 <style lang='less' scoped>
 .success {
+  background: url('../../assets/images/background.png') no-repeat center;
+  background-size:cover;
+  /* height:14rem; */ 
+  height: 100vh;
+  width: 100vw;
     .main {
+      width: 6.7rem;
+      margin: auto;
+      background-color: #ffffff;
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      padding:0.4rem 0;
+      border-top-right-radius: 20px;
+      border-top-left-radius: 20px;
         h2 {
-            font-size: 0.36rem;
-            color: #B68458;
+            font-size: 0.4rem;
+            color: #413620;
             font-weight: 400;
-            margin-top: 1.16rem;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.46rem;
         }
         > p {
             font-size: 0.28rem;
-            color: #333333;
+            color: #4A4A4A;
             vertical-align: bottom;
             position: relative;
-            > i {
+            /* > i {
                 font-size: 0.4rem;
                 color: #333;
                 position: absolute;
-                left: -0.5rem;
-            }
-            /* .icon-shijian {
-                left: -1.28rem;
-            }
-            .icon-dizhi {
                 left: -0.5rem;
             } */
         }
         .site,
         .time {
             text-align: left;
-            margin-left: 1.5rem;
+            margin-left: 1.2rem;
+            color: #9B9B9B;
+            font-size:0.26rem;
         }
         > .time {
-            margin-top: 1.68rem;
-            margin-bottom: 0.88rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.1rem;
+        }
+        .ok{
+          margin: auto;
+          display:block;
         }
     }
     .sureButton {
-        margin-top: 3.94rem;
-        font-size: 0.28rem;
+        width: 5.9rem;
+        margin-top:0.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.36rem;
     }
     p.bind {
         font-size: 0.28rem;
         color: #9B9B9B;
-        text-align: right;
-        margin-right: 0.4rem;
-        margin-top: 0.3rem;
+        /* text-align: right; */
+        /* margin-right: 0.4rem; */
+        padding-bottom: 0.5rem;
+        position:relative;
+        i{
+          position:absolute;
+          top:-0.05rem;
+        }
     }
     .modal {
         width: 100%;
@@ -247,7 +263,7 @@ export default {
             height: 4.34rem;
             margin: auto;
             position: relative;
-            top: 45%;
+            top: 50%;
             margin-top: -2.17rem;
             background-color: #ffffff;
             > i {
@@ -288,6 +304,11 @@ export default {
                     color: #5B5B5B;
                     letter-spacing: 0;
                 }
+                .color{
+                  font-size: 0.28rem;
+                  letter-spacing: 0;
+                  color: #BD9D62;
+                }
             }
             .one {
                 padding-top: 0.63rem;
@@ -313,16 +334,20 @@ export default {
                 }
             }
             button {
-                width: 4.13rem;
-                height: 0.6rem;
-                background: #B68458;
-                border-radius: 4px;
+                width: 50%;
+                height: 1rem;
+                float: left;
+                background: #fff;
                 margin: auto;
-                color: #fff;
+                color: #9B9B9B;
                 margin-top: 0.73rem;
-                ont-size: 0.28rem;
-                color: #FFFFFF;
+                font-size: 0.36rem;
                 letter-spacing: 0;
+                border-top:1px solid #D2D3D5;
+            }
+            button:last-child{
+              border-left:1px solid #D2D3D5;
+              color: #BD9D62;
             }
 
         }

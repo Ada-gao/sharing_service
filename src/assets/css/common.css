@@ -10,13 +10,13 @@ body {
 }
 
 a {
-  color: #2d374b;
+  color: #4A4A4A;
   text-decoration: none
 }
 
 a:hover {
-  color: #cd0200;
-  text-decoration: underline
+  color: #4A4A4A;
+  text-decoration: none;
 }
 
 em {

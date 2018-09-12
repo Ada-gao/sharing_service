@@ -79,7 +79,7 @@ export default {
         text: '其他',
         value: 3
       }],
-      place: '请选择证件类型',
+      place: '请选择证件类型 〉',
       imgShow: true,
       imgsrc: front,
       imgsrcs: back,
@@ -251,10 +251,11 @@ export default {
       border-bottom: 1px solid #E9E9E9;
       padding-bottom:0.2rem;
       .select{
+        width: 2.3rem;
         color: #DCDCDC;
         text-align: right;
         float:right;
-        margin-right: 0.4rem;
+        margin-right: 1rem;
         margin-top: -0.3rem;
       }
       .list{

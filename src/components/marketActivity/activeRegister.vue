@@ -127,15 +127,11 @@ export default {
         this.codeMsg = '您输入的手机号码不正确'
       } else if (!this.verifyCode) {
         this.codeMsg = '请输入验证码'
+      }else if(this.isIconShow){
+        this.codeMsg = '请认真阅读并勾选协议'
       } else {
         this.userRegister()
       }
-
-      // if (this.isIconShow == false) {
-      //   this.userRegister()
-      // } else {
-      //   this.codeMsg = '请认真阅读并勾选协议'
-      // }
     },
     userRegister() {
       let obj = {
@@ -177,7 +173,8 @@ export default {
 @bgColor: #B68458;
 .register {
     background: url("../../assets/images/background.png") bottom center no-repeat;
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
     background-size: cover;
     font-size: 0.26rem;
     .box {

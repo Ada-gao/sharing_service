@@ -69,6 +69,18 @@ export function timestampToTime(timestamp) {
   return Y + M + D + h + m;
 }
 
+// xxxx年xx月xx日 xx:xx
+export function timetampToTime(timetamp) {
+  var date = new Date(timetamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  var Y = date.getFullYear() + '.';
+  var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.';
+  var D = (date.getDate() + 1 < 10 ? '0' + (date.getDate() + 1) : date.getDate() + 1) + ' ';
+  var h = date.getHours() + ':';
+  var m = date.getMinutes();
+  // var s = date.getSeconds();
+  return Y + M + D + h + m;
+}
+
 export function timetap(time) {
   return new Date(time).getTime()
 }

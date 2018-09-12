@@ -16,13 +16,8 @@
 </template>
 <script type="text/javascript">
 import user from '@/http/api'
-import {
-  gett,
-} from '../../help'
-import {
-  MessageBox,
-  Header
-} from 'mint-ui';
+import {gett,} from '../../help'
+import {MessageBox,Header} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 export default {

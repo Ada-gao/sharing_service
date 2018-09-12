@@ -93,7 +93,7 @@ export default {
         value: 3
       }],
       // place: '男',
-      place: '请选择证件类型',
+      place: '请选择证件类型 〉',
       placeVal: 0,
       // places: '身份证',
       placesVal: 0,
@@ -282,7 +282,7 @@ export default {
                     color: #333;
                 }
                 input{
-                  width:3.5rem;
+                  width:2.5rem;
                   height:0.88rem;
                   float: right;
                   font-size:0.3rem;
@@ -302,7 +302,7 @@ export default {
                     font-size: 0.28rem;;
                     color: #B7BABB;
                     line-height: 0.28rem;;
-                    margin-right: 1.5rem;
+                    margin-right: 0.4rem;
                   }
                   input[type="radio"]{
                     display: none;
@@ -345,26 +345,20 @@ export default {
                 box-sizing: border-box;
                 line-height: 0.6rem;
                 padding: 0.2rem 0 0.2rem 0.2rem;
+                position:relative;
                 span {
                     margin-top: -0.2rem;
-                    width:3.5rem;
-                    height: 0.88rem;
+                    width:2.5rem;
+                    height: 0.88rem; 
                     float: right;
-                    margin-right: 0.4rem;
-                    position: relative;
-                    .iconfont {
-                        width: 0.25rem;
-                        height: 0.16rem;
-                        font-size: 0.25rem;
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                    }
+                  margin-right: 0.2rem;
+                    /* position: absolute; */
                 }
                 span.most {
-                  width:3.5rem;
-                    position: relative;
+                  width:2.5rem;
+                    /* position: relative; */
                     z-index: 1;
+                    margin-right: 0.4rem;
                 }
             }
         }
@@ -382,14 +376,5 @@ export default {
     .sureButton {
         margin-top: 1rem;
     }
-    /* button {
-        margin-top: 2.18rem;
-        margin-bottom: 1.8rem;
-        width: 6.5rem;
-        height: 0.8rem;
-        background: #B68458;
-        border-radius: 10px;
-
-    } */
 }
 </style>

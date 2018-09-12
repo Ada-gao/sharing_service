@@ -12,38 +12,38 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/auth': {
-      target: baseUrl,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/auth' : '/auth'
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/auth': '/auth'
         }
       },
-      '/common':{
-      target: baseUrl,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/common' : '/common'
+      '/common': {
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/common': '/common'
         }
       },
-      '/cert':{
-      target: baseUrl,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/cert' : '/cert'
+      '/cert': {
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/cert': '/cert'
         }
       },
-      '/mine':{
-      target: baseUrl,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/mine' : '/mine'
+      '/mine': {
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mine': '/mine'
         }
       },
-      '/activity':{
-      target: 'http://10.9.70.232:9999',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/activity' : '/activity'
+      '/activity': {
+        target: 'http://10.9.70.232:9999',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/activity': '/activity'
         }
       },
     },

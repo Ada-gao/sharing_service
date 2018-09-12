@@ -173,7 +173,8 @@ export default {
 @bgColor: #B68458;
 .register {
     background: url("../assets/images/bg.png") bottom center no-repeat;
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
     background-size: cover;
     .box {
         padding-top: 2.52rem;
