@@ -44,7 +44,7 @@
       <p class='txt'>活动简介：</p>
       <p>{{list.introduction}}</p>
     </div>
-    <button class='sureButton' type="button" name="button" @click='go'>立即报名</button>
+    <router-link tag='button' class='sureButton' :to="{ path: 'activeRegister' }">立即报名</router-link>
   </div>
 </template>
 <script type="text/javascript">
@@ -55,14 +55,6 @@ import {timetampToTime} from '../../help'
     data(){
       return{
         id:'4',
-        lists:[],
-        activityCode:'',
-        activityTime:'',
-        registrationTime:'',
-        activityNumber:'',
-        man:'',
-        dept:'',
-        activitySite:'',
         list:{},
       }
     },
