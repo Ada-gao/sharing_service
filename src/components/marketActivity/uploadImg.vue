@@ -36,9 +36,11 @@
     <p class='front'>正面</p>
     <div class="box2 ">
       <div class="pic " v-show='imgShow'>
-        <label for="inputer"></label>
-        <input id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple/>
-        <img :src="imgsrcs" alt=" ">
+        <div class="">
+          <label for="inputer"></label>
+          <input id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple/>
+          <img :src="imgsrcs" alt=" ">
+        </div>
         <p class='back'>背面</p>
       </div>
     </div>
@@ -142,8 +144,14 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             this.imgFiles[index] = res.data.file_url
-            console.log(this.imgFiles.length)
-            if(this.imgFiles.length == 1){
+            console.log(this.imgFiles[0])
+            if(!this.imgFiles[0] && !this.imgFiles[1]){
+              this.imgsrc = front
+              this.imgsrcs = back
+            }else if(!this.imgFiles[0] && this.imgFiles[1]){
+              this.imgsrc = front
+              this.imgsrcs = this.imgFiles[1]
+            }else if (this.imgFiles[0] && !this.imgFiles[1]){
               this.imgsrc = this.imgFiles[0]
               this.imgsrcs = back
             }else{
@@ -346,6 +354,10 @@ export default {
                 width: 100%;
                 height: 100%;
                 border: 1px solid #ccc;
+                >div{
+                  width: 100%;
+                  height: 100%;
+                }
             }
         }
     }

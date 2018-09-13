@@ -19,7 +19,7 @@
       <i class='iconfont icon-chahao' @click='close()'></i>
       <div class="one">
         <input ref='default' type="radio" id="first" name="radio" @change='change()' checked />
-        <label :class='{"color":isInputShow === false}' for="first">绑定推荐理财师<span>({{name}})</span></label>
+        <label :class='{"color":isInputShow === false}' for="first">绑定推荐理财师<span>（{{name}}）</span></label>
       </div>
       <div class="two">
         <input ref='check' type="radio" id="second" name="radio" @change='change()' />
@@ -53,11 +53,13 @@ export default {
       activityStart: '',
       activityName: '',
       activitySite: '',
+      name:'',
     }
   },
   created() {
     this.isBind()
     this.activityDetail()
+    this.detail()
   },
   methods: {
     close() {
@@ -144,6 +146,21 @@ export default {
         .catch((err) => {
           MessageBox(err.response.data.message)
         })
+    },
+    // 查询绑定理财师信息
+    detail(){
+      let token = gett('token');
+      let header = {
+        'X-Token': token
+      }
+      user.detail(header)
+      .then((res)=>{
+        this.name = res.data.name
+        console.log(res.data.name)
+      })
+      .catch((err)=>{
+        console.log(err.response)
+      })
     },
     // 下载app
     download() {
@@ -273,7 +290,7 @@ export default {
             }
             .one,
             .two {
-                width: 3.36rem;
+                width: 4rem;
                 margin: auto;
                 text-align: left;
                 input[type="radio"] + label::before {

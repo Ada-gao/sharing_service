@@ -297,8 +297,8 @@ export default {
                 .sex{
                   
                   label{
-                    position: relative;
-                    top: 0.16rem;;
+                    /* position: relative; */
+                    /* top: 0.16rem;; */
                     font-size: 0.28rem;;
                     color: #B7BABB;
                     line-height: 0.28rem;;
@@ -343,13 +343,14 @@ export default {
             
             li.special {
                 box-sizing: border-box;
-                line-height: 0.6rem;
-                padding: 0.2rem 0 0.2rem 0.2rem;
+                line-height: 1rem;
+                /* padding: 0.2rem 0 0.2rem 0.2rem; */
                 position:relative;
                 span {
-                    margin-top: -0.2rem;
+                    /* margin-top: -0.1rem; */
                     width:2.5rem;
-                    height: 0.88rem; 
+                    height: 1rem; 
+                    line-height: 1rem;
                     float: right;
                   margin-right: 0.2rem;
                     /* position: absolute; */
