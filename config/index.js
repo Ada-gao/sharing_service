@@ -12,14 +12,41 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/auth': {
-      target: baseUrl,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/auth' : '/auth'
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/auth': '/auth'
+        }
+      },
+      '/common': {
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/common': '/common'
+        }
+      },
+      '/cert': {
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/cert': '/cert'
+        }
+      },
+      '/mine': {
+        target: baseUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mine': '/mine'
+        }
+      },
+      '/activity': {
+        target: 'http://10.9.70.232:9999',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/activity': '/activity'
         }
       },
     },
-
     // Various Dev Server settings
     host: '10.9.70.96', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined

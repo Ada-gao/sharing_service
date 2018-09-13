@@ -1,10 +1,9 @@
 <template>
 <div class="register">
+  <!-- <mt-header class='title' title="注册   登录">
+    <mt-button icon="more" slot="right"></mt-button>
+  </mt-header> -->
   <div class="box">
-    <div class="two">
-      <i class='iconfont icon-gerenxinxi'></i>
-      <input type="text" name="" value="" placeholder="请输入用户姓名" v-model='userName'>
-    </div>
     <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
       <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
@@ -15,42 +14,45 @@
       <span v-show='!msgShow' @click='checkMsgCode()'>发送验证码</span>
       <span v-show='msgShow'>{{this.msg}}</span>
     </div>
-    <div class="two">
-      <i class='iconfont icon-mima'></i>
-      <input type="password" name="" value="" placeholder="请您输入密码" v-model='password'>
-    </div>
-    <div class="two">
-      <i class='iconfont icon-mima'></i>
-      <input type="password" name="" value="" placeholder="请您再一次输入密码" v-model='surePassword'>
+    <div class="agrenment">
+      <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
+      <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
+      <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
     </div>
     <div class="text">
       <p>{{this.codeMsg}}</p>
     </div>
   </div>
-  <button type="button" name="button" @click='checkRegister()'>注册</button>
+  <button class='sureButton' type="button" name="button" @click='submit()'>确定</button>
+  <!-- <button type="button" name="button">取消</button> -->
 </div>
 </template>
-
 <script>
 import {
-  MessageBox
+  MessageBox,
+  Header
 } from 'mint-ui';
+import Vue from 'vue'
+Vue.component(Header.name, Header);
+
 import user from '@/http/api'
+import {
+  sett,
+} from '../../help'
 
 export default {
   name: 'register',
   data() {
     return {
-      userName: this.userName,
       phone: this.phone,
       verifyCode: this.verifyCode,
-      password: this.password,
-      surePassword: this.surePassword,
       codeMsg: '',
       count: 60,
       msgShow: false,
       msg: '',
-      share_id: this.$route.query.shareId,
+      share_id: this.$route.query.share_id,
+      dept_id: 11,
+      isIconShow: true,
     }
   },
   methods: {
@@ -72,22 +74,17 @@ export default {
     //         this.codeMsg = '';
     //       }
     //       break
-    //     case 3:
-    //       if (this.password != this.surePassword) {
-    //         this.codeMsg = '两次输入的密码不一致'
-    //       } else {
-    //         this.codeMsg = '';
-    //       }
-    //       break
     //   }
     // },
+    choose() {
+      this.isIconShow = !this.isIconShow
+    },
     checkMsgCode() {
       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
-      if (!this.userName) {
-        this.codeMsg = '请输入用户名'
-      } else if (!phone_reg.test(this.phone)) {
+      if (!phone_reg.test(this.phone)) {
         this.codeMsg = '您输入的手机号码不正确'
       } else {
+        this.codeMsg = ''
         this.sendCode();
       }
     },
@@ -105,7 +102,7 @@ export default {
     sendCode() {
       let obj = {
         "mobile": this.phone,
-        "code_flag": 1,
+        // "code_flag": 0,
         "platform": "iOS",
         "app_version": "v1.0",
         "registration_id": "0891683108200105F"
@@ -124,21 +121,43 @@ export default {
           console.log(err)
         })
     },
+    submit() {
+      var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
+      if (!phone_reg.test(this.phone)) {
+        this.codeMsg = '您输入的手机号码不正确'
+      } else if (!this.verifyCode) {
+        this.codeMsg = '请输入验证码'
+      }else if(this.isIconShow){
+        this.codeMsg = '请认真阅读并勾选协议'
+      } else {
+        this.userRegister()
+      }
+    },
     userRegister() {
       let obj = {
         "mobile": this.phone,
-        "name": this.userName,
-        "passwd": this.password,
-        "verify_passwd": this.surePassword,
         "code": this.verifyCode,
-        "share_id": this.share_id
+        "dept_id": this.dept_id,
+        "share_id": '3',
       }
       user.register(obj)
         .then((res) => {
           console.log(res)
           if (res.data.code == 200) {
-            MessageBox('提示', '注册成功');
-          } else {
+            let token = res.data.token
+            let user_id = res.data.user_id
+            sett('token', token)
+            sett('user_id', user_id)
+            if (res.data.status == 0) {
+              this.$router.push({
+                name: 'uploadImg'
+              });
+            } else if (res.data.status == 1) {
+              this.$router.push({
+                name: 'success'
+              });
+            }
+          } else if (res.data.code == 103 || res.data.code == 104) {
             this.codeMsg = res.data.message
           }
         })
@@ -146,44 +165,26 @@ export default {
           console.log(err)
         })
     },
-    checkRegister() {
-      console.log(this.share_id)
-      // var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-      var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
-      var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-      if (!this.userName) {
-        this.codeMsg = '请输入用户名'
-      } else if (!phone_reg.test(this.phone)) {
-        this.codeMsg = '您输入的手机号码不正确'
-      } else if (!this.verifyCode) {
-        this.codeMsg = '请输入验证码'
-      } else if (!pwd_reg.test(this.password)) {
-        this.codeMsg = '密码必须由 6-16位字母、数字组成'
-      } else if (this.surePassword != this.password) {
-        this.codeMsg = '两次输入的密码不一致'
-      } else {
-        this.userRegister();
-      }
-    }
-  }
+  },
 }
 </script>
 
 <style lang='less' scoped>
 @bgColor: #B68458;
 .register {
-    background: url("../assets/images/bg.png") bottom center no-repeat;
+    background: url("../../assets/images/background.png") bottom center no-repeat;
     height: 100vh;
     width: 100vw;
     background-size: cover;
+    font-size: 0.26rem;
     .box {
-        padding-top: 2.52rem;
+        padding-top: 3.9rem;
         input {
-            width: 6.36rem;
-            height: 1.17rem;
+            width: 6.66rem;
+            height: 1.8rem;
             border: 1px solid #979797;
-            padding-left: 0.6rem;
-            font-size: 0.28rem;
+            padding-left: 0.8rem;
+            font-size: 0.26rem;
             color: #B4B4B4;
             border: 0 none;
             background-color: rgba(255,255,255,0);
@@ -191,38 +192,61 @@ export default {
             box-sizing: border-box;
         }
         input::-webkit-input-placeholder {
-            color: #B4B4B4;
+            color: #7B7976;
         }
         i {
             display: inline-block;
-            width: 0.3rem;
-            height: 0.3rem;
+            width: 0.32rem;
+            height: 0.32rem;
             position: absolute;
-            top: 0.59rem;
+            top: 0.9rem;
             left: 0.2rem;
             vertical-align: middle;
         }
         .iconfont {
-            color: #B1B1B1;
+            color: #8F7859;
         }
         .two {
             position: relative;
-            height: 1.17rem;
+            height: 1.5rem;
             width: 6.36rem;
             margin: auto;
             border-bottom: 1px solid #979797;
             span {
                 position: absolute;
                 display: inline-block;
-                background-color: @bgColor;
-                border-radius: 10px;
+                /* background-color: @bgColor; */
+                border: 1px solid #BD9D62;
+                border-radius: 4px;
+                /* border-radius: 10px; */
                 width: 1.56rem;
                 height: 0.5rem;
-                font-size: 0.2rem;
-                color: #F0F0F0;
+                font-size: 0.22rem;
+                color: #BD9D62;
                 line-height: 0.5rem;
-                top: 0.52rem;
+                top: 0.8rem;
                 right: 0.1rem;
+            }
+        }
+        .agrenment {
+            text-align: left;
+            width: 6.36rem;
+            margin: auto;
+            position: relative;
+            padding-top: 0.4rem;
+            padding-right: 0.4rem;
+            i {
+                width: 0.3rem;
+                height: 0.3rem;
+                font-size: 0.34rem;
+                position: absolute;
+                top: 0.38rem;
+                left: 0.4rem;
+            }
+            span {
+                margin-left: 0.99rem;
+                font-size: 0.26rem;
+                color: #B9B9B9;
             }
         }
         .text {
@@ -234,15 +258,9 @@ export default {
         }
 
     }
-    button {
-        background: @bgColor;
-        border-radius: 10px;
-        width: 6.5rem;
-        height: 0.8rem;
-        margin-top: 1rem;
-        margin-bottom: 2.3rem;
-        font-size: 0.28rem;
-        color: #F0F0F0;
+    > button {
+        margin-top: 1.7rem;
+        margin-bottom: 2.09rem;
     }
 }
 </style>

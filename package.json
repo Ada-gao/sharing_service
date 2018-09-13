@@ -17,10 +17,13 @@
     "axios": "^0.18.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "lrz": "^4.9.40",
     "mint-ui": "^2.2.13",
     "qs": "^6.5.2",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-select": "^2.4.0",
+    "vux": "^2.9.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
