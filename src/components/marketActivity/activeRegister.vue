@@ -145,9 +145,11 @@ export default {
           console.log(res)
           if (res.data.code == 200) {
             let token = res.data.token
-            let user_id = res.data.user_id
             sett('token', token)
-            sett('user_id', user_id)
+            if(res.data.user_id){
+              let user_id = res.data.user_id
+              sett('user_id', user_id)
+            }
             if (res.data.status == 0) {
               this.$router.push({
                 name: 'uploadImg'

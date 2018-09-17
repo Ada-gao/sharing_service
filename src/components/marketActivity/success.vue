@@ -17,7 +17,7 @@
   <div class="modal" v-show='isModalShow'>
     <div class="box clearfix">
       <i class='iconfont icon-chahao' @click='close()'></i>
-      <div class="one">
+      <div class="one" v-show='bindShow'>
         <input ref='default' type="radio" id="first" name="radio" @change='change()' checked />
         <label :class='{"color":isInputShow === false}' for="first">绑定推荐理财师<span>（{{name}}）</span></label>
       </div>
@@ -54,6 +54,7 @@ export default {
       activityName: '',
       activitySite: '',
       name:'',
+      bindShow:true,
     }
   },
   created() {
@@ -186,6 +187,9 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
+    if(!gett('user_id')){
+      this.bindShow = false
+    }
     if(!gett('token')){
       MessageBox.alert('登录信息已过期，请重新登录').then(action => {
         this.$router.push({
@@ -277,7 +281,7 @@ export default {
         right: 0;
         .box {
             width: 5.29rem;
-            height: 4.34rem;
+            /* height: 4.34rem; */
             margin: auto;
             position: relative;
             top: 50%;
@@ -285,7 +289,7 @@ export default {
             background-color: #ffffff;
             > i {
                 float: right;
-                margin-top: 0.26rem;
+                margin-top: 0.1rem;
                 margin-right: 0.26rem;
             }
             .one,
@@ -329,8 +333,11 @@ export default {
             }
             .one {
                 padding-top: 0.63rem;
-                margin-bottom: 0.3rem;
+                
 
+            }
+            .two{
+              padding-top: 0.5rem;
             }
             .inputer {
                 width: 3.36rem;
@@ -357,7 +364,7 @@ export default {
                 background: #fff;
                 margin: auto;
                 color: #9B9B9B;
-                margin-top: 0.73rem;
+                margin-top: 0.7rem;
                 font-size: 0.36rem;
                 letter-spacing: 0;
                 border-top:1px solid #D2D3D5;
