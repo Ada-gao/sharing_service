@@ -50,7 +50,7 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      share_id: this.$route.query.share_id,
+      share_id: '',
       dept_id: 11,
       isIconShow: true,
     }
@@ -134,6 +134,8 @@ export default {
       }
     },
     userRegister() {
+      let url = window.location.href
+      this.share_id = url.split('&')[1].split('=')[1]
       let obj = {
         "mobile": this.phone,
         "code": this.verifyCode,

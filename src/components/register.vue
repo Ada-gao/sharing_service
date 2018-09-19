@@ -50,10 +50,16 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      share_id: '',
+      // share_id: null,
     }
   },
   methods: {
+    getUrlParams(name) { 
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.href.split('?')[1].substr(1).match(reg); 
+      if (r != null) return unescape(r[2]); 
+      return null;
+    },
     checkMsgCode() {
       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
       if (!this.userName) {
@@ -98,16 +104,15 @@ export default {
         })
     },
     userRegister() {
-      let url = window.location.href
-      this.share_id = url.split('&')[1].split('=')[1]
-      console.log(this.share_id)
+      let share_id = this.getUrlParams('shareId')
+      console.log(share_id)
       let obj = {
         "mobile": this.phone,
         "name": this.userName,
         "passwd": this.password,
         "verify_passwd": this.surePassword,
         "code": this.verifyCode,
-        "share_id": this.share_id
+        "share_id": share_id
       }
       user.register(obj)
         .then((res) => {
@@ -187,7 +192,7 @@ export default {
             border-bottom: 1px solid #979797;
             span {
                 position: absolute;
-                display: inline-block;
+                display: inline-block; 
                 background-color: @bgColor;
                 border-radius: 10px;
                 width: 1.8rem;
