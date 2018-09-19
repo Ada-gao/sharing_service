@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     checkMsgCode() {
+      console.log(this.$route.query)
       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
       if (!this.userName) {
         this.codeMsg = '请输入用户名'
