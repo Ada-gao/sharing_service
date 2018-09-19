@@ -50,15 +50,11 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      share_id: this.$route.query.shareId,
+      share_id: '',
     }
-  },
-  mounted(){
-    console.log(this.$route.query)
   },
   methods: {
     checkMsgCode() {
-      console.log(this.$route.query)
       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
       if (!this.userName) {
         this.codeMsg = '请输入用户名'
@@ -102,6 +98,8 @@ export default {
         })
     },
     userRegister() {
+      let url = window.location.href
+      this.share_id = url.split('&')[1].split('=')[1]
       let obj = {
         "mobile": this.phone,
         "name": this.userName,
@@ -124,8 +122,6 @@ export default {
         })
     },
     checkRegister() {
-      console.log(this.share_id)
-      // var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
       var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
       if (!this.userName) {
