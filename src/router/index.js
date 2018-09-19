@@ -32,7 +32,7 @@ export default new Router({
       name: 'activeRegister',
       component: activeRegister,
       meta: {
-        title: '注册'
+        title: '登录注册',
       }
     },
     {
@@ -80,7 +80,7 @@ export default new Router({
       name: 'activeDetail',
       component: activeDetail,
       meta: {
-        title: '用户协议'
+        title: '活动详情'
       }
     },
   ]
