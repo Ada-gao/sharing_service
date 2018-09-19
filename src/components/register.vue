@@ -53,34 +53,10 @@ export default {
       share_id: this.$route.query.shareId,
     }
   },
+  mounted(){
+    console.log(this.$route.query)
+  },
   methods: {
-    // show(code) {
-    //   switch (code) {
-    //     case 1:
-    //       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
-    //       if (!phone_reg.test(this.phone)) {
-    //         this.codeMsg = '您输入的手机号码不正确'
-    //       } else {
-    //         this.codeMsg = '';
-    //       }
-    //       break
-    //     case 2:
-    //       var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-    //       if (!pwd_reg.test(this.password)) {
-    //         this.codeMsg = '密码必须由 6-16位字母、数字组成'
-    //       } else {
-    //         this.codeMsg = '';
-    //       }
-    //       break
-    //     case 3:
-    //       if (this.password != this.surePassword) {
-    //         this.codeMsg = '两次输入的密码不一致'
-    //       } else {
-    //         this.codeMsg = '';
-    //       }
-    //       break
-    //   }
-    // },
     checkMsgCode() {
       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
       if (!this.userName) {
@@ -216,7 +192,7 @@ export default {
                 display: inline-block;
                 background-color: @bgColor;
                 border-radius: 10px;
-                width: 1.56rem;
+                width: 1.8rem;
                 height: 0.5rem;
                 font-size: 0.2rem;
                 color: #F0F0F0;
