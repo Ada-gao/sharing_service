@@ -1,6 +1,7 @@
 FROM openresty/openresty:alpine
 
 ENV GATEWAY_URL http://10.9.60.141:9999
+ENV PYTHON_URL http://10.9.60.141:5050/api/v1/
 COPY dist /usr/share/nginx/html
 
 
