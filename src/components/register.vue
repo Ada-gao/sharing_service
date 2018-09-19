@@ -100,6 +100,7 @@ export default {
     userRegister() {
       let url = window.location.href
       this.share_id = url.split('&')[1].split('=')[1]
+      console.log(this.share_id)
       let obj = {
         "mobile": this.phone,
         "name": this.userName,
