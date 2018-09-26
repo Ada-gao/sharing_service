@@ -32,10 +32,9 @@
 </template>
 
 <script>
-import {
-  MessageBox
-} from 'mint-ui';
+import {MessageBox} from 'mint-ui';
 import user from '@/http/api'
+import {getUrlParams} from '../help'
 
 export default {
   name: 'register',
@@ -50,16 +49,10 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      // share_id: null,
+      share_id: null,
     }
   },
   methods: {
-    getUrlParams(name) { 
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-      var r = window.location.href.split('?')[1].substr(1).match(reg); 
-      if (r != null) return unescape(r[2]); 
-      return null;
-    },
     checkMsgCode() {
       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
       if (!this.userName) {
@@ -104,15 +97,15 @@ export default {
         })
     },
     userRegister() {
-      let share_id = this.getUrlParams('shareId')
-      console.log(share_id)
+      this.share_id = getUrlParams('shareId')
+      console.log(this.share_id)
       let obj = {
         "mobile": this.phone,
         "name": this.userName,
         "passwd": this.password,
         "verify_passwd": this.surePassword,
         "code": this.verifyCode,
-        "share_id": share_id
+        "share_id": this.share_id
       }
       user.register(obj)
         .then((res) => {
@@ -219,7 +212,7 @@ export default {
         width: 6.5rem;
         height: 0.8rem;
         margin-top: 1rem;
-        margin-bottom: 2.3rem;
+        /* margin-bottom: 2.3rem; */
         font-size: 0.28rem;
         color: #F0F0F0;
     }

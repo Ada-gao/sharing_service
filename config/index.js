@@ -3,11 +3,13 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-var baseUrl = 'http://10.9.60.141:5050/api/v1/'
+var url = require('./dev.env')
+var baseUrl = 'http://10.9.60.141:5050/api/v1'
 
 module.exports = {
   dev: {
     // Paths
+    env: require('./dev.env'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
@@ -40,7 +42,7 @@ module.exports = {
         }
       },
       '/activity': {
-        target: 'http://10.9.70.232:9999',
+        target: url.BASE_API,
         changeOrigin: true,
         pathRewrite: {
           '^/activity': '/activity'
@@ -50,6 +52,7 @@ module.exports = {
     // Various Dev Server settings
     host: '10.9.70.96', // can be overwritten by process.env.HOST
     // host: '10.1.71.219',
+    // host: 'localhost',
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
@@ -80,6 +83,7 @@ module.exports = {
   },
 
   build: {
+    env: require('./prod.env'),
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 

@@ -7,36 +7,30 @@
       <p>{{list.activityName}}</p>
       <ul>
         <li>
-          <span class='one'>活动编号: </span>
+          <span class='one'>活动编号： </span>
           <span class='two'>{{list.activityCode}}</span>
         </li>
         <li>
-          <span class='one'>活动时间: </span>
+          <span class='one'>活动时间： </span>
           <span class='two'>{{list.activityTime}}</span>
         </li>
         <li>
-          <span class='one'>报名时间: </span>
+          <span class='one'>报名时间： </span>
           <span class='two'>{{list.registrationTime}}</span>
         </li>
         <li>
-          <span class='one'>活动人数: </span>
+          <span class='one'>活动人数： </span>
           <span class='two'>{{list.activityNumber}}</span>
         </li>
         <li>
-          <span class='one '>活动负责人: </span>
-          <span class='two man'>
-            <a v-for='i in list.man'>{{i.val}}</a>
-          </span>
+          <span class='one '>活动负责人：  {{list.man}}</span>
         </li>
         <li>
-          <span class='one'>活动所属部门: </span>
-          <span class='two dept'>
-            <a v-for='item in list.dept'>{{item.val}}</a>
-          </span>
+          <span class='one'>活动所属部门：  {{list.dept}} </span>
         </li>
         <li>
-          <span class='one'>活动地点: </span>
-          <span class='two'>{{list.activitySite}}</span>
+          <span class='one'>活动地点：  {{list.activitySite}}</span>
+          <!-- <span class='two'>{{list.activitySite}}</span> -->
         </li>
       </ul>
     </div>
@@ -49,12 +43,12 @@
 </template>
 <script type="text/javascript">
 import user from '@/http/api'
-import {timetampToTime} from '../../help'
+import {timetampToTime,getUrlParams,gett,sett} from '../../help'
   export default{
     name:'activeDetail',
     data(){
       return{
-        id:'4',
+        activity_id:getUrlParams('activity_id'),
         list:{},
       }
     },
@@ -65,19 +59,19 @@ import {timetampToTime} from '../../help'
         })
       },
       activeDetail(){
-        let id = this.id
-        user.showActivity(id)
+        let activity_id = window.location.hash.split('?')[1].split('&')[0].split('=')[1]
+        user.showActivity(activity_id)
         .then((res)=>{
           if(res.status == 200){
-            console.log(res.data)
             this.list = {
+              imgSrc:res.data.activityBannerUrl,
               activityName : res.data.activityName,
               activityCode : res.data.activityCode,
               activityTime : timetampToTime(res.data.activityStart) +'--'+timetampToTime(res.data.activityEnd),
               registrationTime : timetampToTime(res.data.registrationStart) +'--'+timetampToTime(res.data.registrationEnd),
               activityNumber : res.data.activityActivitiesNumber + '人',
-              man : res.data.activityForeendPictureList,
-              dept : res.data.activityRangeDeptList,
+              man : res.data.activityPrincipal,
+              dept : res.data.activityDept,
               activitySite : res.data.activitySite,
               introduction:res.data.activityIntroduction
             }
@@ -93,6 +87,10 @@ import {timetampToTime} from '../../help'
     },
     mounted() {
       document.getElementsByTagName("body")[0].className = 'add_bg'
+      let share_id = getUrlParams('shareId')
+      let dept_id = getUrlParams('dept_id')
+      sett('share_id',share_id)
+      sett('dept_id',dept_id)
     },
     beforedestroy() {
       document.body.removeAttribute('class', 'add_bg')
@@ -111,7 +109,7 @@ import {timetampToTime} from '../../help'
     }
     .infos{
       background-color: #ffffff;
-      padding:0.3rem;
+      padding:0.6rem;
       >p{
         font-size: 0.32rem;
         color: #2E2E2E;
@@ -123,12 +121,12 @@ import {timetampToTime} from '../../help'
         li{
           height:0.6rem;
           text-align:left;
-          font-size: 0.3rem;;
+          font-size: 0.28rem;;
           color: #4A4A4A;
           .two{
-            margin-left: 0.7rem;
+            margin-left: 0.3rem;
             a{
-              font-size:0.3rem;
+              font-size:0.28rem;
               padding:0 0.1rem;
             }
           }
@@ -159,7 +157,7 @@ import {timetampToTime} from '../../help'
     }
     .sureButton{
       margin: 0 auto;
-      margin-top: 1.4rem;
+      margin-top: 0.8rem;
     }
   }
 </style>

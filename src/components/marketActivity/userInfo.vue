@@ -50,20 +50,13 @@
 </template>
 <script type="text/javascript">
 import mySelect from '@/components/common/select'
-import {
-  Header,
-  MessageBox
-} from 'mint-ui';
+import {Header,MessageBox} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 
 import user from '@/http/api'
 
-import {
-  fmtDate,
-  gett,
-  timetap,
-} from '../../help'
+import {fmtDate,gett,timetap} from '../../help'
 
 export default {
   name: 'uploadImg',

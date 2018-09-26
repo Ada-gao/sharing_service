@@ -28,17 +28,12 @@
 </div>
 </template>
 <script>
-import {
-  MessageBox,
-  Header
-} from 'mint-ui';
+import {MessageBox,  Header} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 
 import user from '@/http/api'
-import {
-  sett,
-} from '../../help'
+import {sett,gett} from '../../help'
 
 export default {
   name: 'register',
@@ -50,32 +45,12 @@ export default {
       count: 60,
       msgShow: false,
       msg: '',
-      share_id: '',
-      dept_id: 11,
+      share_id: gett('share_id'),
+      dept_id: gett('dept_id'),
       isIconShow: true,
     }
   },
   methods: {
-    // show(code) {
-    //   switch (code) {
-    //     case 1:
-    //       var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
-    //       if (!phone_reg.test(this.phone)) {
-    //         this.codeMsg = '您输入的手机号码不正确'
-    //       } else {
-    //         this.codeMsg = '';
-    //       }
-    //       break
-    //     case 2:
-    //       var pwd_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-    //       if (!pwd_reg.test(this.password)) {
-    //         this.codeMsg = '密码必须由 6-16位字母、数字组成'
-    //       } else {
-    //         this.codeMsg = '';
-    //       }
-    //       break
-    //   }
-    // },
     choose() {
       this.isIconShow = !this.isIconShow
     },
@@ -134,18 +109,16 @@ export default {
       }
     },
     userRegister() {
-      let url = window.location.href
-      this.share_id = url.split('&')[1].split('=')[1]
       let obj = {
         "mobile": this.phone,
         "code": this.verifyCode,
         "dept_id": this.dept_id,
-        "share_id": '3',
+        "share_id": this.share_id,
       }
       user.register(obj)
         .then((res) => {
           console.log(res)
-          if (res.data.code == 200) {
+          if (res.status == 200) {
             let token = res.data.token
             sett('token', token)
             if(res.data.user_id){
@@ -219,11 +192,9 @@ export default {
             span {
                 position: absolute;
                 display: inline-block;
-                /* background-color: @bgColor; */
                 border: 1px solid #BD9D62;
                 border-radius: 4px;
-                /* border-radius: 10px; */
-                width: 1.56rem;
+                width: 1.7rem;
                 height: 0.5rem;
                 font-size: 0.22rem;
                 color: #BD9D62;
@@ -264,7 +235,7 @@ export default {
     }
     > button {
         margin-top: 1.7rem;
-        margin-bottom: 2.09rem;
+        /* margin-bottom: 2.09rem; */
     }
 }
 </style>

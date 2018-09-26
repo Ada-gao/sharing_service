@@ -84,3 +84,12 @@ export function timetampToTime(timetamp) {
 export function timetap(time) {
   return new Date(time).getTime()
 }
+
+// url参数匹配
+export function getUrlParams(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  var url = window.location.hash.split('?')[1]
+  var r = url.substr(1).match(reg);
+  if (r != null) return unescape(r[2]);
+  return null;
+}

@@ -39,7 +39,7 @@ const user = {
   // 实名认证
   realName: function(id, header, data) {
     return fetch({
-      url: "/cert/identity/" + id + "/",
+      url: `/cert/identity/${id}/`,
       headers: header,
       method: 'post',
       data: data
@@ -86,7 +86,7 @@ const user = {
   // 活动报名
   activityClient: function(id, token) {
     return fetch({
-      url: '/activity/m/activityClient/' + id,
+      url: `/activity/m/activityClient/${id}`,
       method: 'post',
       headers: {
         'X-token': token
@@ -97,7 +97,7 @@ const user = {
   // 报名成功-活动详情
   activityDetail: function(id, token) {
     return fetch({
-      url: '/activity/m/activity/' + id,
+      url: `/activity/m/activity/${id}`,
       method: 'get',
       headers: {
         'X-token': token
@@ -107,7 +107,7 @@ const user = {
   // 报名之前-获取活动详情
   showActivity: function(id) {
     return fetch({
-      url: '/activity/show/activity/' + id,
+      url: `/activity/show/activity/${id}`,
       method: 'get',
     })
   },
