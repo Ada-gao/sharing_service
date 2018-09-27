@@ -53,7 +53,6 @@ export default {
       activityStart: '',
       activityName: '',
       activitySite: '',
-      name:'',
       bindShow:true,
     }
   },
@@ -136,7 +135,7 @@ export default {
       user.bind(header, data)
         .then((res) => {
           console.log(res)
-          if (res.data.code == 209) {
+          if (res.data.code == 200) {
             MessageBox(res.data.message)
             this.isbindShow = false
             this.isModalShow = false

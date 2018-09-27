@@ -23,7 +23,7 @@ Vue.component(Header.name, Header);
 export default {
   data() {
     return {
-      activityId: '3'
+      activityId: gett('activity_id')
     }
   },
   methods: {
