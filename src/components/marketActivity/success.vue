@@ -49,7 +49,7 @@ export default {
       isbindShow: true,
       phone: this.phone,
       name: '',
-      activity_id: '4',
+      activity_id: gett('activity_id'),
       activityStart: '',
       activityName: '',
       activitySite: '',

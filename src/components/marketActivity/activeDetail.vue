@@ -48,7 +48,6 @@ import {timetampToTime,getUrlParams,gett,sett} from '../../help'
     name:'activeDetail',
     data(){
       return{
-        activity_id:getUrlParams('activity_id'),
         list:{},
       }
     },
@@ -60,6 +59,7 @@ import {timetampToTime,getUrlParams,gett,sett} from '../../help'
       },
       activeDetail(){
         let activity_id = window.location.hash.split('?')[1].split('&')[0].split('=')[1]
+        sett('activity_id',activity_id)
         user.showActivity(activity_id)
         .then((res)=>{
           if(res.status == 200){
