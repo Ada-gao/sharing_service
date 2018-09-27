@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <div class="banner">
-      <img src="../../assets/images/banner.png" alt="">
+      <img :src="list.imgSrc" alt="">
     </div>
     <div class="infos">
       <p>{{list.activityName}}</p>
