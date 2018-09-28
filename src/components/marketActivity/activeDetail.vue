@@ -59,6 +59,7 @@ import {timetampToTime,gett,sett,getParameterByName} from '../../help'
       },
       activeDetail(){
         let activity_id = getParameterByName('activity_id')
+        // console.log(activity_id)
         sett('activity_id',activity_id)
         user.showActivity(activity_id)
         .then((res)=>{
@@ -78,7 +79,7 @@ import {timetampToTime,gett,sett,getParameterByName} from '../../help'
           }
         })
         .catch((err)=>{
-          console.log(err.response)
+          console.log(err.response.data)
         })
       }
     },
