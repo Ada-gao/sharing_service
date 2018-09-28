@@ -43,7 +43,7 @@
 </template>
 <script type="text/javascript">
 import user from '@/http/api'
-import {timetampToTime,getUrlParams,gett,sett} from '../../help'
+import {timetampToTime,gett,sett,getParameterByName} from '../../help'
   export default{
     name:'activeDetail',
     data(){
@@ -58,7 +58,7 @@ import {timetampToTime,getUrlParams,gett,sett} from '../../help'
         })
       },
       activeDetail(){
-        let activity_id = window.location.hash.split('?')[1].split('&')[0].split('=')[1]
+        let activity_id = getParameterByName('activity_id')
         sett('activity_id',activity_id)
         user.showActivity(activity_id)
         .then((res)=>{
@@ -87,8 +87,8 @@ import {timetampToTime,getUrlParams,gett,sett} from '../../help'
     },
     mounted() {
       document.getElementsByTagName("body")[0].className = 'add_bg'
-      let share_id = getUrlParams('shareId')
-      let dept_id = getUrlParams('dept_id')
+      let share_id = getParameterByName('shareId')
+      let dept_id = getParameterByName('dept_id')
       sett('share_id',share_id)
       sett('dept_id',dept_id)
     },

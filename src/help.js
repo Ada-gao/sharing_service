@@ -22,7 +22,7 @@ export function gett(key, exp) {
   // exp默认一周
   var exp = exp || 1000 * 60 * 60 * 24;
   if (!dataObj) {
-    console.log('错误')
+    console.log(' ')
   } else if (key == 'token') {
     if (new Date().getTime() - dataObj.time > exp) {
       window.localStorage.removeItem(key);
@@ -92,4 +92,22 @@ export function getUrlParams(name) {
   var r = url.substr(1).match(reg);
   if (r != null) return unescape(r[2]);
   return null;
+}
+
+// url参数匹配(全)
+export function getParameterByName(paramName) {
+  var args = new Object();
+  var argsStr = window.location.hash.split('?')[1]; //获取URL参数字符串
+  if (argsStr) {
+    // argsStr = argsStr.substr(0);
+    var nameValueArr = argsStr.split("&"); //多参数
+    for (var i = 0; i < nameValueArr.length; i++) {
+      var pos = nameValueArr[i].indexOf('=');
+      if (pos == -1) continue; //如果没有找到就跳过
+      var argName = nameValueArr[i].substring(0, pos); //提取name
+      var argVal = nameValueArr[i].substring(pos + 1); //提取value
+      args[argName] = unescape(argVal);
+    }
+    return args[paramName];
+  }
 }
