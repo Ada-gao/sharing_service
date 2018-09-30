@@ -65,7 +65,7 @@ export default {
       }
     },
     countDown() {
-        const TIME_COUNT = 5
+        const TIME_COUNT = 60
         this.count = TIME_COUNT
         var timer = setInterval(() => {
           if (this.count > 1 && this.count <= TIME_COUNT) {
