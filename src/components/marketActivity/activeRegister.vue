@@ -11,8 +11,7 @@
     <div class="two">
       <i class='iconfont icon-duanxinyanzhengma'></i>
       <input type="text" name="" value="" placeholder="请您输入验证码" v-model='verifyCode'>
-      <span v-show='!msgShow' @click='checkMsgCode()'>发送验证码</span>
-      <span v-show='msgShow'>{{this.msg}}</span>
+      <span @click='checkMsgCode()'>{{this.msg}}</span>
     </div>
     <div class="agrenment">
       <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
@@ -24,6 +23,9 @@
     </div>
   </div>
   <button class='sureButton' type="button" name="button" @click='submit()'>确定</button>
+  <div class="botBox">
+    
+  </div>
   <!-- <button type="button" name="button">取消</button> -->
 </div>
 </template>
@@ -42,9 +44,8 @@ export default {
       phone: this.phone,
       verifyCode: this.verifyCode,
       codeMsg: '',
-      count: 60,
-      msgShow: false,
-      msg: '',
+      count: '',
+      msg: '发送验证码',
       share_id: gett('share_id'),
       dept_id: gett('dept_id'),
       isIconShow: true,
@@ -64,15 +65,17 @@ export default {
       }
     },
     countDown() {
-      var timer = setInterval(() => {
-        this.msgShow = true
-        this.count--;
-        this.msg = this.count + 'S后重新发送';
-        if (this.count <= 0) {
-          this.msgShow = false
-          clearInterval(timer);
-        }
-      }, 1000);
+        const TIME_COUNT = 5
+        this.count = TIME_COUNT
+        var timer = setInterval(() => {
+          if (this.count > 1 && this.count <= TIME_COUNT) {
+            this.count--;
+            this.msg = this.count + 'S后重新发送';
+          }else{
+            this.msg =  '发送验证码';
+            clearInterval(timer);
+          }
+        }, 1000);
     },
     sendCode() {
       let obj = {
@@ -86,8 +89,8 @@ export default {
         .then((res) => {
           console.log(res)
           if (res.data.code == 200) {
-            this.countDown();
             MessageBox('提示', '验证码发送成功，请查收');
+            this.countDown();
           } else {
             this.codeMsg = res.data.message
           }
@@ -234,8 +237,10 @@ export default {
 
     }
     > button {
-        margin-top: 1.7rem;
-        /* margin-bottom: 2.09rem; */
+        margin-top: 1.1rem;
+    }
+    .botBox{
+      height:2rem;
     }
 }
 </style>
