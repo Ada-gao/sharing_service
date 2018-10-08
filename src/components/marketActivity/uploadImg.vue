@@ -70,16 +70,16 @@ export default {
     return {
       options: [{
         text: '身份证',
-        value: 0
-      }, {
-        text: '护照',
         value: 1
       }, {
-        text: '军官证',
+        text: '护照',
         value: 2
       }, {
-        text: '其他',
+        text: '军官证',
         value: 3
+      }, {
+        text: '其他',
+        value: 4
       }],
       place: '请选择证件类型 〉',
       imgShow: true,
@@ -94,7 +94,7 @@ export default {
   methods: {
     select(item) {
       this.type = item.value
-      if (item.value != 0) {
+      if (item.value != 1) {
         this.imgShow = false
       } else {
         this.imgShow = true
@@ -177,7 +177,9 @@ export default {
     },
     // 开始认证
     submit() {
-      if (this.imgFiles.length == 0) {
+      if(!this.type){
+        MessageBox('请选择证件类型')
+      }else if (this.imgFiles.length == 0) {
         MessageBox('请先上传图片');
       } else {
         this.upload()
@@ -190,9 +192,9 @@ export default {
       }
       user.certification(header)
         .then((res) => {
-          if (!this.type) {
-            this.type = 0;
-          }
+          // if (!this.type) {
+          //   this.type = 0;
+          // }
           if (this.imgFiles.length != 2 && this.type == 0) {
             MessageBox('请先上传完整的照片');
           } else {

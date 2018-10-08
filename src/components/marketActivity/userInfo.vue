@@ -74,16 +74,16 @@ export default {
       // }],
       options: [{
         text: '身份证',
-        value: 0
-      }, {
-        text: '护照',
         value: 1
       }, {
-        text: '军官证',
+        text: '护照',
         value: 2
       }, {
-        text: '其他',
+        text: '军官证',
         value: 3
+      }, {
+        text: '其他',
+        value: 4
       }],
       // place: '男',
       place: '请选择证件类型 〉',

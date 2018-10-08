@@ -7,6 +7,7 @@ body {
   font: 12px "PingFangSC-Regular", "Arial Narrow", HELVETICA;
   -webkit-text-size-adjust: 100%;
   background-color: #fff;
+  height: 100vh;
 }
 
 a {
