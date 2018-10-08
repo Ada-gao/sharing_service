@@ -3,25 +3,25 @@
   <!-- <mt-header class='title' title="注册   登录">
     <mt-button icon="more" slot="right"></mt-button>
   </mt-header> -->
-  <div class="box">
-    <div class="two">
-      <i class=' iconfont icon-dianhuaphone349'></i>
-      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
+    <div class="box">
+      <div class="two">
+        <i class=' iconfont icon-dianhuaphone349'></i>
+        <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
+      </div>
+      <div class="two">
+        <i class='iconfont icon-duanxinyanzhengma'></i>
+        <input type="text" name="" value="" placeholder="请您输入验证码" v-model='verifyCode'>
+        <span @click='checkMsgCode()'>{{this.msg}}</span>
+      </div>
+      <div class="agrenment">
+        <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
+        <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
+        <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
+      </div>
+      <div class="text">
+        <p>{{this.codeMsg}}</p>
+      </div>
     </div>
-    <div class="two">
-      <i class='iconfont icon-duanxinyanzhengma'></i>
-      <input type="text" name="" value="" placeholder="请您输入验证码" v-model='verifyCode'>
-      <span @click='checkMsgCode()'>{{this.msg}}</span>
-    </div>
-    <div class="agrenment">
-      <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
-      <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
-      <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
-    </div>
-    <div class="text">
-      <p>{{this.codeMsg}}</p>
-    </div>
-  </div>
   <button class='sureButton' type="button" name="button" @click='submit()'>确定</button>
   <div class="botBox">
     
@@ -38,7 +38,7 @@ import user from '@/http/api'
 import {sett,gett} from '../../help'
 
 export default {
-  name: 'register',
+  name: 'activeRegister',
   data() {
     return {
       phone: this.phone,
@@ -137,8 +137,9 @@ export default {
                 name: 'success'
               });
             }
-          } else if (res.data.code == 103 || res.data.code == 104) {
-            this.codeMsg = res.data.message
+            if (res.data.code == 103 || res.data.code == 104) {
+              this.codeMsg = res.data.message
+            }
           }
         })
         .catch((err) => {

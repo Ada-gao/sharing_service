@@ -33,6 +33,7 @@ export default new Router({
       component: activeRegister,
       meta: {
         title: '登录注册',
+        keepAlive: true
       }
     },
     {
@@ -72,7 +73,8 @@ export default new Router({
       name: 'agrement',
       component: agrement,
       meta: {
-        title: '用户协议'
+        title: '用户协议',
+        keepAlive: false
       }
     },
     {
