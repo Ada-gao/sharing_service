@@ -8,7 +8,7 @@
   <div class="main">
     <i class='ok iconfont icon-iconfont-success'></i>
     <h2>报名成功!</h2>
-    <p>你已成功报名<span>{{activitySite}}</span></p>
+    <p>你已成功报名<span>{{activityName}}</span></p>
     <p class='time'>活动时间:<span>{{activityStart}}</span></p>
     <p class='site'>活动地址: <span>{{activitySite}}</span></p>
     <button class='sureButton' type="button" name="button" @click='download()'>立即下载望财app</button>
