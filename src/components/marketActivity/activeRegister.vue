@@ -11,7 +11,8 @@
       <div class="two">
         <i class='iconfont icon-duanxinyanzhengma'></i>
         <input type="text" name="" value="" placeholder="请您输入验证码" v-model='verifyCode'>
-        <span @click='checkMsgCode()'>{{this.msg}}</span>
+        <!-- <span @click='checkMsgCode()'>{{this.msg}}</span> -->
+        <button :disabled = 'isDisable' @click='checkMsgCode()'>{{this.msg}}</button>
       </div>
       <div class="agrenment">
         <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
@@ -49,6 +50,7 @@ export default {
       share_id: gett('share_id'),
       dept_id: gett('dept_id'),
       isIconShow: true,
+      isDisable:false,
     }
   },
   methods: {
@@ -71,7 +73,9 @@ export default {
           if (this.count > 1 && this.count <= TIME_COUNT) {
             this.count--;
             this.msg = this.count + 'S后重新发送';
+            this.isDisable = true
           }else{
+            this.isDisable = false
             this.msg =  '发送验证码';
             clearInterval(timer);
           }
@@ -193,15 +197,16 @@ export default {
             width: 6.36rem;
             margin: auto;
             border-bottom: 1px solid #979797;
-            span {
+            button {
                 position: absolute;
                 display: inline-block;
                 border: 1px solid #BD9D62;
                 border-radius: 4px;
-                width: 1.7rem;
+                width: 1.8rem;
                 height: 0.5rem;
                 font-size: 0.22rem;
-                color: #BD9D62;
+                background-color: rgba(255,255,255,0);
+                color:#BD9D62;
                 line-height: 0.5rem;
                 top: 0.8rem;
                 right: 0.1rem;
