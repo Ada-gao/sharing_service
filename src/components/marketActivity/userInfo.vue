@@ -35,7 +35,7 @@
         </span>
       </li>
       <li>证件号码：<input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'></li>
-      <li>证件有效期起始时间：<input type="text"  v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间 〉'>
+      <li>证件有效期起始时间：<input type="text"  v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间 〉' readonly/>
         <mt-datetime-picker
   v-model="pickerVisible"
   type="date"
@@ -48,7 +48,7 @@
   :endDate='endDate'>
 </mt-datetime-picker>
       </li>
-      <li>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()'  placeholder='请选择有效结束时间 〉'>
+      <li>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()'  placeholder='请选择有效结束时间 〉' readonly/>
         <mt-datetime-picker
   v-model="endPickerVisible"
   type="date"
@@ -61,7 +61,7 @@
   :endDate='endDate'>
 </mt-datetime-picker>
       </li>
-      <li>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()'  placeholder='请选择出生日期 〉'>
+      <li>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()'  placeholder='请选择出生日期 〉' readonly/>
         <mt-datetime-picker
   v-model="birthPickerVisible"
   type="date"
@@ -336,7 +336,7 @@ export default {
                     color: #333;
                 }
                 input{
-                  width:2.9rem;
+                  width:3rem;
                   height:0.88rem;
                   float: right;
                   font-size:0.3rem;
@@ -409,14 +409,14 @@ export default {
                     height: 1rem; 
                     line-height: 1rem;
                     float: right;
-                  margin-right: 0.4rem;
+                  margin-right: 0.5rem;
                     /* position: absolute; */
                 }
                 span.most {
                   width:2.5rem;
                     /* position: relative; */
                     z-index: 1;
-                    margin-right: 0.8rem;
+                    margin-right: 0.9rem;
                 }
             }
         }
