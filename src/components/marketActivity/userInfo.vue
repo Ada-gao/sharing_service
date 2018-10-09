@@ -34,11 +34,47 @@
           <i class="iconfont icon-xialajiantou"></i> -->
         </span>
       </li>
-      <li>证件号码：</i><input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'></li>
-      <li>证件有效期起始时间：</i><input type="date" name="" value="" v-model='start_time' @keyup='show(3)'></li>
-      <li>证件有效期结束时间：</i><input type="date" name="" value="" v-model='end_time' @keyup='show(3)'></li>
-      <li>出生日期：</i><input type="date" name="" value="" v-model='birth ' @keyup='show(3)'></li>
-      <li>地址：</i>
+      <li>证件号码：<input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'></li>
+      <li>证件有效期起始时间：<input type="text"  v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间 〉'>
+        <mt-datetime-picker
+  v-model="pickerVisible"
+  type="date"
+  ref='picker'
+  year-format="{value} 年"
+  month-format="{value} 月"
+  date-format="{value} 日"
+  @confirm="handleConfirm"
+  :startDate='startDate'
+  :endDate='endDate'>
+</mt-datetime-picker>
+      </li>
+      <li>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()'  placeholder='请选择有效结束时间 〉'>
+        <mt-datetime-picker
+  v-model="endPickerVisible"
+  type="date"
+  ref='end'
+  year-format="{value} 年"
+  month-format="{value} 月"
+  date-format="{value} 日"
+  @confirm="handleSuccess"
+  :startDate='startDate'
+  :endDate='endDate'>
+</mt-datetime-picker>
+      </li>
+      <li>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()'  placeholder='请选择出生日期 〉'>
+        <mt-datetime-picker
+  v-model="birthPickerVisible"
+  type="date"
+  ref='birth'
+  year-format="{value} 年"
+  month-format="{value} 月"
+  date-format="{value} 日"
+  @confirm="handleBirth"
+  :startDate='startDate'
+  :endDate='endDate'>
+</mt-datetime-picker>
+      </li>
+      <li>地址：
         <input type="text" name="" value="" v-model='adress ' @keyup='show(4)' placeholder='请输入地址'></li>
     </ul>
   </div>
@@ -53,6 +89,8 @@ import mySelect from '@/components/common/select'
 import {Header,MessageBox} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
+import { DatetimePicker } from 'mint-ui';
+Vue.component(DatetimePicker.name, DatetimePicker);
 
 import user from '@/http/api'
 
@@ -100,9 +138,32 @@ export default {
       birth: this.birth,
       id: this.$route.query.id,
       codeMsg: '',
+      pickerVisible:new Date(),
+      endPickerVisible:new Date(),
+      birthPickerVisible:new Date(),
+      startDate:new Date('1950'),
+      endDate:new Date('2050'),
     }
   },
   methods: {
+    openPicker(){
+      this.$refs.picker.open();
+    },
+    openEnd(){
+      this.$refs.end.open();
+    },
+    openBirth(){
+      this.$refs.birth.open();
+    },
+    handleConfirm(){
+      this.start_time = fmtDate(this.pickerVisible)
+    },
+    handleSuccess(){
+      this.end_time = fmtDate(this.endPickerVisible)
+    },
+    handleBirth(){
+      this.birth = fmtDate(this.birthPickerVisible)
+    },
     select(option) {
       this.sexVal = option.value
     },
@@ -210,13 +271,13 @@ export default {
   },
   mounted() {
     document.getElementsByTagName("body")[0].className = 'add_bg'
-    if(!gett('token')){
-      MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-        this.$router.push({
-          name: 'activeRegister'
-        })
-      });
-    }
+    // if(!gett('token')){
+    //   MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+    //     this.$router.push({
+    //       name: 'activeRegister'
+    //     })
+    //   });
+    // }
   },
   beforedestroy() {
     document.body.removeAttribute('class', 'add_bg')
@@ -275,7 +336,7 @@ export default {
                     color: #333;
                 }
                 input{
-                  width:2.5rem;
+                  width:2.9rem;
                   height:0.88rem;
                   float: right;
                   font-size:0.3rem;
@@ -284,11 +345,14 @@ export default {
                 }
                 input::-webkit-input-placeholder {
                     color: #DCDCDC;
-                    font-size: 0.3rem;
-                    
+                    font-size: 0.3rem;  
                 }
+                input[type="date"]::-webkit-clear-button{
+                    display:none;
+                }
+              input[type=date]::-webkit-inner-spin-button { visibility: hidden; } 
+                
                 .sex{
-                  
                   label{
                     /* position: relative; */
                     /* top: 0.16rem;; */
@@ -341,18 +405,18 @@ export default {
                 position:relative;
                 span {
                     /* margin-top: -0.1rem; */
-                    width:2.5rem;
+                    width:2.7rem;
                     height: 1rem; 
                     line-height: 1rem;
                     float: right;
-                  margin-right: 0.2rem;
+                  margin-right: 0.4rem;
                     /* position: absolute; */
                 }
                 span.most {
                   width:2.5rem;
                     /* position: relative; */
                     z-index: 1;
-                    margin-right: 0.4rem;
+                    margin-right: 0.8rem;
                 }
             }
         }
