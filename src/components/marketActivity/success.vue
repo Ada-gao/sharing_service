@@ -71,7 +71,7 @@ export default {
     change() {
       if (this.$refs.check.checked) {
         this.isInputShow = true
-        document.getElementByClassName('introduce')[0].color='#BD9D62'
+        document.getElementsByClassName('introduce')[0].color='#BD9D62'
       } else {
         this.isInputShow = false
       }
@@ -313,7 +313,7 @@ export default {
                 input[type="radio"]:checked + label::before {
                     background-color: #B68458;
                     background-clip: content-box;
-                    padding: 0.1em;
+                    padding: 0.07em;
                 }
                 input[type="radio"] {
                     position: absolute;

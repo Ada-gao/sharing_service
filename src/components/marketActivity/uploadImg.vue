@@ -30,7 +30,7 @@
   <div class="img">
     <div class="box1">
       <label for="input"></label>
-      <input id='input' type='file' accept="image/*" @change="getImg(0)" multiple />
+      <input ref='input' id='input' type='file' accept="image/*" @change="getImg(0)" multiple />
       <img :src="imgsrc" alt=" ">
     </div>
     <p class='front'>正面</p>
@@ -38,7 +38,7 @@
       <div class="pic " v-show='imgShow'>
         <div class="">
           <label for="inputer"></label>
-          <input id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple/>
+          <input ref='inputer' id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple/>
           <img :src="imgsrcs" alt=" ">
         </div>
         <p class='back'>背面</p>
@@ -93,6 +93,8 @@ export default {
   },
   methods: {
     select(item) {
+      this.$refs.input.setAttribute('type','file')
+      this.$refs.inputer.setAttribute('type','file')
       this.type = item.value
       if (item.value != 1) {
         this.imgShow = false
@@ -105,6 +107,7 @@ export default {
     },
     // 切换select时清除图片路径
     deleteImg() {
+      this.imgFiles = []
       this.imgsrc = front
       this.imgsrcs = back
     },
@@ -137,6 +140,14 @@ export default {
       reader.onerror = function() {
         MessageBox('上传失败，请稍后再试');
       }
+      // 处理onload以后的事件
+      reader.onloadend = function(){
+        if(index == 0 ){
+          _this.$refs.input.setAttribute('type','text')
+        }else{
+          _this.$refs.inputer.setAttribute('type','text')
+        }
+      }
       reader.readAsDataURL(file);
     },
     uploadImg(header, data, index) {
@@ -144,21 +155,16 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             this.imgFiles[index] = res.data.file_url
-            console.log(this.imgFiles[0])
-            if(!this.imgFiles[0] && !this.imgFiles[1]){
-              this.imgsrc = front
-              this.imgsrcs = back
-            }else if(!this.imgFiles[0] && this.imgFiles[1]){
+            if(!this.imgFiles[0] && this.imgFiles[1]){
               this.imgsrc = front
               this.imgsrcs = this.imgFiles[1]
             }else if (this.imgFiles[0] && !this.imgFiles[1]){
               this.imgsrc = this.imgFiles[0]
               this.imgsrcs = back
-            }else{
+            }else if(this.imgFiles[0] && this.imgFiles[1]){
               this.imgsrc = this.imgFiles[0]
               this.imgsrcs = this.imgFiles[1]
             }
-            // this.imgsrcs = this.imgFiles[1]
             sett('id_front_url', this.imgsrc)
             sett('id_back_url', this.imgsrcs)
           } else {
