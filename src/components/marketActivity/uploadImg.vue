@@ -30,7 +30,7 @@
   <div class="img">
     <div class="box1">
       <label for="input"></label>
-      <input ref='input' id='input' type='file' accept="image/*" @change="getImg(0)" multiple />
+      <input ref='input' id='input' type='file' accept="image/*" @change="getImg(0)" />
       <img :src="imgsrc" alt=" ">
     </div>
     <p class='front'>正面</p>
@@ -38,7 +38,7 @@
       <div class="pic " v-show='imgShow'>
         <div class="">
           <label for="inputer"></label>
-          <input ref='inputer' id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple />
+          <input ref='inputer' id='inputer' type="file" accept="image/*" @change="getImg(1)" />
           <img :src="imgsrcs" alt=" ">
         </div>
         <p class='back'>背面</p>
@@ -100,8 +100,8 @@ export default {
   },
   methods: {
     select(item) {
-      this.$refs.input.setAttribute('type', 'file')
-      this.$refs.inputer.setAttribute('type', 'file')
+      // this.$refs.input.setAttribute('type', 'file')
+      // this.$refs.inputer.setAttribute('type', 'file')
       this.type = item.value
       if (item.value != 1) {
         this.imgShow = false
@@ -147,15 +147,14 @@ export default {
       reader.onerror = function() {
         MessageBox('提示', '上传失败，请稍后再试');
       }
-      // 处理onload以后的事件
-      reader.onloadend = function() {
-        if (index == 0) {
-          _this.$refs.input.setAttribute('type', 'text')
-        } else {
-          _this.$refs.inputer.setAttribute('type', 'text')
-        }
-      }
       reader.readAsDataURL(file);
+      if (index == 0) {
+        this.$refs.input.value = null
+        // _this.$refs.input.setAttribute('type', '')
+      } else {
+        this.$refs.inputer.value = null
+        // _this.$refs.inputer.setAttribute('type', '')
+      }
     },
     uploadImg(header, data, index) {
       user.uploadImg(header, data)
@@ -179,13 +178,16 @@ export default {
           }
         })
         .catch((err) => {
-          if (err.response.status == 504) {
-            MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-              this.$router.push({
-                name: 'activeRegister'
-              })
-            });
+          if (err.response) {
+            if (err.response.status == 504) {
+              MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+                this.$router.push({
+                  name: 'activeRegister'
+                })
+              });
+            }
           }
+
         })
     },
     // 开始认证
@@ -274,7 +276,7 @@ export default {
         border-bottom: 1px solid #E9E9E9;
         padding-bottom: 0.2rem;
         .select {
-            width: 2.3rem;
+            width: 2.4rem;
             color: #DCDCDC;
             text-align: right;
             float: right;

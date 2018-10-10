@@ -196,13 +196,6 @@ export default {
     if (!gett('user_id')) {
       this.bindShow = false
     }
-    if (!gett('token')) {
-      MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-        this.$router.push({
-          name: 'activeRegister'
-        })
-      });
-    }
   },
 }
 </script>

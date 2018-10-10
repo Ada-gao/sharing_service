@@ -59,9 +59,6 @@ export default {
       isDisable: false,
     }
   },
-  mounted() {
-    MessageBox('提示', '验证码发送成功，请查收');
-  },
   methods: {
     choose() {
       this.isIconShow = !this.isIconShow
