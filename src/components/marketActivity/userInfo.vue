@@ -44,7 +44,7 @@
         </mt-datetime-picker>
       </li>
       <li>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()' placeholder='请选择出生日期 〉' readonly />
-        <mt-datetime-picker v-model="birthPickerVisible" type="date" ref='birth' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleBirth" :startDate='startDate' :endDate='endDate'>
+        <mt-datetime-picker v-model="birthPickerVisible" type="date" ref='birth' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleBirth" :startDate='birthStart' :endDate='birthEnd'>
         </mt-datetime-picker>
       </li>
       <li>地址：
@@ -125,6 +125,8 @@ export default {
       birthPickerVisible: new Date(),
       startDate: new Date('1950'),
       endDate: new Date('2050'),
+      birthStart: new Date('1950'),
+      birthEnd: new Date(),
     }
   },
   methods: {

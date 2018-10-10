@@ -28,7 +28,8 @@ Vue.component(Header.name, Header);
 export default {
   data() {
     return {
-      activityId: gett('activity_id')
+      activityId: gett('activity_id'),
+      userId: gett('user_id')
     }
   },
   methods: {
@@ -40,7 +41,11 @@ export default {
           console.log(res)
           if (res.data.code == 0) {
             this.$router.push({
-              name: 'success'
+              name: 'success',
+              params: {
+                activityId: this.activityId,
+                userId: this.userId
+              }
             })
           }
         })

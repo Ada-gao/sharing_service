@@ -61,7 +61,7 @@ export default new Router({
       }
     },
     {
-      path: '/marketActivity/success',
+      path: '/marketActivity/success/:activityId/:userId',
       name: 'success',
       component: success,
       meta: {

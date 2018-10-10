@@ -56,7 +56,7 @@ export default {
       isbindShow: true,
       phone: this.phone,
       name: '',
-      activity_id: gett('activity_id'),
+      activity_id: this.$route.params.activityId,
       activityStart: '',
       activityName: '',
       activitySite: '',
@@ -193,7 +193,7 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
-    if (!gett('user_id')) {
+    if (!this.$route.params.userId) {
       this.bindShow = false
     }
   },
@@ -346,10 +346,9 @@ export default {
                     height: 100%;
                     border: 1px solid #979797;
                     border-radius: 4px;
-
                 }
                 input::-webkit-input-placeholder {
-                    font-size: 0.24rem;
+                    font-size: 0.2rem;
                     color: #A7A7A7;
                     letter-spacing: 0;
                     padding-left: 0.1rem;
