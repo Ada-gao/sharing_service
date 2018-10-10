@@ -123,9 +123,9 @@ export default {
       pickerVisible: new Date(),
       endPickerVisible: new Date(),
       birthPickerVisible: new Date(),
-      startDate: new Date('1950'),
+      startDate: new Date('1910'),
       endDate: new Date('2050'),
-      birthStart: new Date('1950'),
+      birthStart: new Date('1910'),
       birthEnd: new Date(),
     }
   },
