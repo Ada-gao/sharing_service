@@ -32,9 +32,13 @@
 </template>
 
 <script>
-import {MessageBox} from 'mint-ui';
+import {
+  MessageBox
+} from 'mint-ui';
 import user from '@/http/api'
-import {getUrlParams} from '../help'
+import {
+  getUrlParams
+} from '../help'
 
 export default {
   name: 'register',
@@ -185,7 +189,7 @@ export default {
             border-bottom: 1px solid #979797;
             span {
                 position: absolute;
-                display: inline-block; 
+                display: inline-block;
                 background-color: @bgColor;
                 border-radius: 10px;
                 width: 1.8rem;

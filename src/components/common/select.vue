@@ -49,13 +49,13 @@ export default {
     .choose {
         width: 100%;
         height: 100%;
-        font-size:0.3rem;
-        position:relative;
+        font-size: 0.3rem;
+        position: relative;
         > .iconfont {
-            display:inline-block;
-            position:absolute;
-            top:0.15rem;
-            right:-0.3rem;
+            display: inline-block;
+            position: absolute;
+            top: 0.15rem;
+            right: -0.3rem;
         }
         input {
             width: 100%;
@@ -64,7 +64,7 @@ export default {
             padding-left: 0.2rem;
             color: #4A4A4A;
             position: relative;
-            font-size:0.3rem;
+            font-size: 0.3rem;
         }
         input::-webkit-input-placeholder {
             color: #DCDCDC;
