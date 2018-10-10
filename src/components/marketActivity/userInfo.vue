@@ -28,51 +28,24 @@
       <li class='special clearfix'>证件类型：
         <span class='most'>
           <!-- <span class='select'> -->
-            <my-select :options='options' @chooseTwo='selects' :place='place' v-model='typeVal'></my-select>
+          <my-select :options='options' @chooseTwo='selects' :place='place' v-model='typeVal'></my-select>
           <!-- </span> -->
           <!-- <my-select :options='options' @chooseTwo='selects' :place='places' v-model='typeVal'></my-select>
           <i class="iconfont icon-xialajiantou"></i> -->
         </span>
       </li>
       <li>证件号码：<input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'></li>
-      <li>证件有效期起始时间：<input type="text"  v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间 〉' readonly/>
-        <mt-datetime-picker
-  v-model="pickerVisible"
-  type="date"
-  ref='picker'
-  year-format="{value} 年"
-  month-format="{value} 月"
-  date-format="{value} 日"
-  @confirm="handleConfirm"
-  :startDate='startDate'
-  :endDate='endDate'>
-</mt-datetime-picker>
+      <li>证件有效期起始时间：<input type="text" v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间 〉' readonly />
+        <mt-datetime-picker v-model="pickerVisible" type="date" ref='picker' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleConfirm" :startDate='startDate' :endDate='endDate'>
+        </mt-datetime-picker>
       </li>
-      <li>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()'  placeholder='请选择有效结束时间 〉' readonly/>
-        <mt-datetime-picker
-  v-model="endPickerVisible"
-  type="date"
-  ref='end'
-  year-format="{value} 年"
-  month-format="{value} 月"
-  date-format="{value} 日"
-  @confirm="handleSuccess"
-  :startDate='startDate'
-  :endDate='endDate'>
-</mt-datetime-picker>
+      <li>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()' placeholder='请选择有效结束时间 〉' readonly />
+        <mt-datetime-picker v-model="endPickerVisible" type="date" ref='end' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleSuccess" :startDate='startDate' :endDate='endDate'>
+        </mt-datetime-picker>
       </li>
-      <li>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()'  placeholder='请选择出生日期 〉' readonly/>
-        <mt-datetime-picker
-  v-model="birthPickerVisible"
-  type="date"
-  ref='birth'
-  year-format="{value} 年"
-  month-format="{value} 月"
-  date-format="{value} 日"
-  @confirm="handleBirth"
-  :startDate='startDate'
-  :endDate='endDate'>
-</mt-datetime-picker>
+      <li>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()' placeholder='请选择出生日期 〉' readonly />
+        <mt-datetime-picker v-model="birthPickerVisible" type="date" ref='birth' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleBirth" :startDate='startDate' :endDate='endDate'>
+        </mt-datetime-picker>
       </li>
       <li>地址：
         <input type="text" name="" value="" v-model='adress ' @keyup='show(4)' placeholder='请输入地址'></li>
@@ -86,15 +59,24 @@
 </template>
 <script type="text/javascript">
 import mySelect from '@/components/common/select'
-import {Header,MessageBox} from 'mint-ui';
+import {
+  Header,
+  MessageBox
+} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
-import { DatetimePicker } from 'mint-ui';
+import {
+  DatetimePicker
+} from 'mint-ui';
 Vue.component(DatetimePicker.name, DatetimePicker);
 
 import user from '@/http/api'
 
-import {fmtDate,gett,timetap} from '../../help'
+import {
+  fmtDate,
+  gett,
+  timetap
+} from '../../help'
 
 export default {
   name: 'uploadImg',
@@ -138,30 +120,30 @@ export default {
       birth: this.birth,
       id: this.$route.query.id,
       codeMsg: '',
-      pickerVisible:new Date(),
-      endPickerVisible:new Date(),
-      birthPickerVisible:new Date(),
-      startDate:new Date('1950'),
-      endDate:new Date('2050'),
+      pickerVisible: new Date(),
+      endPickerVisible: new Date(),
+      birthPickerVisible: new Date(),
+      startDate: new Date('1950'),
+      endDate: new Date('2050'),
     }
   },
   methods: {
-    openPicker(){
+    openPicker() {
       this.$refs.picker.open();
     },
-    openEnd(){
+    openEnd() {
       this.$refs.end.open();
     },
-    openBirth(){
+    openBirth() {
       this.$refs.birth.open();
     },
-    handleConfirm(){
+    handleConfirm() {
       this.start_time = fmtDate(this.pickerVisible)
     },
-    handleSuccess(){
+    handleSuccess() {
       this.end_time = fmtDate(this.endPickerVisible)
     },
-    handleBirth(){
+    handleBirth() {
       this.birth = fmtDate(this.birthPickerVisible)
     },
     select(option) {
@@ -205,9 +187,9 @@ export default {
       }
     },
     submit() {
-      if(this.$refs.man.checked){
+      if (this.$refs.man.checked) {
         this.sexVal = 0
-      }else{
+      } else {
         this.sexVal = 1
       }
       var start_time = timetap(this.start_time)
@@ -215,9 +197,9 @@ export default {
       const number_reg = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
       if (!this.name) {
         this.codeMsg = '请输入您的名称'
-      }else if(this.sexVal !=0 && this.sexVal !=1){
+      } else if (this.sexVal != 0 && this.sexVal != 1) {
         this.codeMsg = '请选择性别'
-      }else if (!this.typeVal) {
+      } else if (!this.typeVal) {
         this.codeMsg = '请选择证件类型'
       } else if (!number_reg.test(this.number)) {
         this.codeMsg = '请输入正确的证件号码'
@@ -271,13 +253,13 @@ export default {
   },
   mounted() {
     document.getElementsByTagName("body")[0].className = 'add_bg'
-    // if(!gett('token')){
-    //   MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-    //     this.$router.push({
-    //       name: 'activeRegister'
-    //     })
-    //   });
-    // }
+    if (!gett('token')) {
+      MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+        this.$router.push({
+          name: 'activeRegister'
+        })
+      });
+    }
   },
   beforedestroy() {
     document.body.removeAttribute('class', 'add_bg')
@@ -288,31 +270,31 @@ export default {
 .info {
     font-size: 0.28rem;
     color: #333;
-    
+
     .txt {
-      box-sizing: border-box;
-      background-color: #fff;
+        box-sizing: border-box;
+        background-color: #fff;
         padding-top: 0.48rem;
-        padding-left:0.2rem;
+        padding-left: 0.2rem;
         text-align: left;
         font-size: 0.32rem;
         color: #4A4A4A;
     }
-    .txt::before{
-      content:'';
-      display: inline-block;
-      width: 0.06rem;
-      height:0.3rem;
-      background: #C4902D;
-      margin-right: 0.1rem;
-      vertical-align: middle;
+    .txt::before {
+        content: '';
+        display: inline-block;
+        width: 0.06rem;
+        height: 0.3rem;
+        background: #C4902D;
+        margin-right: 0.1rem;
+        vertical-align: middle;
     }
     .list {
         background: #fff;
         margin-bottom: 0.2rem;
         padding-top: 0.2rem;
         .listUl {
-          
+
             > li {
                 height: 1rem;
                 border-bottom: 1px solid #E9E9E9;
@@ -335,85 +317,87 @@ export default {
                     font-size: 0.3rem;
                     color: #333;
                 }
-                input{
-                  width:3rem;
-                  height:0.88rem;
-                  float: right;
-                  font-size:0.3rem;
-                  /* text-align: right; */
-                  margin-right: 0.2rem;
+                input {
+                    width: 3rem;
+                    height: 0.88rem;
+                    float: right;
+                    font-size: 0.3rem;
+                    /* text-align: right; */
+                    margin-right: 0.2rem;
                 }
                 input::-webkit-input-placeholder {
                     color: #DCDCDC;
-                    font-size: 0.3rem;  
+                    font-size: 0.3rem;
                 }
-                input[type="date"]::-webkit-clear-button{
-                    display:none;
-                }
-              input[type=date]::-webkit-inner-spin-button { visibility: hidden; } 
-                
-                .sex{
-                  label{
-                    /* position: relative; */
-                    /* top: 0.16rem;; */
-                    font-size: 0.28rem;;
-                    color: #B7BABB;
-                    line-height: 0.28rem;;
-                    margin-right: 0.4rem;
-                  }
-                  input[type="radio"]{
+                input[type="date"]::-webkit-clear-button {
                     display: none;
-                  }
-                  input[type='radio']+label:before{
-                    margin-top: -2px;
-                    content: '';
-                    display: inline-block;
-                    width: 0.32rem;
-                    height: 0.32rem;
-                    margin-right: 0.2rem;
-                    border-radius: 100%;
-                    vertical-align: middle;
-                    border: 1px solid #979797;
-                    background: #FFFFFF;
-                  }
-                  input[type='radio']:checked+label:before{
-                    border: 1px solid #3377FF;
-                    background-color: #3377FF;
-                    background-clip: content-box;
-                    padding: 0.1em;
-                    box-sizing: border-box;
-                  }
+                }
+                input[type=date]::-webkit-inner-spin-button {
+                    visibility: hidden;
+                }
+
+                .sex {
+                    label {
+                        /* position: relative; */
+                        /* top: 0.16rem;; */
+                        font-size: 0.28rem;
+                        color: #B7BABB;
+                        line-height: 0.28rem;
+                        margin-right: 0.4rem;
+                    }
+                    input[type="radio"] {
+                        display: none;
+                    }
+                    input[type='radio']+label:before {
+                        margin-top: -2px;
+                        content: '';
+                        display: inline-block;
+                        width: 0.32rem;
+                        height: 0.32rem;
+                        margin-right: 0.2rem;
+                        border-radius: 100%;
+                        vertical-align: middle;
+                        border: 1px solid #979797;
+                        background: #FFFFFF;
+                    }
+                    input[type='radio']:checked+label:before {
+                        border: 1px solid #3377FF;
+                        background-color: #3377FF;
+                        background-clip: content-box;
+                        padding: 0.1em;
+                        box-sizing: border-box;
+                    }
                 }
             }
-            >li::before{
-              content:'*';
-              display: inline-block;
-              width: 0;
-              height:0;
-              color: #E73838;
-              margin-right: 0.2rem;
-              vertical-align: top;
+            > li::before {
+                content: '*';
+                display: inline-block;
+                width: 0;
+                height: 0;
+                color: #E73838;
+                margin-right: 0.2rem;
+                vertical-align: top;
             }
             /* li.one {
                 height: 1.06rem;
             } */
-            
+
             li.special {
                 box-sizing: border-box;
                 line-height: 1rem;
                 /* padding: 0.2rem 0 0.2rem 0.2rem; */
-                position:relative;
+                position: relative;
                 span {
                     /* margin-top: -0.1rem; */
-                    width:2.7rem;
-                    height: 1rem; 
+                    width: 2.7rem;
+                    height: 1rem;
                     line-height: 1rem;
                     float: right;
-                  margin-right: 0.5rem;
+                    margin-right: 0.5rem;
                     /* position: absolute; */
                 }
                 span.most {
-                  width:2.5rem;
+                    width: 2.5rem;
                     /* position: relative; */
                     z-index: 1;
                     margin-right: 0.9rem;

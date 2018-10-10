@@ -88,3 +88,15 @@ option::-ms-expand {
 .add_bgs {
   background-color: #160a19;
 }
+
+.mint-msgbox {
+  width: 65%;
+}
+
+.mint-msgbox-title {
+  font-size: 18px;
+}
+
+.mint-msgbox-confirm {
+  font-size: 16px;
+}

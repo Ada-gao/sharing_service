@@ -11,7 +11,7 @@
     <span class='select'>
       <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg()' :place='place' v-model='type'></my-select>
     </span>
-    
+
     <!-- <mt-popup v-model="popupVisible" position="bottom" v-modal='false'>
       <div class='list' v-for="it in options">
             <span v-text="it.text"></span>
@@ -22,7 +22,7 @@
     <span>上传照片：</span>
     <span class='select'>（请上传清晰的原件或复印件）</span>
   </div>
-  
+
   <!-- <div class="select">
     <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg' :place='place' v-model='type'></my-select>
     <i class="iconfont icon-xialajiantou"></i>
@@ -38,25 +38,32 @@
       <div class="pic " v-show='imgShow'>
         <div class="">
           <label for="inputer"></label>
-          <input ref='inputer' id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple/>
+          <input ref='inputer' id='inputer' type="file" accept="image/*" @change="getImg(1)" multiple />
           <img :src="imgsrcs" alt=" ">
         </div>
         <p class='back'>背面</p>
       </div>
     </div>
-    
+
   </div>
   <button class='sureButton ' type="button " name="button" @click='submit()'>提交</button>
 </div>
 </template>
 <script type="text/javascript">
 import mySelect from '@/components/common/select'
-import {MessageBox,Header,Popup } from 'mint-ui';
+import {
+  MessageBox,
+  Header,
+  Popup
+} from 'mint-ui';
 Vue.component(Popup.name, Popup);
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 import user from '@/http/api'
-import {gett,sett,} from '../../help'
+import {
+  gett,
+  sett,
+} from '../../help'
 
 import front from '../../assets/images/front.png'
 import back from '../../assets/images/back.png'
@@ -87,14 +94,14 @@ export default {
       imgsrcs: back,
       type: this.type,
       imgFiles: [],
-      defaultImg:'this.src="' + front + '"',
-      defaultImgs:'this.src="' + back + '"',
+      defaultImg: 'this.src="' + front + '"',
+      defaultImgs: 'this.src="' + back + '"',
     }
   },
   methods: {
     select(item) {
-      this.$refs.input.setAttribute('type','file')
-      this.$refs.inputer.setAttribute('type','file')
+      this.$refs.input.setAttribute('type', 'file')
+      this.$refs.inputer.setAttribute('type', 'file')
       this.type = item.value
       if (item.value != 1) {
         this.imgShow = false
@@ -102,7 +109,7 @@ export default {
         this.imgShow = true
       }
     },
-    choose(){
+    choose() {
       this.popupVisible = true
     },
     // 切换select时清除图片路径
@@ -117,7 +124,7 @@ export default {
       var file = event.target.files[0];
       var reader = new FileReader()
       if (typeof FileReader === 'undefined') {
-        MessageBox('您的浏览器不支持图片上传，请升级您的浏览器');
+        MessageBox('提示', '您的浏览器不支持图片上传，请升级您的浏览器');
         return false;
       }
       reader.onload = function(e) {
@@ -138,14 +145,14 @@ export default {
           })
       }
       reader.onerror = function() {
-        MessageBox('上传失败，请稍后再试');
+        MessageBox('提示', '上传失败，请稍后再试');
       }
       // 处理onload以后的事件
-      reader.onloadend = function(){
-        if(index == 0 ){
-          _this.$refs.input.setAttribute('type','text')
-        }else{
-          _this.$refs.inputer.setAttribute('type','text')
+      reader.onloadend = function() {
+        if (index == 0) {
+          _this.$refs.input.setAttribute('type', 'text')
+        } else {
+          _this.$refs.inputer.setAttribute('type', 'text')
         }
       }
       reader.readAsDataURL(file);
@@ -155,38 +162,38 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             this.imgFiles[index] = res.data.file_url
-            if(!this.imgFiles[0] && this.imgFiles[1]){
+            if (!this.imgFiles[0] && this.imgFiles[1]) {
               this.imgsrc = front
               this.imgsrcs = this.imgFiles[1]
-            }else if (this.imgFiles[0] && !this.imgFiles[1]){
+            } else if (this.imgFiles[0] && !this.imgFiles[1]) {
               this.imgsrc = this.imgFiles[0]
               this.imgsrcs = back
-            }else if(this.imgFiles[0] && this.imgFiles[1]){
+            } else if (this.imgFiles[0] && this.imgFiles[1]) {
               this.imgsrc = this.imgFiles[0]
               this.imgsrcs = this.imgFiles[1]
             }
             sett('id_front_url', this.imgsrc)
             sett('id_back_url', this.imgsrcs)
           } else {
-            MessageBox('上传失败，请稍后再试');
+            MessageBox('提示', '上传失败，请稍后再试');
           }
         })
         .catch((err) => {
           if (err.response.status == 504) {
             MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-               this.$router.push({
-                 name:'activeRegister'
-               })
-             });
+              this.$router.push({
+                name: 'activeRegister'
+              })
+            });
           }
         })
     },
     // 开始认证
     submit() {
-      if(!this.type){
-        MessageBox('请选择证件类型')
-      }else if (this.imgFiles.length == 0) {
-        MessageBox('请先上传图片');
+      if (!this.type) {
+        MessageBox('提示', '请选择证件类型')
+      } else if (this.imgFiles.length == 0) {
+        MessageBox('提示', '请先上传图片');
       } else {
         this.upload()
       }
@@ -219,7 +226,7 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
-    if(!gett('token')){
+    if (!gett('token')) {
       MessageBox.alert('登录信息已过期，请重新登录').then(action => {
         this.$router.push({
           name: 'activeRegister'
@@ -235,19 +242,19 @@ export default {
     background-color: #fff;
     .txt {
         padding-top: 0.48rem;
-        padding-left:0.2rem;
+        padding-left: 0.2rem;
         text-align: left;
         font-size: 0.32rem;
         color: #4A4A4A;
     }
-    .txt::before{
-      content:'';
-      display: inline-block;
-      width: 0.06rem;
-      height:0.3rem;
-      background: #C4902D;
-      margin-right: 0.1rem;
-      vertical-align: middle;
+    .txt::before {
+        content: '';
+        display: inline-block;
+        width: 0.06rem;
+        height: 0.3rem;
+        background: #C4902D;
+        margin-right: 0.1rem;
+        vertical-align: middle;
     }
     .add {
         border-radius: 8px;
@@ -256,42 +263,42 @@ export default {
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
     }
-    .card{
-      text-align: left;
-      width: 100%;
-      box-sizing: border-box;
-      padding-left:0.2rem;
-      margin-top: 0.5rem;
-      font-size: 0.3rem;
-      color: #4A4A4A;
-      border-bottom: 1px solid #E9E9E9;
-      padding-bottom:0.2rem;
-      .select{
-        width: 2.3rem;
-        color: #DCDCDC;
-        text-align: right;
-        float:right;
-        margin-right: 1rem;
-        margin-top: -0.3rem;
-      }
-      .list{
+    .card {
+        text-align: left;
         width: 100%;
-      }
+        box-sizing: border-box;
+        padding-left: 0.2rem;
+        margin-top: 0.5rem;
+        font-size: 0.3rem;
+        color: #4A4A4A;
+        border-bottom: 1px solid #E9E9E9;
+        padding-bottom: 0.2rem;
+        .select {
+            width: 2.3rem;
+            color: #DCDCDC;
+            text-align: right;
+            float: right;
+            margin-right: 1.2rem;
+            margin-top: -0.3rem;
+        }
+        .list {
+            width: 100%;
+        }
     }
-    .photo{
-      border:none;
-      .select{
-        float: none;
-      }
+    .photo {
+        border: none;
+        .select {
+            float: none;
+        }
     }
-    .card::before{
-      content:'*';
-      display: inline-block;
-      width: 0;
-      height:0;
-      color: #E73838;
-      margin-right: 0.2rem;
-      vertical-align: top;
+    .card::before {
+        content: '*';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        color: #E73838;
+        margin-right: 0.2rem;
+        vertical-align: top;
     }
     /* .select {
         width: 2.1rem;
@@ -308,11 +315,11 @@ export default {
         }
     } */
     .img {
-        width:4.2rem;
+        width: 4.2rem;
         margin: 0.45rem auto auto;
         > div {
-          width: 100%;
-          height:2.7rem;
+            width: 100%;
+            height: 2.7rem;
             position: relative;
             input {
                 width: 100%;
@@ -345,32 +352,32 @@ export default {
             /* background: url('../../assets/images/front.png') no-repeat center;
             background-size: 100%; */
         }
-        .front{
-          margin-bottom: 0.88rem;
-          font-size: 0.24rem;
-          color: #B0B0B0;
+        .front {
+            margin-bottom: 0.88rem;
+            font-size: 0.24rem;
+            color: #B0B0B0;
         }
-        .back{
-          margin-bottom: 1rem;
-          font-size: 0.24rem;
-          color: #B0B0B0;
+        .back {
+            margin-bottom: 1rem;
+            font-size: 0.24rem;
+            color: #B0B0B0;
         }
         .box2 {
-          /* background: url('../../assets/images/back.png') no-repeat center;
+            /* background: url('../../assets/images/back.png') no-repeat center;
           background-size: 100%; */
             .pic {
                 width: 100%;
                 height: 100%;
                 border: 1px solid #ccc;
-                >div{
-                  width: 100%;
-                  height: 100%;
+                > div {
+                    width: 100%;
+                    height: 100%;
                 }
             }
         }
     }
-    .sureButton{
-      margin-top: 1rem;
+    .sureButton {
+        margin-top: 1rem;
     }
 }
 </style>

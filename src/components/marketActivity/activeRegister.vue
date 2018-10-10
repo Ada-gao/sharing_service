@@ -3,40 +3,46 @@
   <!-- <mt-header class='title' title="注册   登录">
     <mt-button icon="more" slot="right"></mt-button>
   </mt-header> -->
-    <div class="box">
-      <div class="two">
-        <i class=' iconfont icon-dianhuaphone349'></i>
-        <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
-      </div>
-      <div class="two">
-        <i class='iconfont icon-duanxinyanzhengma'></i>
-        <input type="text" name="" value="" placeholder="请您输入验证码" v-model='verifyCode'>
-        <!-- <span @click='checkMsgCode()'>{{this.msg}}</span> -->
-        <button :disabled = 'isDisable' @click='checkMsgCode()'>{{this.msg}}</button>
-      </div>
-      <div class="agrenment">
-        <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
-        <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
-        <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
-      </div>
-      <div class="text">
-        <p>{{this.codeMsg}}</p>
-      </div>
+  <div class="box">
+    <div class="two">
+      <i class=' iconfont icon-dianhuaphone349'></i>
+      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
     </div>
+    <div class="two">
+      <i class='iconfont icon-duanxinyanzhengma'></i>
+      <input type="text" name="" value="" placeholder="请您输入验证码" v-model='verifyCode'>
+      <!-- <span @click='checkMsgCode()'>{{this.msg}}</span> -->
+      <button :disabled='isDisable' @click='checkMsgCode()'>{{this.msg}}</button>
+    </div>
+    <div class="agrenment">
+      <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
+      <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
+      <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
+    </div>
+    <div class="text">
+      <p>{{this.codeMsg}}</p>
+    </div>
+  </div>
   <button class='sureButton' type="button" name="button" @click='submit()'>确定</button>
   <div class="botBox">
-    
+
   </div>
   <!-- <button type="button" name="button">取消</button> -->
 </div>
 </template>
 <script>
-import {MessageBox,  Header} from 'mint-ui';
+import {
+  MessageBox,
+  Header
+} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 
 import user from '@/http/api'
-import {sett,gett} from '../../help'
+import {
+  sett,
+  gett
+} from '../../help'
 
 export default {
   name: 'activeRegister',
@@ -50,8 +56,11 @@ export default {
       share_id: gett('share_id'),
       dept_id: gett('dept_id'),
       isIconShow: true,
-      isDisable:false,
+      isDisable: false,
     }
+  },
+  mounted() {
+    MessageBox('提示', '验证码发送成功，请查收');
   },
   methods: {
     choose() {
@@ -67,19 +76,19 @@ export default {
       }
     },
     countDown() {
-        const TIME_COUNT = 60
-        this.count = TIME_COUNT
-        var timer = setInterval(() => {
-          if (this.count > 1 && this.count <= TIME_COUNT) {
-            this.count--;
-            this.msg = this.count + 'S后重新发送';
-            this.isDisable = true
-          }else{
-            this.isDisable = false
-            this.msg =  '发送验证码';
-            clearInterval(timer);
-          }
-        }, 1000);
+      const TIME_COUNT = 60
+      this.count = TIME_COUNT
+      var timer = setInterval(() => {
+        if (this.count > 1 && this.count <= TIME_COUNT) {
+          this.count--;
+          this.msg = this.count + 'S后重新发送';
+          this.isDisable = true
+        } else {
+          this.isDisable = false
+          this.msg = '发送验证码';
+          clearInterval(timer);
+        }
+      }, 1000);
     },
     sendCode() {
       let obj = {
@@ -109,7 +118,7 @@ export default {
         this.codeMsg = '您输入的手机号码不正确'
       } else if (!this.verifyCode) {
         this.codeMsg = '请输入验证码'
-      }else if(this.isIconShow){
+      } else if (this.isIconShow) {
         this.codeMsg = '请认真阅读并勾选协议'
       } else {
         this.userRegister()
@@ -128,7 +137,7 @@ export default {
           if (res.status == 200) {
             let token = res.data.token
             sett('token', token)
-            if(res.data.user_id){
+            if (res.data.user_id) {
               let user_id = res.data.user_id
               sett('user_id', user_id)
             }
@@ -206,7 +215,7 @@ export default {
                 height: 0.5rem;
                 font-size: 0.22rem;
                 background-color: rgba(255,255,255,0);
-                color:#BD9D62;
+                color: #BD9D62;
                 line-height: 0.5rem;
                 top: 0.8rem;
                 right: 0.1rem;
@@ -245,8 +254,8 @@ export default {
     > button {
         margin-top: 1.1rem;
     }
-    .botBox{
-      height:2rem;
+    .botBox {
+        height: 2rem;
     }
 }
 </style>

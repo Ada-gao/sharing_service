@@ -37,8 +37,15 @@
 <script type="text/javascript">
 import user from '@/http/api'
 import runApp from '@/http/platform'
-import {gett,sett,timestampToTime} from '../../help'
-import {MessageBox,Header} from 'mint-ui';
+import {
+  gett,
+  sett,
+  timestampToTime
+} from '../../help'
+import {
+  MessageBox,
+  Header
+} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 export default {
@@ -53,7 +60,7 @@ export default {
       activityStart: '',
       activityName: '',
       activitySite: '',
-      bindShow:true,
+      bindShow: true,
     }
   },
   created() {
@@ -71,7 +78,7 @@ export default {
     change() {
       if (this.$refs.check.checked) {
         this.isInputShow = true
-        document.getElementsByClassName('introduce')[0].color='#BD9D62'
+        document.getElementsByClassName('introduce')[0].color = '#BD9D62'
       } else {
         this.isInputShow = false
       }
@@ -110,7 +117,7 @@ export default {
       if (this.$refs.check.checked) {
         var phone_reg = /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57]|19[9])[0-9]{8}$/;
         if (!phone_reg.test(this.phone)) {
-          MessageBox('手机号码输入不正确')
+          MessageBox('提示', '手机号码输入不正确')
         } else {
           let data = {
             "mobile": this.phone
@@ -123,7 +130,7 @@ export default {
         }
         this.bind(data)
       } else {
-        MessageBox('请选择绑定理财师')
+        MessageBox('提示', '请选择绑定理财师')
       }
     },
     // 绑定理财师
@@ -148,19 +155,19 @@ export default {
         })
     },
     // 查询绑定理财师信息
-    detail(){
+    detail() {
       let token = gett('token');
       let header = {
         'X-Token': token
       }
       user.detail(header)
-      .then((res)=>{
-        this.name = res.data.name
-        console.log(res.data.name)
-      })
-      .catch((err)=>{
-        console.log(err.response)
-      })
+        .then((res) => {
+          this.name = res.data.name
+          console.log(res.data.name)
+        })
+        .catch((err) => {
+          console.log(err.response)
+        })
     },
     // 下载app
     download() {
@@ -186,10 +193,10 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
-    if(!gett('user_id')){
+    if (!gett('user_id')) {
       this.bindShow = false
     }
-    if(!gett('token')){
+    if (!gett('token')) {
       MessageBox.alert('登录信息已过期，请重新登录').then(action => {
         this.$router.push({
           name: 'activeRegister'
@@ -201,22 +208,22 @@ export default {
 </script>
 <style lang='less' scoped>
 .success {
-  background: url('../../assets/images/background.png') no-repeat center;
-  background-size:cover;
-  /* height:14rem; */ 
-  height: 100vh;
-  width: 100vw;
+    background: url("../../assets/images/background.png") no-repeat center;
+    background-size: cover;
+    /* height:14rem; */
+    height: 100vh;
+    width: 100vw;
     .main {
-      width: 6.7rem;
-      margin: auto;
-      background-color: #ffffff;
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      padding:0.4rem 0;
-      border-top-right-radius: 20px;
-      border-top-left-radius: 20px;
+        width: 6.7rem;
+        margin: auto;
+        background-color: #ffffff;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.4rem 0;
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
         h2 {
             font-size: 0.4rem;
             color: #413620;
@@ -240,20 +247,20 @@ export default {
             text-align: left;
             margin-left: 1.2rem;
             color: #9B9B9B;
-            font-size:0.26rem;
+            font-size: 0.26rem;
         }
         > .time {
             margin-top: 0.4rem;
             margin-bottom: 0.1rem;
         }
-        .ok{
-          margin: auto;
-          display:block;
+        .ok {
+            margin: auto;
+            display: block;
         }
     }
     .sureButton {
         width: 5.9rem;
-        margin-top:0.5rem;
+        margin-top: 0.5rem;
         margin-bottom: 0.5rem;
         font-size: 0.36rem;
     }
@@ -263,10 +270,10 @@ export default {
         /* text-align: right; */
         /* margin-right: 0.4rem; */
         padding-bottom: 0.5rem;
-        position:relative;
-        i{
-          position:absolute;
-          top:-0.05rem;
+        position: relative;
+        i {
+            position: absolute;
+            top: -0.05rem;
         }
     }
     .modal {
@@ -324,19 +331,18 @@ export default {
                     color: #5B5B5B;
                     letter-spacing: 0;
                 }
-                .color{
-                  font-size: 0.28rem;
-                  letter-spacing: 0;
-                  color: #BD9D62;
+                .color {
+                    font-size: 0.28rem;
+                    letter-spacing: 0;
+                    color: #BD9D62;
                 }
             }
             .one {
                 padding-top: 0.63rem;
-                
 
             }
-            .two{
-              padding-top: 0.5rem;
+            .two {
+                padding-top: 0.5rem;
             }
             .inputer {
                 width: 3.36rem;
@@ -366,11 +372,11 @@ export default {
                 margin-top: 0.7rem;
                 font-size: 0.36rem;
                 letter-spacing: 0;
-                border-top:1px solid #D2D3D5;
+                border-top: 1px solid #D2D3D5;
             }
-            button:last-child{
-              border-left:1px solid #D2D3D5;
-              color: #BD9D62;
+            button:last-child {
+                border-left: 1px solid #D2D3D5;
+                color: #BD9D62;
             }
 
         }

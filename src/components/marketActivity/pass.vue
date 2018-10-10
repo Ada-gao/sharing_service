@@ -16,8 +16,13 @@
 </template>
 <script type="text/javascript">
 import user from '@/http/api'
-import {gett,} from '../../help'
-import {MessageBox,Header} from 'mint-ui';
+import {
+  gett,
+} from '../../help'
+import {
+  MessageBox,
+  Header
+} from 'mint-ui';
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 export default {
@@ -50,7 +55,7 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
-    if(!gett('token')){
+    if (!gett('token')) {
       MessageBox.alert('登录信息已过期，请重新登录').then(action => {
         this.$router.push({
           name: 'activeRegister'
@@ -70,7 +75,7 @@ export default {
             width: 2.84rem;
             height: 2.96rem;
             margin: auto auto 0.5rem;
-            background: url('../../assets/images/pass.png') no-repeat center;
+            background: url("../../assets/images/pass.png") no-repeat center;
             background-size: cover;
             i {
                 display: block;
@@ -83,8 +88,8 @@ export default {
             }
         }
         > p {
-          font-size: 0.32rem;
-          color: #4A4A4A;
+            font-size: 0.32rem;
+            color: #4A4A4A;
         }
         button {
             margin-top: 3rem;
