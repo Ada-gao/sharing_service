@@ -281,7 +281,7 @@ export default {
             text-align: right;
             float: right;
             margin-right: 1.2rem;
-            margin-top: -0.3rem;
+            margin-top: -0.28rem;
         }
         .list {
             width: 100%;

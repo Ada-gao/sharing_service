@@ -179,6 +179,7 @@ export default {
     // 活动详情
     activityDetail() {
       let id = this.activity_id
+      console.log(id, this.$route.params.userId)
       let token = gett('token')
       user.activityDetail(id, token)
         .then((res) => {
@@ -195,6 +196,8 @@ export default {
     document.body.removeAttribute('class', 'add_bg')
     if (!this.$route.params.userId) {
       this.bindShow = false
+    } else {
+      this.bindShow = true
     }
   },
 }

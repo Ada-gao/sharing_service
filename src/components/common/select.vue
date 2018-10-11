@@ -37,7 +37,7 @@ export default {
 <style lang='less' scoped>
 .selectWrap {
     width: 100%;
-    height: 0.88rem;
+    height: 0.95rem;
     /* .add {
         border-radius: 8px;
         font-size:0.3rem;
