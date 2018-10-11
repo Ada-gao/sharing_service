@@ -57,6 +57,7 @@ export default {
       phone: this.phone,
       name: '',
       activity_id: this.$route.query.activityId,
+      key: this.$route.query.key,
       activityStart: '',
       activityName: '',
       activitySite: '',
@@ -85,9 +86,9 @@ export default {
     },
     // 查询用户是否绑定理财师
     isBind() {
-      let token = gett('token');
+      // let token = gett('token');
       let header = {
-        'X-Token': token
+        'X-Token': this.key
       }
       user.isBind(header)
         .then((res) => {
@@ -135,9 +136,9 @@ export default {
     },
     // 绑定理财师
     bind(data) {
-      let token = gett('token');
+      // let token = gett('token');
       let header = {
-        'X-Token': token
+        'X-Token': this.key
       }
       user.bind(header, data)
         .then((res) => {
@@ -156,14 +157,13 @@ export default {
     },
     // 查询绑定理财师信息
     detail() {
-      let token = gett('token');
+      // let token = gett('token');
       let header = {
-        'X-Token': token
+        'X-Token': this.key
       }
       user.detail(header)
         .then((res) => {
           this.name = res.data.name
-          console.log(res.data.name)
         })
         .catch((err) => {
           console.log(err.response)
@@ -179,8 +179,8 @@ export default {
     // 活动详情
     activityDetail() {
       let id = this.activity_id
-      console.log(id, this.$route.query.userId)
-      let token = gett('token')
+      console.log(id, this.$route.query.userId, this.key)
+      let token = this.key
       user.activityDetail(id, token)
         .then((res) => {
           this.activityStart = timestampToTime(res.data.activityStart)

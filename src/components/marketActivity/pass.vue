@@ -38,7 +38,8 @@ export default {
               path: '/marketActivity/success',
               query: {
                 activityId: this.activityId,
-                userId: this.userId
+                userId: this.userId,
+                key: gett('token'),
               }
             })
           }
