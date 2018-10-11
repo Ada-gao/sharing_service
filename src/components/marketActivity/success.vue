@@ -56,7 +56,7 @@ export default {
       isbindShow: true,
       phone: this.phone,
       name: '',
-      activity_id: this.$route.params.activityId,
+      activity_id: this.$route.query.activityId,
       activityStart: '',
       activityName: '',
       activitySite: '',
@@ -179,7 +179,7 @@ export default {
     // 活动详情
     activityDetail() {
       let id = this.activity_id
-      console.log(id, this.$route.params.userId)
+      console.log(id, this.$route.query.userId)
       let token = gett('token')
       user.activityDetail(id, token)
         .then((res) => {
@@ -194,7 +194,7 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
-    if (!this.$route.params.userId) {
+    if (!this.$route.query.userId) {
       this.bindShow = false
     } else {
       this.bindShow = true

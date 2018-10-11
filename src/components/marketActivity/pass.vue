@@ -1,13 +1,7 @@
 <template >
 <div class="pass">
-  <!-- <mt-header class='title' title="实名认证">
-    <router-link :to="{path:'userInfo'}" slot="left">
-      <mt-button icon="back"></mt-button>
-    </router-link>
-  </mt-header> -->
   <div class="main">
     <div class="pic">
-      <!-- <i class='iconfont icon-tongguo'></i> -->
     </div>
     <p>实名认证审核通过</p>
     <button class='sureButton' type="button" name="button" @click='submit()'>提交报名</button>
@@ -41,8 +35,8 @@ export default {
           console.log(res)
           if (res.data.code == 0) {
             this.$router.push({
-              name: 'success',
-              params: {
+              path: '/marketActivity/success',
+              query: {
                 activityId: this.activityId,
                 userId: this.userId
               }
