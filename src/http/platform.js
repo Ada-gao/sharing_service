@@ -7,7 +7,7 @@ export default function runApp(schemaUrl) {
     href = ''
   // 判断是微信
   if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
-    MessageBox('提示', '点击右上角按钮，选择在浏览器打开')
+    MessageBox('提示', '点击右上角按钮，选择在浏览器打开即可下载APP')
     return
   }
   if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
