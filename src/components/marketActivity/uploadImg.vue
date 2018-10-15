@@ -7,22 +7,16 @@
   </mt-header> -->
   <p class='txt'>证件信息</p>
   <div class="card">
-    <span>证件类型：</span>
+    <!-- <span>证件类型：</span> -->
+    证件类型：
     <span class='select'>
       <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg()' :place='place' v-model='type'></my-select>
     </span>
-
-    <!-- <mt-popup v-model="popupVisible" position="bottom" v-modal='false'>
-      <div class='list' v-for="it in options">
-            <span v-text="it.text"></span>
-        </div>
-    </mt-popup> -->
   </div>
   <div class="card photo">
     <span>上传照片：</span>
     <span class='select'>（请上传清晰的原件或复印件）</span>
   </div>
-
   <!-- <div class="select">
     <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg' :place='place' v-model='type'></my-select>
     <i class="iconfont icon-xialajiantou"></i>
@@ -54,9 +48,7 @@ import mySelect from '@/components/common/select'
 import {
   MessageBox,
   Header,
-  Popup
 } from 'mint-ui';
-Vue.component(Popup.name, Popup);
 import Vue from 'vue'
 Vue.component(Header.name, Header);
 import user from '@/http/api'
@@ -228,13 +220,13 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
-    if (!gett('token')) {
-      MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-        this.$router.push({
-          name: 'activeRegister'
-        })
-      });
-    }
+    // if (!gett('token')) {
+    //   MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+    //     this.$router.push({
+    //       name: 'activeRegister'
+    //     })
+    //   });
+    // }
   },
 }
 </script>
@@ -268,6 +260,8 @@ export default {
     .card {
         text-align: left;
         width: 100%;
+        height: 0.95rem;
+        line-height: 0.95rem;
         box-sizing: border-box;
         padding-left: 0.2rem;
         margin-top: 0.5rem;
@@ -281,7 +275,7 @@ export default {
             text-align: right;
             float: right;
             margin-right: 1.2rem;
-            margin-top: -0.28rem;
+            margin-top: -0.02rem;
         }
         .list {
             width: 100%;

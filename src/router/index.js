@@ -41,7 +41,8 @@ export default new Router({
       name: 'uploadImg',
       component: uploadImg,
       meta: {
-        title: '实名认证'
+        title: '实名认证',
+        login: true,
       }
     },
     {
@@ -49,7 +50,8 @@ export default new Router({
       name: 'userInfo',
       component: userInfo,
       meta: {
-        title: '实名认证'
+        title: '实名认证',
+        login: true,
       }
     },
     {
@@ -57,7 +59,8 @@ export default new Router({
       name: 'pass',
       component: pass,
       meta: {
-        title: '实名认证'
+        title: '实名认证',
+        login: true,
       }
     },
     {
@@ -65,7 +68,8 @@ export default new Router({
       name: 'success',
       component: success,
       meta: {
-        title: '报名成功'
+        title: '报名成功',
+        login: true,
       }
     },
     {
@@ -74,7 +78,7 @@ export default new Router({
       component: agrement,
       meta: {
         title: '用户协议',
-        keepAlive: false
+        keepAlive: false,
       }
     },
     {

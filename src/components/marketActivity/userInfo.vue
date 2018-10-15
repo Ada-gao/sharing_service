@@ -255,13 +255,13 @@ export default {
   },
   mounted() {
     document.getElementsByTagName("body")[0].className = 'add_bg'
-    if (!gett('token')) {
-      MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-        this.$router.push({
-          name: 'activeRegister'
-        })
-      });
-    }
+    // if (!gett('token')) {
+    //   MessageBox.alert('登录信息已过期，请重新登录').then(action => {
+    //     this.$router.push({
+    //       name: 'activeRegister'
+    //     })
+    //   });
+    // }
   },
   beforedestroy() {
     document.body.removeAttribute('class', 'add_bg')
