@@ -37,7 +37,8 @@ import {
 } from 'mint-ui';
 import user from '@/http/api'
 import {
-  getUrlParams
+  getUrlParams,
+  getParameterByName
 } from '../help'
 
 export default {
@@ -102,7 +103,7 @@ export default {
         })
     },
     userRegister() {
-      this.share_id = getUrlParams('shareId')
+      this.share_id = getParameterByName('shareId')
       console.log(this.share_id)
       let obj = {
         "mobile": this.phone,
