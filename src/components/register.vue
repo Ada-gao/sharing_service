@@ -92,6 +92,7 @@ export default {
           if (res.data.code == 200) {
             this.countDown();
             MessageBox('提示', '验证码发送成功，请查收');
+            this.codeMsg = ''
           } else {
             this.codeMsg = res.data.message
           }
@@ -138,6 +139,7 @@ export default {
       } else if (this.surePassword != this.password) {
         this.codeMsg = '两次输入的密码不一致'
       } else {
+        this.codeMsg = ''
         this.userRegister();
       }
     }

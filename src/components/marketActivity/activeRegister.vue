@@ -118,6 +118,7 @@ export default {
       } else if (this.isIconShow) {
         this.codeMsg = '请认真阅读并勾选协议'
       } else {
+        this.codeMsg = ''
         this.userRegister()
       }
     },
@@ -149,6 +150,8 @@ export default {
             }
             if (res.data.code == 103 || res.data.code == 104) {
               this.codeMsg = res.data.message
+            } else if (res.data.code == 101) {
+              MessageBox('提示', '请先扫码报名活动');
             }
           }
         })
