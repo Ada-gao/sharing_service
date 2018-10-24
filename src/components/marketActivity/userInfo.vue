@@ -26,24 +26,28 @@
   <div class="list lists">
     <ul class='listUl'>
       <li class='special clearfix'>证件类型：
-        <span class='most'>
+        <span class='most' style='position:relative;'>
           <!-- <span class='select'> -->
           <my-select :options='options' @chooseTwo='selects' :place='place' v-model='typeVal'></my-select>
+          <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:0;right:-10px;'></i>
           <!-- </span> -->
           <!-- <my-select :options='options' @chooseTwo='selects' :place='places' v-model='typeVal'></my-select>
           <i class="iconfont icon-xialajiantou"></i> -->
         </span>
       </li>
       <li>证件号码：<input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'></li>
-      <li>证件有效期起始时间：<input type="text" v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间 〉' readonly />
+      <li style='position:relative;'>证件有效期起始时间：<input type="text" v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间' readonly />
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-3px;right:10px;'></i>
         <mt-datetime-picker v-model="pickerVisible" type="date" ref='picker' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleConfirm" :startDate='startDate' :endDate='endDate'>
         </mt-datetime-picker>
       </li>
-      <li>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()' placeholder='请选择有效结束时间 〉' readonly />
+      <li style='position:relative;'>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()' placeholder='请选择有效结束时间' readonly />
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-3px;right:10px;'></i>
         <mt-datetime-picker v-model="endPickerVisible" type="date" ref='end' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleSuccess" :startDate='startDate' :endDate='endDate'>
         </mt-datetime-picker>
       </li>
-      <li>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()' placeholder='请选择出生日期 〉' readonly />
+      <li style='position:relative;'>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()' placeholder='请选择出生日期' readonly />
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-3px;right:40px;'></i>
         <mt-datetime-picker v-model="birthPickerVisible" type="date" ref='birth' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleBirth" :startDate='birthStart' :endDate='birthEnd'>
         </mt-datetime-picker>
       </li>
@@ -85,13 +89,6 @@ export default {
   },
   data() {
     return {
-      // option: [{
-      //   text: '男',
-      //   value: 0
-      // }, {
-      //   text: '女',
-      //   value: 1
-      // }],
       options: [{
         text: '身份证',
         value: 1
@@ -106,7 +103,7 @@ export default {
         value: 4
       }],
       // place: '男',
-      place: '请选择证件类型 〉',
+      place: '请选择证件类型',
       placeVal: 0,
       // places: '身份证',
       placesVal: 0,
@@ -127,26 +124,50 @@ export default {
       endDate: new Date('2050'),
       birthStart: new Date('1910'),
       birthEnd: new Date(),
+      handler: function(e) {
+        e.preventDefault()
+      },
     }
   },
   methods: {
+    /*解决iphone页面层级相互影响滑动的问题*/
+    closeTouch: function() {
+      document.getElementsByTagName("body")[0].addEventListener('touchmove',
+        this.handler, {
+          passive: false
+        }); //阻止默认事件
+      console.log("closeTouch haved happened.");
+    },
+    openTouch: function() {
+      document.getElementsByTagName("body")[0].removeEventListener('touchmove',
+        this.handler, {
+          passive: false
+        }); //打开默认事件
+      console.log("openTouch haved happened.");
+    },
     openPicker() {
       this.$refs.picker.open();
+      this.closeTouch()
     },
     openEnd() {
       this.$refs.end.open();
+      this.closeTouch()
     },
     openBirth() {
       this.$refs.birth.open();
+      this.closeTouch()
     },
     handleConfirm() {
       this.start_time = fmtDate(this.pickerVisible)
+      this.openTouch(); //打开默认事件
     },
     handleSuccess() {
       this.end_time = fmtDate(this.endPickerVisible)
+      this.openTouch(); //打开默认事件
     },
     handleBirth() {
       this.birth = fmtDate(this.birthPickerVisible)
+      this.openTouch(); //打开默认事件
     },
     select(option) {
       this.sexVal = option.value
@@ -253,19 +274,22 @@ export default {
         })
     },
   },
+
+  watch: {
+    signReasonVisible: function(newvs, oldvs) { //picker关闭没有回调函数，所以侦听该属性替代
+      if (newvs) {
+        this.closeTouch();
+      } else {
+        this.openTouch();
+      }
+    }
+  },
   mounted() {
     document.getElementsByTagName("body")[0].className = 'add_bg'
-    // if (!gett('token')) {
-    //   MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-    //     this.$router.push({
-    //       name: 'activeRegister'
-    //     })
-    //   });
-    // }
   },
   beforedestroy() {
     document.body.removeAttribute('class', 'add_bg')
-  }
+  },
 }
 </script>
 <style lang='less' scoped>

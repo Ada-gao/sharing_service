@@ -216,7 +216,7 @@ export default {
                 font-size: 0.22rem;
                 background-color: rgba(255,255,255,0);
                 color: #BD9D62;
-                line-height: 0.5rem;
+                /* line-height: 0.5rem; */
                 top: 0.8rem;
                 right: 0.1rem;
             }

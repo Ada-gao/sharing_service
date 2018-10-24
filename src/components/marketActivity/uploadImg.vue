@@ -9,8 +9,9 @@
   <div class="card">
     <!-- <span>证件类型：</span> -->
     证件类型：
-    <span class='select'>
+    <span class='select' style='position:relative;'>
       <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg()' :place='place' v-model='type'></my-select>
+      <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:0;right:-17px;'></i>
     </span>
   </div>
   <div class="card photo">
@@ -80,7 +81,7 @@ export default {
         text: '其他',
         value: 4
       }],
-      place: '请选择证件类型 〉',
+      place: '请选择证件类型',
       imgShow: true,
       imgsrc: front,
       imgsrcs: back,
