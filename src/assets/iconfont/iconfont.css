@@ -32,11 +32,14 @@
 
 .icon-chahao:before {
   content: "\e617";
+  font-size: 24px;
+  color: #C6C6C6;
 }
 
 .icon-duigou:before {
   content: "\e65d";
-  color: #fff;
+  color: #BD9D62;
+  font-size: 18px;
 }
 
 .icon-dizhi:before {
@@ -53,6 +56,7 @@
 
 .icon-dui:before {
   content: "\e507";
+  font-size: 18px;
 }
 
 .icon-shijian:before {
@@ -73,10 +77,12 @@
 
 .icon-duanxinyanzhengma:before {
   content: "\e61b";
+  font-size: 18px;
 }
 
 .icon-dianhuaphone349:before {
   content: "\e631";
+  font-size: 20px;
 }
 
 .icon-mima:before {

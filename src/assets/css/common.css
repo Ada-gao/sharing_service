@@ -64,7 +64,7 @@ option::-ms-expand {
   width: 6.7rem;
   height: 0.88rem;
   margin: auto;
-  border-radius: 10px;
+  border-radius: 4px;
   color: #fff;
   background-image: linear-gradient(-90deg, rgba(223, 193, 137, 0.97) 0%, #BD9D62 89%);
   font-size: 0.36rem;

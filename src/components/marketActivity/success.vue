@@ -223,7 +223,7 @@ export default {
         h2 {
             font-size: 0.4rem;
             color: #413620;
-            font-weight: 400;
+            font-weight: 700;
             margin-bottom: 0.46rem;
         }
         > p {
@@ -282,16 +282,17 @@ export default {
         left: 0;
         right: 0;
         .box {
-            width: 5.29rem;
+            width: 5.6rem;
             /* height: 4.34rem; */
             margin: auto;
             position: relative;
             top: 50%;
             margin-top: -2.17rem;
             background-color: #ffffff;
+            border-radius: 8px;
             > i {
                 float: right;
-                margin-top: 0.1rem;
+                margin-top: 0.2rem;
                 margin-right: 0.26rem;
             }
             .one,
@@ -317,6 +318,7 @@ export default {
                     background-color: #B68458;
                     background-clip: content-box;
                     padding: 0.07em;
+                    border-color: #B68458;
                 }
                 input[type="radio"] {
                     position: absolute;
@@ -331,10 +333,11 @@ export default {
                     font-size: 0.28rem;
                     letter-spacing: 0;
                     color: #BD9D62;
+                    border-color: #BD9D62;
                 }
             }
             .one {
-                padding-top: 0.63rem;
+                padding-top: 1rem;
 
             }
             .two {
@@ -343,16 +346,18 @@ export default {
             .inputer {
                 width: 3.36rem;
                 height: 0.6rem;
-                margin: 0.3rem auto auto;
+                margin: 0.34rem auto auto 0.8rem;
                 input {
                     width: 100%;
                     height: 100%;
                     border: 1px solid #979797;
                     border-radius: 4px;
+                    font-size: 0.24rem;
+                    letter-spacing: 0;
                 }
                 input::-webkit-input-placeholder {
-                    font-size: 0.2rem;
-                    color: #A7A7A7;
+                    font-size: 0.24rem;
+                    color: #DCDCDC;
                     letter-spacing: 0;
                     padding-left: 0.1rem;
                 }
@@ -364,7 +369,7 @@ export default {
                 background: #fff;
                 margin: auto;
                 color: #9B9B9B;
-                margin-top: 0.7rem;
+                margin-top: 0.4rem;
                 font-size: 0.36rem;
                 letter-spacing: 0;
                 border-top: 1px solid #D2D3D5;

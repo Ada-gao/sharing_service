@@ -11,11 +11,11 @@
     证件类型：
     <span class='select' style='position:relative;'>
       <my-select :options='options' @chooseOne='select' @deleteSrc='deleteImg()' :place='place' v-model='type'></my-select>
-      <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:0;right:-17px;'></i>
+      <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:3px;right:-17px;'></i>
     </span>
   </div>
   <div class="card photo">
-    <span>上传照片：</span>
+    <span>上传证件照</span>
     <span class='select'>（请上传清晰的原件或复印件）</span>
   </div>
   <!-- <div class="select">
@@ -241,15 +241,17 @@ export default {
         text-align: left;
         font-size: 0.32rem;
         color: #4A4A4A;
+        font-weight: 600;
     }
     .txt::before {
         content: '';
         display: inline-block;
         width: 0.06rem;
-        height: 0.3rem;
+        height: 0.33rem;
         background: #C4902D;
         margin-right: 0.1rem;
         vertical-align: middle;
+        margin-top: -0.05rem;
     }
     .add {
         border-radius: 8px;
@@ -275,7 +277,7 @@ export default {
             color: #DCDCDC;
             text-align: right;
             float: right;
-            margin-right: 1.2rem;
+            margin-right: 0.8rem;
             margin-top: -0.02rem;
         }
         .list {

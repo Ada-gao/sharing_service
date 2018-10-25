@@ -8,7 +8,13 @@
   <p class='txt'>客户信息</p>
   <div class="list">
     <ul class='listUl'>
-      <li>客户姓名：</i><input type="text" name="" value="" v-model='name' @keyup='show(1)' placeholder='请输入客户姓名'></li>
+      <li style='position:relative;'>客户姓名：</i>
+        <div class='allBox'>
+          <input type="text" name="" value="" v-model='name' @keyup='show(1)' placeholder='请输入客户姓名'>
+        </div>
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
+      </li>
+
       <li class='special clearfix'>客户性别：
         <span class='sex'>
           <input type="radio" ref='man' name="sex" value="man" id="man" checked>
@@ -29,30 +35,48 @@
         <span class='most' style='position:relative;'>
           <!-- <span class='select'> -->
           <my-select :options='options' @chooseTwo='selects' :place='place' v-model='typeVal'></my-select>
-          <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:0;right:-10px;'></i>
+          <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:2px;right:-10px;'></i>
           <!-- </span> -->
           <!-- <my-select :options='options' @chooseTwo='selects' :place='places' v-model='typeVal'></my-select>
           <i class="iconfont icon-xialajiantou"></i> -->
         </span>
       </li>
-      <li>证件号码：<input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'></li>
-      <li style='position:relative;'>证件有效期起始时间：<input type="text" v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间' readonly />
-        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-3px;right:10px;'></i>
+      <li style='position:relative;'>证件号码：
+        <div class='allBox'>
+          <input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'>
+        </div>
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
+      </li>
+      <li style='position:relative;'>证件有效期起始时间：
+        <div class='allBox selectBox'>
+          <input type="text" v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间' readonly />
+        </div>
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
         <mt-datetime-picker v-model="pickerVisible" type="date" ref='picker' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleConfirm" :startDate='startDate' :endDate='endDate'>
         </mt-datetime-picker>
       </li>
-      <li style='position:relative;'>证件有效期结束时间：<input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()' placeholder='请选择有效结束时间' readonly />
-        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-3px;right:10px;'></i>
+      <li style='position:relative;'>证件有效期结束时间：
+        <div class='allBox selectBox'>
+          <input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()' placeholder='请选择有效结束时间' readonly />
+        </div>
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
         <mt-datetime-picker v-model="endPickerVisible" type="date" ref='end' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleSuccess" :startDate='startDate' :endDate='endDate'>
         </mt-datetime-picker>
       </li>
-      <li style='position:relative;'>出生日期：<input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()' placeholder='请选择出生日期' readonly />
-        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-3px;right:40px;'></i>
+      <li style='position:relative;'>出生日期：
+        <div class='allBox'>
+          <input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()' placeholder='请选择出生日期' readonly />
+        </div>
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
         <mt-datetime-picker v-model="birthPickerVisible" type="date" ref='birth' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleBirth" :startDate='birthStart' :endDate='birthEnd'>
         </mt-datetime-picker>
       </li>
-      <li>地址：
-        <input type="text" name="" value="" v-model='adress ' @keyup='show(4)' placeholder='请输入地址'></li>
+      <li style='position:relative;'>地址：
+        <div class='allBox addressBox'>
+          <input type="text" name="" value="" v-model='adress ' @keyup='show(4)' placeholder='请输入地址'>
+        </div>
+        <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
+      </li>
     </ul>
   </div>
   <div class="text">
@@ -296,6 +320,7 @@ export default {
 .info {
     font-size: 0.28rem;
     color: #333;
+    overflow: hidden;
 
     .txt {
         box-sizing: border-box;
@@ -320,6 +345,24 @@ export default {
         margin-bottom: 0.2rem;
         padding-top: 0.2rem;
         .listUl {
+            .allBox {
+                display: inline-block;
+                width: 2.8rem;
+                height: 0.88rem;
+                text-align: right;
+                float: right;
+                font-size: 0.3rem;
+            }
+            .selectBox {
+                width: 3.4rem;
+
+                input {
+                    width: 4rem;
+                }
+            }
+            .addressBox {
+                width: 2.2rem;
+            }
 
             > li {
                 height: 1rem;
@@ -344,12 +387,13 @@ export default {
                     color: #333;
                 }
                 input {
-                    width: 3rem;
+                    /* width: 3rem; */
                     height: 0.88rem;
-                    float: right;
+                    /* float: right; */
                     font-size: 0.3rem;
                     /* text-align: right; */
-                    margin-right: 0.2rem;
+                    /* margin-right: 0.7rem; */
+                    /* text-align: right; */
                 }
                 input::-webkit-input-placeholder {
                     color: #DCDCDC;
@@ -419,14 +463,14 @@ export default {
                     height: 1rem;
                     line-height: 1rem;
                     float: right;
-                    margin-right: 0.5rem;
+                    /* margin-right: 0.5rem; */
                     /* position: absolute; */
                 }
                 span.most {
                     width: 2.5rem;
                     /* position: relative; */
                     z-index: 1;
-                    margin-right: 0.9rem;
+                    margin-right: 0.5rem;
                 }
             }
         }

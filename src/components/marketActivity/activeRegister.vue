@@ -17,7 +17,7 @@
     <div class="agrenment">
       <i ref='icon' class='iconfont icon-dui' v-show='isIconShow' @click='choose()'></i>
       <i ref='icon' class='iconfont icon-duigou' v-show='!isIconShow' @click='choose()'></i>
-      <router-link tag='span' :to="{name:'agrement'}">注册协议&隐私协议</router-link>
+      <router-link tag='span' :to="{name:'agrement'}">注册协议 & 隐私协议</router-link>
     </div>
     <div class="text">
       <p>{{this.codeMsg}}</p>
@@ -193,7 +193,7 @@ export default {
             width: 0.32rem;
             height: 0.32rem;
             position: absolute;
-            top: 0.9rem;
+            top: 0.89rem;
             left: 0.2rem;
             vertical-align: middle;
         }

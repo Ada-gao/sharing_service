@@ -120,6 +120,7 @@ export default {
             font-size: 0.32rem;
             color: #2E2E2E;
             text-align: left;
+            font-weight: 700;
         }
         ul {
             padding: 0.3rem 0;
@@ -158,6 +159,7 @@ export default {
             color: #4A4A4A;
         }
         .txt {
+            font-weight: 700;
             margin-bottom: 0.2rem;
         }
     }
