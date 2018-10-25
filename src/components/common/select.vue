@@ -65,6 +65,7 @@ export default {
             color: #4A4A4A;
             position: relative;
             font-size: 0.3rem;
+            text-align: center;
         }
         input::-webkit-input-placeholder {
             color: #DCDCDC;

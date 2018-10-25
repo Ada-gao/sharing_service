@@ -9,9 +9,9 @@
   <div class="list">
     <ul class='listUl'>
       <li style='position:relative;'>客户姓名：</i>
-        <div class='allBox'>
-          <input type="text" name="" value="" v-model='name' @keyup='show(1)' placeholder='请输入客户姓名'>
-        </div>
+        <!-- <div class='allBox'> -->
+        <input type="text" name="" value="" v-model='name' placeholder='请输入客户姓名'>
+        <!-- </div> -->
         <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
       </li>
 
@@ -35,46 +35,46 @@
         <span class='most' style='position:relative;'>
           <!-- <span class='select'> -->
           <my-select :options='options' @chooseTwo='selects' :place='place' v-model='typeVal'></my-select>
-          <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:2px;right:-10px;'></i>
+          <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:2px;right:-20px;'></i>
           <!-- </span> -->
           <!-- <my-select :options='options' @chooseTwo='selects' :place='places' v-model='typeVal'></my-select>
           <i class="iconfont icon-xialajiantou"></i> -->
         </span>
       </li>
       <li style='position:relative;'>证件号码：
-        <div class='allBox'>
-          <input type="text" name="" value="" v-model='number' @keyup='show(2)' placeholder='请输入证件号码'>
-        </div>
+        <!-- <div class='allBox'> -->
+        <input type="text" name="" value="" v-model='number' placeholder='请输入证件号码'>
+        <!-- </div> -->
         <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
       </li>
       <li style='position:relative;'>证件有效期起始时间：
-        <div class='allBox selectBox'>
-          <input type="text" v-model='start_time' @keyup='show(3)' @click='openPicker()' placeholder='请选择有效起始时间' readonly />
-        </div>
+        <!-- <div class='allBox selectBox'> -->
+        <input type="text" v-model='start_time' @click='openPicker()' placeholder='请选择有效起始时间' readonly />
+        <!-- </div> -->
         <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
         <mt-datetime-picker v-model="pickerVisible" type="date" ref='picker' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleConfirm" :startDate='startDate' :endDate='endDate'>
         </mt-datetime-picker>
       </li>
       <li style='position:relative;'>证件有效期结束时间：
-        <div class='allBox selectBox'>
-          <input type="text" v-model='end_time' @keyup='show(3)' @click='openEnd()' placeholder='请选择有效结束时间' readonly />
-        </div>
+        <!-- <div class='allBox selectBox'> -->
+        <input type="text" v-model='end_time' @click='openEnd()' placeholder='请选择有效结束时间' readonly />
+        <!-- </div> -->
         <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
         <mt-datetime-picker v-model="endPickerVisible" type="date" ref='end' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleSuccess" :startDate='startDate' :endDate='endDate'>
         </mt-datetime-picker>
       </li>
       <li style='position:relative;'>出生日期：
-        <div class='allBox'>
-          <input type="text" name="" value="" v-model='birth ' @keyup='show(3)' @click='openBirth()' placeholder='请选择出生日期' readonly />
-        </div>
+        <!-- <div class='allBox'> -->
+        <input type="text" name="" value="" v-model='birth ' @click='openBirth()' placeholder='请选择出生日期' readonly />
+        <!-- </div> -->
         <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
         <mt-datetime-picker v-model="birthPickerVisible" type="date" ref='birth' year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleBirth" :startDate='birthStart' :endDate='birthEnd'>
         </mt-datetime-picker>
       </li>
       <li style='position:relative;'>地址：
-        <div class='allBox addressBox'>
-          <input type="text" name="" value="" v-model='adress ' @keyup='show(4)' placeholder='请输入地址'>
-        </div>
+        <!-- <div class='allBox addressBox'> -->
+        <input type="text" name="" value="" v-model='adress ' placeholder='请输入地址'>
+        <!-- </div> -->
         <i class='iconfont icon-gengduo' style='width:20px;height:20px;display:inline-block;position:absolute;top:-1px;right:15px;'></i>
       </li>
     </ul>
@@ -203,7 +203,8 @@ export default {
     show(code) {
       switch (code) {
         case 1:
-          if (!this.name) {
+          const nameReg = /^[\u4e00-\u9fa5]+$/
+          if (!nameReg.test(this.name)) {
             this.codeMsg = '请输入您的名称'
           } else {
             this.codeMsg = ''
@@ -242,7 +243,8 @@ export default {
       var start_time = timetap(this.start_time)
       var end_time = timetap(this.end_time)
       const number_reg = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
-      if (!this.name) {
+      const nameReg = /^[\u4e00-\u9fa5]+$/
+      if (!nameReg.test(this.name)) {
         this.codeMsg = '请输入您的名称'
       } else if (this.sexVal != 0 && this.sexVal != 1) {
         this.codeMsg = '请选择性别'
@@ -250,9 +252,13 @@ export default {
         this.codeMsg = '请选择证件类型'
       } else if (!number_reg.test(this.number)) {
         this.codeMsg = '请输入正确的证件号码'
-      } else if (!this.start_time || !this.end_time || !this.birth) {
-        this.codeMsg = '请选择日期'
-      } else if (start_time > end_time) {
+      } else if (!this.start_time) {
+        this.codeMsg = '请选择证件有效起始时间'
+      } else if (!this.end_time) {
+        this.codeMsg = '请选择证件有效结束时间'
+      } else if (!this.birth) {
+        this.codeMsg = '请选择出生日期'
+      } else if ((start_time > end_time) || (start_time == end_time)) {
         this.codeMsg = '请选择正确的证件有效期'
       } else if (!this.adress) {
         this.codeMsg = '请输入地址'
@@ -387,13 +393,13 @@ export default {
                     color: #333;
                 }
                 input {
-                    /* width: 3rem; */
+                    width: 3rem;
                     height: 0.88rem;
-                    /* float: right; */
+                    float: right;
                     font-size: 0.3rem;
-                    /* text-align: right; */
-                    /* margin-right: 0.7rem; */
-                    /* text-align: right; */
+                    text-align: right;
+                    margin-right: 0.7rem;
+                    text-align: right;
                 }
                 input::-webkit-input-placeholder {
                     color: #DCDCDC;
@@ -470,7 +476,7 @@ export default {
                     width: 2.5rem;
                     /* position: relative; */
                     z-index: 1;
-                    margin-right: 0.5rem;
+                    margin-right: 0.7rem;
                 }
             }
         }
@@ -486,7 +492,7 @@ export default {
         }
     }
     .sureButton {
-        margin-top: 1rem;
+        /* margin-top: 1rem; */
     }
 }
 </style>
