@@ -78,7 +78,7 @@ export function timetampToTime(timetamp) {
   var h = date.getHours() + ':';
   var m = date.getMinutes();
   // var s = date.getSeconds();
-  return Y + M + D + h + m;
+  return Y + M + D + (h < 10 ? "0" + h : h) + (m < 10 ? "0" + m : m);
 }
 
 export function timetap(time) {

@@ -5,7 +5,7 @@
   </div>
   <div class="infos">
     <p>{{list.activityName}}</p>
-    <ul>
+    <ul class='clearfix'>
       <li>
         <span class='one'>活动编号： </span>
         <span class='two'>{{list.activityCode}}</span>
@@ -23,14 +23,22 @@
         <span class='two'>{{list.activityNumber}}</span>
       </li>
       <li>
-        <span class='one '>活动负责人： {{list.man}}</span>
+        <span class='one '>活动负责人： </span>
+        <span class='two specials'>{{list.man}}</span>
       </li>
-      <li>
+      <!-- <li>
         <span class='one'>活动所属部门： {{list.dept}} </span>
-      </li>
+      </li> -->
       <li>
+        <span class='one'>活动所属部门：</span>
+        <span class='two special'>{{list.dept}}</span>
+      </li>
+      <!-- <li>
         <span class='one'>活动地点： {{list.activitySite}}</span>
-        <!-- <span class='two'>{{list.activitySite}}</span> -->
+      </li> -->
+      <li>
+        <span class='one'>活动地点： </span>
+        <span class='two site'> {{list.activitySite}}</span>
       </li>
     </ul>
   </div>
@@ -115,7 +123,7 @@ export default {
     }
     .infos {
         background-color: #ffffff;
-        padding: 0.6rem;
+        padding: 0.3rem;
         > p {
             font-size: 0.32rem;
             color: #2E2E2E;
@@ -123,19 +131,33 @@ export default {
             font-weight: 700;
         }
         ul {
-            padding: 0.3rem 0;
+            padding: 0.1rem 0;
 
             li {
-                height: 0.6rem;
+                /* height: 0.6rem; */
                 text-align: left;
                 font-size: 0.28rem;
+                padding-top: 0.2rem;
                 color: #4A4A4A;
                 .two {
-                    margin-left: 0.3rem;
+                    margin-left: 0.48rem;
+                    width: 4.5rem;
+                    display: inline-block;
                     a {
                         font-size: 0.28rem;
                         padding: 0 0.1rem;
                     }
+                }
+                .special {
+                    width: 4rem;
+                    margin-left: -0.1rem;
+                }
+                .specials {
+                    width: 4rem;
+                    margin-left: 0.2rem;
+                }
+                .site {
+                    /* margin-left: 0.5rem; */
                 }
                 .dept {
                     margin-left: 0;
