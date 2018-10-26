@@ -29,8 +29,8 @@
       <img :src="imgsrc" alt=" ">
     </div>
     <p class='front'>正面</p>
-    <div class="box2 ">
-      <div class="pic " v-show='imgShow'>
+    <div class="box2 " v-show='imgShow'>
+      <div class="pic ">
         <div class="">
           <label for="inputer"></label>
           <input ref='inputer' id='inputer' type="file" accept="image/*" @change="getImg(1)" />
@@ -39,7 +39,6 @@
         <p class='back'>背面</p>
       </div>
     </div>
-
   </div>
   <button class='sureButton ' type="button " name="button" @click='submit()'>提交</button>
 </div>

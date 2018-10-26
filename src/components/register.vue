@@ -7,7 +7,7 @@
     </div>
     <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
-      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
+      <input type="text" name="" value="" placeholder="请输入手机号" v-model='phone'>
     </div>
     <div class="two">
       <i class='iconfont icon-duanxinyanzhengma'></i>

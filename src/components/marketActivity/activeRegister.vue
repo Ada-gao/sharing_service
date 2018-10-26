@@ -6,7 +6,7 @@
   <div class="box">
     <div class="two">
       <i class=' iconfont icon-dianhuaphone349'></i>
-      <input type="text" name="" value="" placeholder="请输入手机号或邮箱号码" v-model='phone'>
+      <input type="text" name="" value="" placeholder="请输入手机号" v-model='phone'>
     </div>
     <div class="two">
       <i class='iconfont icon-duanxinyanzhengma'></i>
@@ -160,14 +160,19 @@ export default {
         })
     },
   },
+  mounted() {
+    document.getElementsByTagName("body")[0].className = 'add_bgs'
+  },
+  beforedestroy() {
+    document.body.removeAttribute('class', 'add_bgs')
+  },
 }
 </script>
 
 <style lang='less' scoped>
-@bgColor: #B68458;
 .register {
     background: url("../../assets/images/background.png") bottom center no-repeat;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     background-size: cover;
     font-size: 0.26rem;
@@ -205,7 +210,7 @@ export default {
             height: 1.5rem;
             width: 6.36rem;
             margin: auto;
-            border-bottom: 1px solid #979797;
+            border-bottom: 1px solid #7E7569;
             button {
                 position: absolute;
                 display: inline-block;
@@ -213,10 +218,10 @@ export default {
                 border-radius: 4px;
                 width: 1.8rem;
                 height: 0.5rem;
-                font-size: 0.22rem;
+                font-size: 0.2rem;
                 background-color: rgba(255,255,255,0);
                 color: #BD9D62;
-                /* line-height: 0.5rem; */
+                line-height: 0.4rem;
                 top: 0.8rem;
                 right: 0.1rem;
             }
@@ -243,7 +248,7 @@ export default {
             }
         }
         .text {
-            height: 1rem;
+            height: 1.7rem;
             p {
                 color: red;
                 padding-top: 0.4rem;
@@ -252,7 +257,7 @@ export default {
 
     }
     > button {
-        margin-top: 1.1rem;
+        /* margin-bottom: 2.09rem; */
     }
     .botBox {
         height: 2rem;

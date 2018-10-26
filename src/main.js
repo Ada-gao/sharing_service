@@ -64,9 +64,9 @@ router.beforeEach((to, from, next) => {
       MessageBox.alert('未登录，请您先登录').then(() => {
         next({
           path: '/marketActivity/activeRegister',
-          query: {
-            redirect: to.fullPath
-          }
+          // query: {
+          //   redirect: to.fullPath
+          // }
         })
       })
     }
