@@ -294,7 +294,7 @@ export default {
             // this.$router.push({
             //   name: 'pass'
             // })
-            MessageBox(res.data.message)
+            MessageBox('提示', res.data.message)
           }
         })
         .catch((err) => {

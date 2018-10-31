@@ -142,11 +142,11 @@ export default {
               this.userId = res.data.user_id
               sett('user_id', user_id)
             }
-            if (res.data.status == 1) {
+            if (res.data.status == 0) {
               this.$router.push({
                 name: 'uploadImg'
               });
-            } else if (res.data.status == 0) {
+            } else if (res.data.status == 1) {
               this.$router.push({
                 name: 'success',
                 query: {
