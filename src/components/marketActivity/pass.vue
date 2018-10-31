@@ -55,13 +55,6 @@ export default {
   },
   mounted() {
     document.body.removeAttribute('class', 'add_bg')
-    // if (!gett('token')) {
-    //   MessageBox.alert('登录信息已过期，请重新登录').then(action => {
-    //     this.$router.push({
-    //       name: 'activeRegister'
-    //     })
-    //   });
-    // }
   },
 }
 </script>

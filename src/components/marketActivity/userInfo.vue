@@ -291,15 +291,15 @@ export default {
               name: 'pass'
             })
           } else {
-            this.$router.push({
-              name: 'pass'
-            })
-            // MessageBox(res.data.message)
+            // this.$router.push({
+            //   name: 'pass'
+            // })
+            MessageBox(res.data.message)
           }
         })
         .catch((err) => {
-          if (err.response.status == 401) {
-            MessageBox('请先登录');
+          if (err.response) {
+            console.log(err.response)
           }
         })
     },

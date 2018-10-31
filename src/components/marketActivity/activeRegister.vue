@@ -57,6 +57,8 @@ export default {
       dept_id: gett('dept_id'),
       isIconShow: true,
       isDisable: false,
+      activityId: gett('activity_id'),
+      userId: null,
     }
   },
   methods: {
@@ -137,15 +139,21 @@ export default {
             sett('token', token)
             if (res.data.user_id) {
               let user_id = res.data.user_id
+              this.userId = res.data.user_id
               sett('user_id', user_id)
             }
-            if (res.data.status == 0) {
+            if (res.data.status == 1) {
               this.$router.push({
                 name: 'uploadImg'
               });
-            } else if (res.data.status == 1) {
+            } else if (res.data.status == 0) {
               this.$router.push({
-                name: 'success'
+                name: 'success',
+                query: {
+                  activityId: this.activityId,
+                  userId: this.userId,
+                  key: gett('token'),
+                }
               });
             }
             if (res.data.code == 103 || res.data.code == 104) {

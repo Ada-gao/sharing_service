@@ -39,7 +39,9 @@ export default {
       this.isCur = index
       this.tabView = this.tabs[index].com;
     }
-
+  },
+  mounted() {
+    document.body.removeAttribute('class', 'add_bgs')
   },
 }
 </script>
